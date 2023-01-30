@@ -14,8 +14,13 @@ class CreateAppointmentsTable extends Migration
     public function up()
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->string('DNI_cliente');
+            $table->date('Fecha');
+            $table->string('DNI_alumno');
+            $table->integer('Tratamiento');
+            $table->text('Protocolo');
+            $table->text('Asesoramiento');
+            $table->text('Seguimiento');
         });
     }
 
