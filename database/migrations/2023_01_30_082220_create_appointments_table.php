@@ -18,16 +18,17 @@ class CreateAppointmentsTable extends Migration
             $table->date('Date');
 
             $table->string('DNI_client');
-            $table->foreign('DNI_client')->references('DNI')->on('clients')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('DNI_client')->references('DNI')->on('clients')
+            ;
             $table->string('DNI_Student');
-            $table->foreign('DNI_Student')->references('DNI')->on('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreign('DNI_Student')->references('DNI')->on('users');
 
             $table->integer('Treatment');
             $table->text('Protocol');
             $table->text('Advice');
             $table->text('Tracing');
 
-            $table->primary(['Date' , 'DNI_client']);
+            $table->primary(['Date', 'DNI_client']);
         });
 
     }
