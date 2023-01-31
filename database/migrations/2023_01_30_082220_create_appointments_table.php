@@ -18,9 +18,9 @@ class CreateAppointmentsTable extends Migration
             $table->date('Date');
 
             $table->string('DNI_client');
-            $table->foreign('DNI_client')->references('DNI')->on('clients');
+            $table->foreign('DNI_client')->references('DNI')->on('clients')->cascadeOnUpdate()->nullOnDelete();
             $table->string('DNI_Student');
-            $table->foreign('DNI_Student')->references('DNI')->on('users');
+            $table->foreign('DNI_Student')->references('DNI')->on('users')->cascadeOnUpdate()->nullOnDelete();
 
             $table->integer('Treatment');
             $table->text('Protocol');
