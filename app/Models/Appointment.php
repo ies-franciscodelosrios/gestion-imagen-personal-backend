@@ -14,7 +14,8 @@ class Appointment extends Model
         'DNI_Student',
         'Treatment',
         'Protocol',
-        'Advice',
-        'Tracing'
+        'Consultancy',
+        'Tracking',
+        'Survey'
     ];
 }

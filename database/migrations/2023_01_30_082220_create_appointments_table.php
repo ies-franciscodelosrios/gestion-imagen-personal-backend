@@ -15,20 +15,32 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
 
-            $table->date('Date');
+            $table->date('Date')->nullable()->primary();
 
-            $table->string('DNI_client');
+            $table->string('DNI_client')->nullable();
+
             $table->foreign('DNI_client')->references('DNI')->on('clients')
+                ->onUpdate('cascade')
+                ->onDelete('set null')
+                ;
+
+            $table->string('DNI_Student')->nullable();
+
+            $table->foreign('DNI_Student')->references('DNI')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null')
             ;
-            $table->string('DNI_Student');
-            $table->foreign('DNI_Student')->references('DNI')->on('users');
 
-            $table->integer('Treatment');
-            $table->text('Protocol');
-            $table->text('Advice');
-            $table->text('Tracing');
 
-            $table->primary(['Date', 'DNI_client']);
+            $table->integer('Treatment')->nullable();
+            $table->text('Protocol')->nullable();
+            $table->text('Consultancy')->nullable();
+            $table->text('Tracking')->nullable();
+            $table->text('Survey')->nullable();
+
+
+           /*  $table->primary(['Date', 'DNI_client']); */
+
         });
 
     }
