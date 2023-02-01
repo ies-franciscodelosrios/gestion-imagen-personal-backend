@@ -12,6 +12,8 @@ class User extends Model
     protected $fillable=[
         'DNI',
         'Rol',
+        'Course_year',
+        'Cycle',
         'Name',
         'Surname',
         'Email',

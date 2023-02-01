@@ -17,13 +17,13 @@ class CreateClientsTable extends Migration
             $table->string('DNI')->primary();
             $table->string('Name');
             $table->string('Surname');
-            $table->integer('Birth_Date');
+            $table->date('Birth_Date');
             $table->integer('Phone');
             $table->string('Email');
             $table->string('More_Info');
             $table->string('Life_Style');
-            $table->string('Health_History');
-            $table->string('Aesthetic_Background');
+            $table->string('Background_Health');
+            $table->string('Background_Aesthetic');
             $table->string('Asthetic_Routine');
             $table->string('Hairdressing_Routine');
         });

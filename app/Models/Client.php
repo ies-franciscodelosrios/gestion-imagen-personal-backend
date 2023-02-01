@@ -17,8 +17,8 @@ class Client extends Model
         'Email',
         'More_Info',
         'Life_Style',
-        'Health_History',
-        'Aesthetic_Background',
+        'Background_Health',
+        'Background_Aesthetic',
         'Asthetic_Routine',
         'Hairdressing_Routine'
     ];
