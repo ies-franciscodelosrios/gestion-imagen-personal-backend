@@ -14,7 +14,9 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('DNI')->primary();
+
+            $table->bigIncrements('id');
+            $table->string('DNI')->unique();
             $table->integer('Rol');
             $table->date('Course_year');
             $table->string('Cycle');
@@ -23,7 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('Email');
             $table->string('Password');
             $table->string('Others');
+
+
         });
+
     }
 
     /**
