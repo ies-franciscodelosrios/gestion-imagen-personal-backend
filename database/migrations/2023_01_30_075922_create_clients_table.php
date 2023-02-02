@@ -28,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->string('Background_Aesthetic');
             $table->string('Asthetic_Routine');
             $table->string('Hairdressing_Routine');
+            $table->timestamps();
         });
     }
 
