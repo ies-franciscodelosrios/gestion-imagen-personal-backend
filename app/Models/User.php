@@ -10,7 +10,6 @@ class User extends Model
     use HasFactory;
 
     protected $fillable=[
-        'Id',
         'DNI',
         'Rol',
         'Course_year',
@@ -19,5 +18,6 @@ class User extends Model
         'Surname',
         'Email',
         'Password',
+        'Others',
     ];
 }
