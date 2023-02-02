@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Controllers\UsersController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 Route::controller(AppointmentController::class) -> group(function(){
 
@@ -36,6 +38,8 @@ Route::controller(AppointmentController::class) -> group(function(){
     Route::get('/user/Student/{Name}','getUserByName');
     Route::get('/users/course/{Course_year}','getUserByCourse');
     Route::get('/users/cycle/{Cycle}','getUserByCycle');
+    Route::get('/clients', 'getClientAll'); /* Working */
+    Route::get('/client/{id}', 'searchClient');/* Working */
 /*___________________________________________________________________________________________________________________ */
 
                                                     /*  POST */
@@ -45,11 +49,13 @@ Route::controller(AppointmentController::class) -> group(function(){
     Route::post('/user/addstudents','addAllStudent');
     Route::post('/user/addprofessors','addAllProfessor');
     Route::post('/user/login','loginUser');
+    Route::post('/client/add', 'addClient');/* Working */
     /*___________________________________________________________________________________________________________________ */
 
                                                     /*  PUT */
     Route::put('/appointment/edit/{id}', 'editAppointment');
     Route::put('/user/edit/{id}','editUser');
+    Route::put('/client/edit/{id}', 'editById');/* Working */
     /*___________________________________________________________________________________________________________________ */
 
                                                     /*  DELETE */
@@ -58,5 +64,8 @@ Route::controller(AppointmentController::class) -> group(function(){
     Route::delete('/user/delete/{dni}','deleteUser');
     Route::delete('/user/delete/rol/{rol}','deleteByRol');
     Route::delete('/user/deleteall/rol','deleteAllByRol');
+    Route::delete('/client/delete/{id}', 'deleteById');/* Working */
+    Route::delete('/client/deleteall', 'deleteAll');
+
 });
 
