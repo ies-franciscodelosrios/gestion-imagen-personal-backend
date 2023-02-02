@@ -16,7 +16,7 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->date('Date')->nullable()->unique();
+            $table->date('Date')->nullable();
 
             $table->string('DNI_client')->nullable();
 
@@ -38,7 +38,7 @@ class CreateAppointmentsTable extends Migration
             $table->text('Consultancy')->nullable();
             $table->text('Tracking')->nullable();
             $table->text('Survey')->nullable();
-
+            $table->timestamps();
 
            /*  $table->primary(['Date', 'DNI_client']); */
 
