@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'DNI_client',
         'Date',
@@ -16,6 +17,6 @@ class Appointment extends Model
         'Protocol',
         'Consultancy',
         'Tracking',
-        'Survey'
+        'Survey',
     ];
 }

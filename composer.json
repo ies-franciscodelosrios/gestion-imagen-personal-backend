@@ -9,6 +9,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
+        "laravel/pint": "^0.1.7",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5"
     },
@@ -45,7 +46,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "lint":"./vendor/bin/pint"
     },
     "extra": {
         "laravel": {

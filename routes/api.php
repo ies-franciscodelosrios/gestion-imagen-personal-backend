@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::controller(AppointmentController::class) -> group(function(){
+Route::controller(AppointmentController::class)->group(function () {
 
     /*___________________________________________________________________________________________________________________ */
 
-                                                    /*  GET */
+    /*  GET */
     Route::get('/appointments', 'getAll');
     Route::get('/appointment/{id}', 'getAppointmentById');
     Route::get('/appointment/dni/client/{DNI_client}', 'getAppointmentByDNIClient');
     Route::get('/appointment/dni/student/{DNI_Student}', 'getClientByDniStudent');
+
     /*___________________________________________________________________________________________________________________ */
 
                                                     /*  POST */
@@ -112,5 +110,6 @@ Route::controller(UsersController::class) -> group(function(){
     Route::delete('/user/delete/{dni}','deleteUser');
     Route::delete('/user/delete/rol/{rol}','deleteByRol');
     Route::delete('/user/deleteall/rol','deleteAllByRol');
+
 
 });

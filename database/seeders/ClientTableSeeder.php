@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
 use Illuminate\Database\Seeder;
 
 class ClientTableSeeder extends Seeder
@@ -13,7 +12,6 @@ class ClientTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {}
+    {
     }
-
-
+}

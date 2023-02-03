@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +16,7 @@ class ClientController extends Controller
     public function getClientAll()
     {
         $clients = Client::all();
+
         return $clients;
     }
 
@@ -29,6 +29,7 @@ class ClientController extends Controller
     public function addClient(Request $request)
     {
 
+
     // Validación de datos de entrada
     $validator = Validator::make($request->all(), [
         'DNI' => 'required|unique:clients'
@@ -38,6 +39,7 @@ class ClientController extends Controller
     // Si la validación falla, regresa una respuesta con el error
     if ($validator->fails()) {
         return response()->json($validator->errors(), 400);
+
     }
 
     // Crea un nuevo objeto de cliente
@@ -69,14 +71,13 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function searchClient($query) {
+    public function searchClient($query)
+    {
         return Client::where('DNI', 'like', '%'.$query.'%')
           ->orWhere('Name', 'like', '%'.$query.'%')
           ->orWhere('Surname', 'like', '%'.$query.'%')
           ->get();
-      }
-
+    }
 
     /**
      * Update the specified resource in storage.
@@ -88,20 +89,21 @@ class ClientController extends Controller
     public function editById(Request $request)
     {
         $client = Client::findOrFail($request->id);
-        $client -> DNI = $request -> DNI;
-        $client -> Name = $request -> Name;
-        $client -> Surname = $request -> Surname;
-        $client -> Birth_Date = $request -> Birth_Date;
-        $client -> Phone = $request -> Phone;
-        $client -> Email = $request -> Email;
-        $client -> More_Info = $request -> More_Info;
-        $client -> Life_Style = $request -> Life_Style;
-        $client -> Background_Health = $request -> Background_Health;
-        $client -> Background_Aesthetic = $request -> Background_Aesthetic;
-        $client -> Asthetic_Routine = $request -> Asthetic_Routine;
-        $client -> Hairdressing_Routine = $request -> Hairdressing_Routine;
+        $client->DNI = $request->DNI;
+        $client->Name = $request->Name;
+        $client->Surname = $request->Surname;
+        $client->Birth_Date = $request->Birth_Date;
+        $client->Phone = $request->Phone;
+        $client->Email = $request->Email;
+        $client->More_Info = $request->More_Info;
+        $client->Life_Style = $request->Life_Style;
+        $client->Background_Health = $request->Background_Health;
+        $client->Background_Aesthetic = $request->Background_Aesthetic;
+        $client->Asthetic_Routine = $request->Asthetic_Routine;
+        $client->Hairdressing_Routine = $request->Hairdressing_Routine;
 
-        $client -> save();
+        $client->save();
+
         return $client;
     }
 
@@ -111,21 +113,19 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function deleteById($id)
     {
         $client = Client::destroy($id);
+
         return $client;
     }
 
-
-    public function deleteAll(Request $request) {
+    public function deleteAll(Request $request)
+    {
         if ($request->isMethod('delete')) {
-          Client::table('Client')->delete();
-          return response()->json(['message' => 'Todos los registros de clientes han sido eliminados']);
+            Client::table('Client')->delete();
+
+            return response()->json(['message' => 'Todos los registros de clientes han sido eliminados']);
         }
-      }
-
-
-
+    }
 }
