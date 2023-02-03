@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-                                                    /*  GET */
+    /*  GET */
 
     /**
      * Display a listing of the resource.
