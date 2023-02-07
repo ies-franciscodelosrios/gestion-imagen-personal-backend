@@ -3,18 +3,6 @@ var exec = require("child_process").exec;
 var cmd = null;
 
 /**
- * Function to download all dependecies to make work de API, Gulpfile, etc
- * @param {*} cb
- */
-function Install(cb) {
-    cmd = exec(["npm i", 'php compose'], function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
-}
-
-/**
  *  Funtion to install composer dependecies
  * @param {*} cb
  */
@@ -63,7 +51,6 @@ function Delete_Database(cb) {
 }
 
 
-exports.Install = Install;
 exports.Install_Dependencies = Install_Dependencies;
 exports.Create_Database = Create_Database;
 exports.Create_Database_Seed = Create_Database_Seed;
