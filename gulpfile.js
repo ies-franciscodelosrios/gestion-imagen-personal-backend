@@ -60,7 +60,6 @@ function create_db(cb) {
     connection.end();
 }
 
-exports.create_db = create_db;
 exports.Install_Dependencies = Install_Dependencies;
 exports.Create_Database_Seed = Create_Database_Seed;
 exports.Delete_Database = Delete_Database;
