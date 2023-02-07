@@ -1,4 +1,4 @@
-![LOGO DEL PROYECTO](https://github.com/ies-franciscodelosrios/gestion-imagen-personal-backend/blob/main/resources/views/Logotipo.jpg)
+![LOGO DEL PROYECTO](https://github.com/ies-franciscodelosrios/gestion-imagen-personal-backend/blob/main/resources/views/Logotipo2.jpg)
 
 # BACK-END PROYECTO PERICLES 
 
