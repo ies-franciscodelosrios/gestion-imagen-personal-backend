@@ -1,11 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-/* use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\AuthController; */
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +18,7 @@ use App\Http\Controllers\AuthController; */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 
 
@@ -101,3 +99,5 @@ Route::middleware('auth:sanctum')->delete('/user/delete/{dni}',[App\Http\Control
 Route::middleware('auth:sanctum')->delete('/user/delete/rol/{rol}',[App\Http\Controllers\UsersController::class, 'deleteByRol']);
 Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'DNI',
         'Name',
@@ -20,6 +21,6 @@ class Client extends Model
         'Background_Health',
         'Background_Aesthetic',
         'Asthetic_Routine',
-        'Hairdressing_Routine'
+        'Hairdressing_Routine',
     ];
 }

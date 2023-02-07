@@ -7,16 +7,17 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
+    /*  GET */
 
-                                                    /*  GET */
-
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll(){
+    public function getAll()
+    {
         $appointment = Appointment::all();
+
         return $appointment;
     }
 
@@ -26,9 +27,10 @@ class AppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function getAppointmentById($id){
+    public function getAppointmentById($id)
+    {
         $appointment = Appointment::find($id);
+
         return $appointment;
     }
 
@@ -38,8 +40,10 @@ class AppointmentController extends Controller
      * @param  string  $DNI
      * @return \Illuminate\Http\Response
      */
-    public function getAppointmentByDNIClient($DNI){
+    public function getAppointmentByDNIClient($DNI)
+    {
         $appointment = Appointment::where('DNI_client', $DNI)->first();
+
         return $appointment;
     }
 
@@ -49,13 +53,15 @@ class AppointmentController extends Controller
      * @param  string  $DNI
      * @return \Illuminate\Http\Response
      */
-    public function getClientByDniStudent($DNI){
+    public function getClientByDniStudent($DNI)
+    {
         $appointment = Appointment::where('DNI_Student', $DNI)->first();
+
         return $appointment;
     }
-/*___________________________________________________________________________________________________________________ */
+    /*___________________________________________________________________________________________________________________ */
 
-                                                    /*  POST */
+    /*  POST */
 
     /**
      * Store a newly created resource in storage.
@@ -66,25 +72,22 @@ class AppointmentController extends Controller
     public function addAppointment(Request $request)
     {
         $appointment = new Appointment();
-        $appointment -> Date = $request -> Date;
-        $appointment -> DNI_client = $request -> DNI_client;
-        $appointment -> DNI_Student = $request -> DNI_Student;
-        $appointment -> Treatment = $request -> Treatment;
+        $appointment->Date = $request->Date;
+        $appointment->DNI_client = $request->DNI_client;
+        $appointment->DNI_Student = $request->DNI_Student;
+        $appointment->Treatment = $request->Treatment;
 
-        $appointment -> Protocol = $request -> Protocol;
-        $appointment -> Consultancy = $request -> Consultancy;
-        $appointment -> Tracking = $request -> Tracking;
-        $appointment -> Survey = $request -> Survey;
+        $appointment->Protocol = $request->Protocol;
+        $appointment->Consultancy = $request->Consultancy;
+        $appointment->Tracking = $request->Tracking;
+        $appointment->Survey = $request->Survey;
 
-
-        $appointment -> save();
-
+        $appointment->save();
     }
 
-/*___________________________________________________________________________________________________________________ */
+    /*___________________________________________________________________________________________________________________ */
 
-                                                    /*  PUT */
-
+    /*  PUT */
 
     /**
      * Update the specified resource in storage.
@@ -93,34 +96,37 @@ class AppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editAppointment(Request $request){
+    public function editAppointment(Request $request)
+    {
         $appointment = Appointment::findOrFail($request->id);
-        $appointment -> Date = $request -> Date;
-        $appointment -> DNI_client = $request -> DNI_client;
-        $appointment -> DNI_Student = $request -> DNI_Student;
-        $appointment -> Treatment = $request -> Treatment;
+        $appointment->Date = $request->Date;
+        $appointment->DNI_client = $request->DNI_client;
+        $appointment->DNI_Student = $request->DNI_Student;
+        $appointment->Treatment = $request->Treatment;
 
-        $appointment -> Protocol = $request -> Protocol;
-        $appointment -> Consultancy = $request -> Consultancy;
-        $appointment -> Tracking = $request -> Tracking;
-        $appointment -> Survey = $request -> Survey;
+        $appointment->Protocol = $request->Protocol;
+        $appointment->Consultancy = $request->Consultancy;
+        $appointment->Tracking = $request->Tracking;
+        $appointment->Survey = $request->Survey;
 
-        $appointment -> save();
+        $appointment->save();
+
         return $appointment;
     }
 
-/*___________________________________________________________________________________________________________________ */
+    /*___________________________________________________________________________________________________________________ */
 
-                                                    /*  DELETE */
+    /*  DELETE */
     /**
      * Remove the specified resource from storage.
      *
      *@param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function DeleteAppointmenById($id){
+    public function DeleteAppointmenById($id)
+    {
         $appointment = Appointment::destroy($id);
+
         return $appointment;
     }
-
 }

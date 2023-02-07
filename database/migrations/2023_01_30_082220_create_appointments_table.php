@@ -14,7 +14,6 @@ class CreateAppointmentsTable extends Migration
     public function up()
     {
         Schema::create('appointments', function (Blueprint $table) {
-
             $table->bigIncrements('id');
             $table->date('Date')->nullable();
 
@@ -22,16 +21,13 @@ class CreateAppointmentsTable extends Migration
 
             $table->foreign('DNI_client')->references('DNI')->on('clients')
                 ->onUpdate('cascade')
-                ->onDelete('set null')
-                ;
+                ->onDelete('set null');
 
             $table->string('DNI_Student')->nullable();
 
             $table->foreign('DNI_Student')->references('DNI')->on('users')
                 ->onUpdate('cascade')
-                ->onDelete('set null')
-            ;
-
+                ->onDelete('set null');
 
             $table->integer('Treatment')->nullable();
             $table->text('Protocol')->nullable();
@@ -40,10 +36,8 @@ class CreateAppointmentsTable extends Migration
             $table->text('Survey')->nullable();
             $table->timestamps();
 
-           /*  $table->primary(['Date', 'DNI_client']); */
-
+            /*  $table->primary(['Date', 'DNI_client']); */
         });
-
     }
 
     /**
