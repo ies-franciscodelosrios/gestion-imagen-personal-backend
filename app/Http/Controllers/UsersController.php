@@ -38,12 +38,31 @@ class UsersController extends Controller
         return $users;
     }
 
+     /**
+     * Obtener usuario por dni
+     */
+    public function getUserByID($ID){
+
+        $users= User::where('id', $ID)->first();
+
+        return $users;
+
+    }
     /**
      * Obtener usuario por dni
      */
     public function getUserByDni($DNI)
     {
-        $users = User::where('DNI', $DNI)->first();
+      
+
+       $users= User::where('DNI', $DNI)->first();
+
+        return $users;
+
+    }
+       public function getUserByCorreo($Correo){
+
+        $users= User::where('Email', $Correo)->first();
 
         return $users;
     }
@@ -99,6 +118,7 @@ class UsersController extends Controller
     /**
      * Añadir profesor
      */
+
     public function addProfessor(Request $request)
     {
         $user = new User();
@@ -126,13 +146,6 @@ class UsersController extends Controller
      * Añadir los profesores con el json
      */
     public function addAllProfessor()
-    {
-    }
-
-    /**
-     * login de usuario
-     */
-    public function loginUser()
     {
     }
 

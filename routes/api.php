@@ -19,92 +19,85 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(AppointmentController::class)->group(function () {
 
-    /*___________________________________________________________________________________________________________________ */
 
-    /*  GET */
-    Route::get('/appointments', 'getAll');
-    Route::get('/appointment/{id}', 'getAppointmentById');
-    Route::get('/appointment/dni/client/{DNI_client}', 'getAppointmentByDNIClient');
-    Route::get('/appointment/dni/student/{DNI_Student}', 'getClientByDniStudent');
 
-    /*___________________________________________________________________________________________________________________ */
+    /* Auth */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 
-    /*  POST */
-    Route::post('/appointment/add', 'addAppointment');
-    /*___________________________________________________________________________________________________________________ */
+Route::middleware('auth:sanctum')
+    ->get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
-    /*  PUT */
-    Route::put('/appointment/edit/{id}', 'editAppointment');
-    /*___________________________________________________________________________________________________________________ */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    /*  DELETE */
-    Route::delete('/appointment/{id}', 'DeleteAppointmenById');
-    Route::delete('/appointment/delete-all', 'deleteAll');
-});
 
-Route::controller(ClientController::class)->group(function () {
+    /* Appointment */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    /*___________________________________________________________________________________________________________________ */
+/*  METODOS GET DE Appointment */
+Route::middleware('auth:sanctum')->get('/appointments',[App\Http\Controllers\AppointmentController::class, 'getAll']);
+Route::middleware('auth:sanctum')->get('/appointment/{id}',[App\Http\Controllers\AppointmentController::class, 'getAppointmentById']);
+Route::middleware('auth:sanctum')->get('/appointment/dni/client/{DNI_client}',[App\Http\Controllers\AppointmentController::class, 'getAppointmentByDNIClient']);
+Route::middleware('auth:sanctum')->get('/appointment/dni/student/{DNI_Student}',[App\Http\Controllers\AppointmentController::class, 'getClientByDniStudent']);
 
-    /*  GET */
+/*  METODOS POST DE Appointment */
+Route::middleware('auth:sanctum')->post('/appointment/add',[App\Http\Controllers\AppointmentController::class, 'addAppointment']);
 
-    Route::get('/clients', 'getClientAll'); /* Working */
-    Route::get('/client/{id}', 'searchClient'); /* Working */
-    /*___________________________________________________________________________________________________________________ */
+/*  METODOS PUT DE Appointment */
+Route::middleware('auth:sanctum')->put('/appointment/edit/{id}',[App\Http\Controllers\AppointmentController::class, 'editAppointment']);
 
-    /*  POST */
+/*  METODOS DELETE DE Appointment */
+Route::middleware('auth:sanctum')->put('/appointment/delete-all',[App\Http\Controllers\AppointmentController::class, 'deleteAll']);
 
-    Route::post('/client/add', 'addClient'); /* Working */
-    /*___________________________________________________________________________________________________________________ */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    /*  PUT */
+/* Client */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    Route::put('/client/edit/{id}', 'editById'); /* Working */
-    /*___________________________________________________________________________________________________________________ */
+/*  METODOS GET DE Client */
+Route::middleware('auth:sanctum')->get('/clients',[App\Http\Controllers\ClientController::class, 'getClientAll']);
+Route::middleware('auth:sanctum')->get('/client/{id}',[App\Http\Controllers\ClientController::class, 'searchClient']);
 
-    /*  DELETE */
+/*  METODOS POST DE Client */
+Route::middleware('auth:sanctum')->post('/client/add',[App\Http\Controllers\ClientController::class, 'addClient']);
 
-    Route::delete('/client/delete/{id}', 'deleteById'); /* Working */
-    Route::delete('/client/deleteall', 'deleteAll'); /* Not Working */
-});
+/*  METODOS PUT DE Client */
+Route::middleware('auth:sanctum')->put('/client/edit/{id}',[App\Http\Controllers\ClientController::class, 'editById']);
 
-Route::controller(UsersController::class)->group(function () {
+/*  METODOS DELETE DE Client */
+Route::middleware('auth:sanctum')->delete('/client/delete/{id}',[App\Http\Controllers\ClientController::class, 'deleteById']);
+Route::middleware('auth:sanctum')->delete('/client/deleteall',[App\Http\Controllers\ClientController::class, 'deleteAll']);
 
-     /*___________________________________________________________________________________________________________________ */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    /*  GET */
+/* Users */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    Route::get('/users', 'getAll');
-    Route::get('/users/rol/2', 'getAllStudents');
-    Route::get('/users/rol/1', 'getAllProfessor');
-    Route::get('/user/{DNI}', 'getUserByDni');
-    Route::get('/user/Student/{Name}', 'getUserByName');
-    Route::get('/users/course/{Course_year}', 'getUserByCourse');
-    Route::get('/users/cycle/{Cycle}', 'getUserByCycle');
+/*  METODOS GET DE User */
+Route::middleware('auth:sanctum')->get('/users',[App\Http\Controllers\UsersController::class, 'getAll']);
+Route::middleware('auth:sanctum')->get('/users/rol/2', [App\Http\Controllers\UsersController::class, 'getAllStudents']);
+Route::middleware('auth:sanctum')->get('/users/rol/1', [App\Http\Controllers\UsersController::class, 'getAllProfessor']);
+Route::middleware('auth:sanctum')->get('/user/{id}', [App\Http\Controllers\UsersController::class, 'getUserByID']);
+Route::middleware('auth:sanctum')->get('/userByCorreo/{correo}', [App\Http\Controllers\UsersController::class, 'getUserByCorreo']);
+Route::middleware('auth:sanctum')->get('/userByDni/{DNI}', [App\Http\Controllers\UsersController::class, 'getUserByDni']);
+Route::middleware('auth:sanctum')->get('/user/Student/{Name}', [App\Http\Controllers\UsersController::class, 'getUserByName']);
+Route::middleware('auth:sanctum')->get('/users/course/{Course_year}', [App\Http\Controllers\UsersController::class, 'getUserByCourse']);
+Route::middleware('auth:sanctum')->get('/users/cycle/{Cycle}', [App\Http\Controllers\UsersController::class, 'getUserByCycle']);
 
-    /*___________________________________________________________________________________________________________________ */
+/*  METODOS POST DE User */
+Route::middleware('auth:sanctum')->post('/user/addstudent',[App\Http\Controllers\UsersController::class, 'addStudent']);
+Route::middleware('auth:sanctum')->post('/user/addprofessor',[App\Http\Controllers\UsersController::class, 'addProfessor']);
+Route::middleware('auth:sanctum')->post('/user/addstudents',[App\Http\Controllers\UsersController::class, 'addAllStudent']);
+Route::middleware('auth:sanctum')->post('/user/addprofessors',[App\Http\Controllers\UsersController::class, 'addAllProfessor']);
 
-    /*  POST */
+/*  METODOS PUT DE User */
+Route::middleware('auth:sanctum')->put('/user/edit/{id}',[App\Http\Controllers\UsersController::class, 'editUser']);
 
-    Route::post('/user/addstudent', 'addStudent');
-    Route::post('/user/addprofessor', 'addProfessor');
-    Route::post('/user/addstudents', 'addAllStudent');
-    Route::post('/user/addprofessors', 'addAllProfessor');
-    Route::post('/user/login', 'loginUser');
+/*  METODOS DELETE DE User */
+Route::middleware('auth:sanctum')->delete('/user/delete/{dni}',[App\Http\Controllers\UsersController::class, 'deleteUser']);
+Route::middleware('auth:sanctum')->delete('/user/delete/rol/{rol}',[App\Http\Controllers\UsersController::class, 'deleteByRol']);
+Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-    /*___________________________________________________________________________________________________________________ */
 
-    /*  PUT */
-
-    Route::put('/user/edit/{id}', 'editUser');
-
-    /*___________________________________________________________________________________________________________________ */
-
-    /*  DELETE */
-
-    Route::delete('/user/delete/{dni}', 'deleteUser');
-    Route::delete('/user/delete/rol/{rol}', 'deleteByRol');
-    Route::delete('/user/deleteall/rol', 'deleteAllByRol');
-});
