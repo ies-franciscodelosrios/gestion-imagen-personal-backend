@@ -22,9 +22,11 @@ class CreateUsersTable extends Migration
             $table->string('Cycle');
             $table->string('Name');
             $table->string('Surname');
-            $table->string('Email');
-            $table->string('Password');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->string('Others');
+            $table->rememberToken();
             $table->timestamps();
 
         });
