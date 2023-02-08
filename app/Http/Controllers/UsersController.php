@@ -26,7 +26,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'VACIO',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -48,7 +48,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -61,7 +61,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'ALL PROFESSORS',
                 'count'=> $count,
                 "users"=>$users
             ], 200);
@@ -70,7 +70,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
      /**
@@ -79,10 +79,11 @@ class UsersController extends Controller
     public function getUserByID($ID){
 
         $users= User::where('id', $ID)->first();
+
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'GET USER BY ID '.$ID,
                 "users"=>$users
             ], 200);
         }
@@ -90,7 +91,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
 
     }
     /**
@@ -103,7 +104,7 @@ class UsersController extends Controller
        if ($users) {
            return response()->json([
                'status' => 1,
-               'message' => 'ALL STUDENTS',
+               'message' => 'GET USER BY DNI '.$DNI,
                "users"=>$users
            ], 200);
        }
@@ -111,7 +112,7 @@ class UsersController extends Controller
        return response()->json([
            'status' => -1,
            'message' => 'EMPTY',
-       ], 401);
+       ], 404);
 
     }
        public function getUserByCorreo($Correo){
@@ -119,7 +120,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'GET USER BY CORREO '.$Correo,
                 "users"=>$users
             ], 200);
         }
@@ -127,7 +128,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -139,7 +140,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'GET USER BY NAME '.$Name,
                 "users"=>$users
             ], 200);
         }
@@ -147,7 +148,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -156,10 +157,10 @@ class UsersController extends Controller
     public function getUserByCourse($Course_year)
     {
         $users = User::where('Course_year', $Course_year)->get();
-        if ($users) {
+        if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'GET USER BY COURSE YEAR '.$Course_year,
                 "users"=>$users
             ], 200);
         }
@@ -167,7 +168,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -176,10 +177,10 @@ class UsersController extends Controller
     public function getUserByCycle($Cycle)
     {
         $users = User::where('Cycle', $Cycle)->get();
-        if ($users) {
+        if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'GET USER BY CYCLE '.$Cycle,
                 "users"=>$users
             ], 200);
         }
@@ -187,7 +188,7 @@ class UsersController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 401);
+        ], 404);
     }
 
     /**
@@ -264,11 +265,20 @@ class UsersController extends Controller
     /**
      * borrar usuario segun dni
      */
-    public function deleteUser($DNI)
+    public function deleteUser($id)
     {
-        $users = User::destroy($DNI);
+        $users = User::destroy($id);
+        if ($users) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'USER DELETE WHITH ID IS '.$id,
+            ], 200);
+        }
 
-        return $users;
+        return response()->json([
+            'status' => -1,
+            'message' => 'EMPTY',
+        ], 404);
     }
 
     /**
@@ -278,12 +288,21 @@ class UsersController extends Controller
     {
         if ($rol !== 0) {
             $users = User::where('Rol', $rol)->delete();
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'USER DELETE WHITH ROL IS '+$rol,
+                ], 200);
+            }
 
-            return $users;
+            return response()->json([
+                'status' => -1,
+                'message' => 'EMPTY',
+            ], 404);
         }
     }
 
-    public function deleteAllByRol()
+   /*  public function deleteAllByRol()
     {
         $rol = [1, 2];
 
@@ -292,5 +311,5 @@ class UsersController extends Controller
         }
 
         return $users;
-    }
+    } */
 }
