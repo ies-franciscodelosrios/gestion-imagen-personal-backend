@@ -20,8 +20,8 @@ class CreateClientsTable extends Migration
             $table->string('Surname');
             $table->date('Birth_Date');
             $table->integer('Phone');
-            $table->string('Email');
-            $table->string('More_Info');
+            $table->string('Email')->unique();
+            $table->string('More_Info')->nullable();
             $table->string('Life_Style');
             $table->string('Background_Health');
             $table->string('Background_Aesthetic');

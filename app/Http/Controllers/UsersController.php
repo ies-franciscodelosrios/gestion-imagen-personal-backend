@@ -165,7 +165,7 @@ class UsersController extends Controller
         }
 
         return response()->json([
-            'status' => -1,
+            'status' => 1,
             'message' => 'EMPTY',
         ], 401);
     }

@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')
 /*  METODOS GET DE Appointment */
 Route::middleware('auth:sanctum')->get('/appointments',[App\Http\Controllers\AppointmentController::class, 'getAll']);
 Route::middleware('auth:sanctum')->get('/appointment/{id}',[App\Http\Controllers\AppointmentController::class, 'getAppointmentById']);
-Route::middleware('auth:sanctum')->get('/appointment/dni/client/{DNI_client}',[App\Http\Controllers\AppointmentController::class, 'getAppointmentByDNIClient']);
+Route::middleware('auth:sanctum')->get('/appointment/dni/client/{DNI_Client}',[App\Http\Controllers\AppointmentController::class, 'getAppointmentByDNIClient']);
 Route::middleware('auth:sanctum')->get('/appointment/dni/student/{DNI_Student}',[App\Http\Controllers\AppointmentController::class, 'getClientByDniStudent']);
 
 /*  METODOS POST DE Appointment */
@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->put('/appointment/edit/{id}',[App\Http\Contro
 
 /*  METODOS DELETE DE Appointment */
 Route::middleware('auth:sanctum')->delete('/appointment/delete-all',[App\Http\Controllers\AppointmentController::class, 'deleteAll']);
-Route::middleware('auth:sanctum')->delete('/appointment/delete-id/{id}',[App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
+Route::middleware('auth:sanctum')->delete('/appointment/delete/{id}',[App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
