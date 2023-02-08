@@ -18,7 +18,21 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::all();
 
-        return $appointment;
+        $count = count($appointment);
+        if ($appointment) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'REGISTRY FOUND',
+                'count'=> $count,
+                "users"=>$appointment
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 0,
+            'message' => 'EMPTY REGISTRY',
+        ], 404);
+
     }
 
     /**
@@ -30,8 +44,21 @@ class AppointmentController extends Controller
     public function getAppointmentById($id)
     {
         $appointment = Appointment::find($id);
+        if ($appointment) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'FOUND ID: '.$id,
+                "users"=>$appointment
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 0,
+            'message' => 'EMPTY REGISTRY',
+        ], 404);
 
         return $appointment;
+
     }
 
     /**
@@ -43,8 +70,20 @@ class AppointmentController extends Controller
     public function getAppointmentByDNIClient($DNI)
     {
         $appointment = Appointment::where('DNI_client', $DNI)->first();
+        if ($appointment) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'FOUND CLIENT DNI: '.$DNI,
+                "users"=>$appointment
+            ], 200);
+        }
 
-        return $appointment;
+        return response()->json([
+            'status' => 0,
+            'message' => 'CLIENT DNI NOT FOUND',
+        ], 404);
+
+
     }
 
     /**
@@ -56,6 +95,18 @@ class AppointmentController extends Controller
     public function getClientByDniStudent($DNI)
     {
         $appointment = Appointment::where('DNI_Student', $DNI)->first();
+        if ($appointment) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'FOUND STUDENT DNI: '.$DNI,
+                "users"=>$appointment
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 0,
+            'message' => 'STUDENT DNI NOT FOUND',
+        ], 404);
 
         return $appointment;
     }
@@ -83,6 +134,7 @@ class AppointmentController extends Controller
         $appointment->Survey = $request->Survey;
 
         $appointment->save();
+
     }
 
     /*___________________________________________________________________________________________________________________ */
@@ -126,6 +178,18 @@ class AppointmentController extends Controller
     public function DeleteAppointmenById($id)
     {
         $appointment = Appointment::destroy($id);
+        if ($appointment) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'REGISTRY WITH ID: '.$id.' DELETED',
+                "users"=>$appointment
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 0,
+            'message' => 'REGISTRY NOT FOUND',
+        ], 404);
 
         return $appointment;
     }
