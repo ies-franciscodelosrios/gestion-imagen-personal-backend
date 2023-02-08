@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->delete('/appointment/delete-id/{id}',[App\Htt
 
 /*  METODOS GET DE Client */
 Route::middleware('auth:sanctum')->get('/clients',[App\Http\Controllers\ClientController::class, 'getClientAll']);
-Route::middleware('auth:sanctum')->get('/client/{id}',[App\Http\Controllers\ClientController::class, 'searchClient']);
+Route::middleware('auth:sanctum')->get('/client/{data}',[App\Http\Controllers\ClientController::class, 'searchClient']);
 
 /*  METODOS POST DE Client */
 Route::middleware('auth:sanctum')->post('/client/add',[App\Http\Controllers\ClientController::class, 'addClient']);
@@ -96,9 +96,10 @@ Route::middleware('auth:sanctum')->post('/user/addprofessors',[App\Http\Controll
 Route::middleware('auth:sanctum')->put('/user/edit/{id}',[App\Http\Controllers\UsersController::class, 'editUser']);
 
 /*  METODOS DELETE DE User */
-Route::middleware('auth:sanctum')->delete('/user/delete/{dni}',[App\Http\Controllers\UsersController::class, 'deleteUser']);
+Route::middleware('auth:sanctum')->delete('/user/delete/{id}',[App\Http\Controllers\UsersController::class, 'deleteUser']);
 Route::middleware('auth:sanctum')->delete('/user/delete/rol/{rol}',[App\Http\Controllers\UsersController::class, 'deleteByRol']);
-Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
+/* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
+ */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
 

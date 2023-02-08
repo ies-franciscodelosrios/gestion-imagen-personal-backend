@@ -8,24 +8,26 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function getClientAll()
     {
         $clients = Client::all();
 
-        return $clients;
+        if (count($clients) !== 0) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'ALL CLIENTS',
+                "users"=>$clients
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'NO CUSTOMERS SAVED',
+        ], 404);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function addClient(Request $request)
     {
 
@@ -63,18 +65,24 @@ class ClientController extends Controller
         return response()->json(['message' => 'Cliente creado con éxito'], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function searchClient($query)
     {
-        return Client::where('DNI', 'like', '%'.$query.'%')
-          ->orWhere('Name', 'like', '%'.$query.'%')
-          ->orWhere('Surname', 'like', '%'.$query.'%')
-          ->get();
+        $client= Client::where('id', 'like', '%'.$query.'%')->orWhere('DNI', 'like', '%'.$query.'%')
+        ->orWhere('Name', 'like', '%'.$query.'%')
+        ->orWhere('Surname', 'like', '%'.$query.'%')->first();
+        if ($client) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'FOUND CUSTOMER ',
+                "users"=>$client
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'THE DATA ENTERED IS NOT CORRECT',
+        ], 404);
     }
 
     /**
@@ -105,17 +113,21 @@ class ClientController extends Controller
         return $client;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteById($id)
     {
         $client = Client::destroy($id);
+        if ($client) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'USER DELETE WHITH ID IS '.$id,
+            ], 200);
+        }
 
-        return $client;
+        return response()->json([
+            'status' => -1,
+            'message' => 'ERROR',
+        ], 401);
     }
 
     public function deleteAll(Request $request)
@@ -123,7 +135,15 @@ class ClientController extends Controller
         if ($request->isMethod('delete')) {
             Client::table('Client')->delete();
 
-            return response()->json(['message' => 'Todos los registros de clientes han sido eliminados']);
+            return response()->json([
+                'status' => 1,
+                'message' => 'ALL RECORDS HAVE BEEN DELETED',
+            ], 200);
+
         }
+        return response()->json([
+            'status' => -1,
+            'message' => 'ERROR',
+        ], 400);
     }
 }
