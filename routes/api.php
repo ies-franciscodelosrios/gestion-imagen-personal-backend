@@ -48,7 +48,8 @@ Route::middleware('auth:sanctum')->post('/appointment/add',[App\Http\Controllers
 Route::middleware('auth:sanctum')->put('/appointment/edit/{id}',[App\Http\Controllers\AppointmentController::class, 'editAppointment']);
 
 /*  METODOS DELETE DE Appointment */
-Route::middleware('auth:sanctum')->put('/appointment/delete-all',[App\Http\Controllers\AppointmentController::class, 'deleteAll']);
+Route::middleware('auth:sanctum')->delete('/appointment/delete-all',[App\Http\Controllers\AppointmentController::class, 'deleteAll']);
+Route::middleware('auth:sanctum')->delete('/appointment/delete-id/{id}',[App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
