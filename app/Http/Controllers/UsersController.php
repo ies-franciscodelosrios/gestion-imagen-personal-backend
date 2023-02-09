@@ -151,9 +151,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-    /**
-     * Obtener todos los usuarios de un curso
-     */
+
     public function getUserByCourse($Course_year)
     {
         $users = User::where('Course_year', $Course_year)->get();
@@ -171,9 +169,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-    /**
-     * Obtener todos los usuarios de un ciclo
-     */
+
     public function getUserByCycle($Cycle)
     {
         $users = User::where('Cycle', $Cycle)->get();
@@ -191,9 +187,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-    /**
-     * Añadir alumno
-     */
+
     public function addStudent(Request $request)
     {
         $user = new User();
@@ -209,9 +203,6 @@ class UsersController extends Controller
         $user->save();
     }
 
-    /**
-     * Añadir profesor
-     */
 
     public function addProfessor(Request $request)
     {
@@ -229,23 +220,16 @@ class UsersController extends Controller
         $user->save();
     }
 
-    /**
-     * Añadir los estudiantes con el json
-     */
+
     public function addAllStudent()
     {
     }
 
-    /**
-     * Añadir los profesores con el json
-     */
+
     public function addAllProfessor()
     {
     }
 
-    /**
-     * editar usuario
-     */
     public function editUser(Request $request)
     {
         $user = User::findOrFail($request->id);
@@ -262,9 +246,7 @@ class UsersController extends Controller
         return $user;
     }
 
-    /**
-     * borrar usuario segun dni
-     */
+
     public function deleteUser($id)
     {
         $users = User::destroy($id);
@@ -281,9 +263,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-    /**
-     * borrar usuario segun rol
-     */
+
     public function deleteByRol($rol)
     {
         if ($rol !== 0) {
