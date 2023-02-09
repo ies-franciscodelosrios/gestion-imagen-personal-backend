@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
-
+/**
+* @OA\Info(title="API PERICLES", version="1.0")
+*
+* @OA\Server(url="http://swagger.local")
+*/
 class AppointmentController extends Controller
 {
     /*  GET */
@@ -13,11 +17,18 @@ class AppointmentController extends Controller
  * Display a listing of the resource.
  * Mostramos el listado de los regitros solicitados.
  *
- * @Get(
+ * @OA\Get(
  *     path="/api/appointments",
  *     tags={"appointments"},
  *     summary="Mostar listado de todas las citas",
- *
+ *     @OA\Response(
+ *         response=200,
+ *         description="Mostar listado de todas las citas"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Ha ocurrido un error."
+ *     )
  * )
  */
     public function getAll()
