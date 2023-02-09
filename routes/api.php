@@ -68,7 +68,7 @@ Route::middleware('auth:sanctum')->put('/client/edit/{id}',[App\Http\Controllers
 
 /*  METODOS DELETE DE Client */
 Route::middleware('auth:sanctum')->delete('/client/delete/{id}',[App\Http\Controllers\ClientController::class, 'deleteById']);
-Route::middleware('auth:sanctum')->delete('/client/deleteall',[App\Http\Controllers\ClientController::class, 'deleteAll']);
+Route::middleware('auth:sanctum')->delete('/client/delete/all',[App\Http\Controllers\ClientController::class, 'deleteAll']);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
