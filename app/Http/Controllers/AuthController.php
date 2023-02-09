@@ -9,6 +9,29 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    /**
+     * Login
+     *
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Log-in with email and password.Generate token",
+     *  @OA\Parameter(
+     *         name="Request",
+     *         in="query",
+     *         description="Log-in with email and password.",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successful and token generated."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -37,7 +60,29 @@ class AuthController extends Controller
             'device' => 'required',
         ]);
     }
-
+    /**
+     * Logout
+     *
+     * @OA\Get(
+     *     path="/api/logout",
+     *     tags={"Auth"},
+     *     summary="Logout of the application.",
+     *  @OA\Parameter(
+     *         name="Request",
+     *         in="query",
+     *         description="session started.",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Logout successful."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         if ($request->user()->currentAccessToken()->delete()) {
