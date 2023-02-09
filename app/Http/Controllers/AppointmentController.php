@@ -4,33 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+
 /**
-* @OA\Info(title="API PERICLES", version="1.0")
-*
-* @OA\Server(url="http://swagger.local")
-*/
+ * @OA\Info(title="API PERICLES", version="1.0")
+ *
+ * @OA\Server(url="http://swagger.local")
+ */
 class AppointmentController extends Controller
 {
     /*  GET */
 
-/**
- * Display a listing of the resource.
- * Mostramos el listado de los regitros solicitados.
- *
- * @OA\Get(
- *     path="/api/appointments",
- *     tags={"appointments"},
- *     summary="Mostar listado de todas las citas",
- *     @OA\Response(
- *         response=200,
- *         description="Mostar listado de todas las citas"
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Ha ocurrido un error."
- *     )
- * )
- */
+    /**
+     * Show all appointments saved in the database
+     *
+     * @OA\Get(
+     *     path="/api/appointments",
+     *     tags={"appointments"},
+     *     summary="Show all appointments saved",
+     *     @OA\Response(
+     *         response=200,
+     *         description="ALL APPOINTMENTS"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function getAll()
     {
         $appointment = Appointment::all();
@@ -39,9 +39,9 @@ class AppointmentController extends Controller
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'REGISTRY FOUND',
-                'count'=> $count,
-                "users"=>$appointment
+                'message' => 'ALL APPOINTMENTS',
+                'count' => $count,
+                "users" => $appointment
             ], 200);
         }
 
@@ -52,15 +52,37 @@ class AppointmentController extends Controller
 
     }
 
-
+    /**
+     * Find appointment by id.
+     *
+     * @OA\Get(
+     *     path="/api/appointment/{id}",
+     *     tags={"appointments"},
+     *     summary="Get Appointment By ID",
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="Get Appointment By Id ",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get Appointment By Id"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function getAppointmentById($id)
     {
         $appointment = Appointment::find($id);
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND ID: '.$id,
-                "users"=>$appointment
+                'message' => 'FOUND ID: ' . $id,
+                "users" => $appointment
             ], 200);
         }
 
@@ -73,15 +95,37 @@ class AppointmentController extends Controller
 
     }
 
-
+/**
+     * Find appointment by DNI_Client
+     *
+     * @OA\Get(
+     *     path="/api/appointment/dni/client/{DNI_Client}",
+     *     tags={"appointments"},
+     *     summary="Get Appointment By DNI_Client",
+     *  @OA\Parameter(
+     *         name="DNI_Client",
+     *         in="query",
+     *         description="Get Appointment By DNI_Client",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get Appointment By DNI_Client"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function getAppointmentByDNIClient($DNI)
     {
         $appointment = Appointment::where('DNI_client', $DNI)->first();
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND CLIENT DNI: '.$DNI,
-                "users"=>$appointment
+                'message' => 'FOUND CLIENT DNI: ' . $DNI,
+                "users" => $appointment
             ], 200);
         }
 
@@ -93,15 +137,37 @@ class AppointmentController extends Controller
 
     }
 
-
+/**
+     * Find appointment by DNI_Student
+     *
+     * @OA\Get(
+     *     path="/api/appointment/dni/student/{DNI_Student}",
+     *     tags={"appointments"},
+     *     summary="Get Appointment By DNI_Student",
+     *  @OA\Parameter(
+     *         name="DNI_Student",
+     *         in="query",
+     *         description="Get Appointment By DNI_Student",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get Appointment By DNI_Student"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function getClientByDniStudent($DNI)
     {
         $appointment = Appointment::where('DNI_Student', $DNI)->first();
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND STUDENT DNI: '.$DNI,
-                "users"=>$appointment
+                'message' => 'FOUND STUDENT DNI: ' . $DNI,
+                "users" => $appointment
             ], 200);
         }
 
@@ -116,7 +182,23 @@ class AppointmentController extends Controller
 
     /*  POST */
 
-
+/**
+     * Add appointment
+     *
+     * @OA\Post(
+     *     path="/api/appointment/add",
+     *     tags={"appointments"},
+     *     summary="Add appointment",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Quote added"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function addAppointment(Request $request)
     {
         $appointment = new Appointment();
@@ -138,7 +220,29 @@ class AppointmentController extends Controller
 
     /*  PUT */
 
-
+/**
+     * Edit appointment by id
+     *
+     * @OA\Put(
+     *     path="/api/appointment/edit/{id}",
+     *     tags={"appointments"},
+     *     summary="Edit appointment by id",
+     *  @OA\Parameter(
+     *         name="appointment",
+     *         in="query",
+     *         description="Edit appointment by id",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Edited quote"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function editAppointment(Request $request)
     {
         $appointment = Appointment::findOrFail($request->id);
@@ -159,15 +263,37 @@ class AppointmentController extends Controller
 
     /*___________________________________________________________________________________________________________________ */
 
-
+/**
+     * Delete appointment by id
+     *
+     * @OA\Delete(
+     *     path="/api/appointment/edit/{id}",
+     *     tags={"appointments"},
+     *     summary="Delete appointment by id",
+     *  @OA\Parameter(
+     *         name="appointment",
+     *         in="query",
+     *         description="Delete appointment by id",
+     *         required=true,
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Deleted date"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="ERROR"
+     *     )
+     * )
+     */
     public function DeleteAppointmenById($id)
     {
         $appointment = Appointment::destroy($id);
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'REGISTRY WITH ID: '.$id.' DELETED',
-                "users"=>$appointment
+                'message' => 'REGISTRY WITH ID: ' . $id . ' DELETED',
+                "users" => $appointment
             ], 200);
         }
 
