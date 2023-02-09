@@ -1,0 +1,590 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API PERICLES",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://swagger.local"
+        }
+    ],
+    "paths": {
+        "/api/appointments": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Show all appointments saved",
+                "description": "Show all appointments saved in the database",
+                "operationId": "158f8acc8087367fcc7bc952790c9473",
+                "responses": {
+                    "200": {
+                        "description": "ALL APPOINTMENTS"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/appointment/{id}": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Get Appointment By ID",
+                "description": "Find appointment by id.",
+                "operationId": "ad059938c18d2b24d9d9d3ede9d1194f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Get Appointment By Id ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Appointment By Id"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/appointment/dni/client/{DNI_Client}": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Get Appointment By DNI_Client",
+                "description": "Find appointment by DNI_Client",
+                "operationId": "bcb28d9e9fedf7ee0e272240e40dd18b",
+                "parameters": [
+                    {
+                        "name": "DNI_Client",
+                        "in": "query",
+                        "description": "Get Appointment By DNI_Client",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Appointment By DNI_Client"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/appointment/dni/student/{DNI_Student}": {
+            "get": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Get Appointment By DNI_Student",
+                "description": "Find appointment by DNI_Student",
+                "operationId": "dbed6b250717e4ca30df53a866bda75f",
+                "parameters": [
+                    {
+                        "name": "DNI_Student",
+                        "in": "query",
+                        "description": "Get Appointment By DNI_Student",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Appointment By DNI_Student"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/appointment/add": {
+            "post": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Add appointment",
+                "description": "Add appointment",
+                "operationId": "d3be3893cfcd9b24812f509ab841bbfe",
+                "responses": {
+                    "200": {
+                        "description": "Quote added"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/appointment/edit/{id}": {
+            "put": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Edit appointment by id",
+                "description": "Edit appointment by id",
+                "operationId": "22262a9ce778cebdb5f9cf5b42b03d1b",
+                "parameters": [
+                    {
+                        "name": "appointment",
+                        "in": "query",
+                        "description": "Edit appointment by id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edited quote"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Appointments"
+                ],
+                "summary": "Delete appointment by id",
+                "description": "Delete appointment by id",
+                "operationId": "dcaee28126a241eabe335fb87a229b57",
+                "parameters": [
+                    {
+                        "name": "appointment",
+                        "in": "query",
+                        "description": "Delete appointment by id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted date"
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log-in with email and password.Generate token",
+                "description": "Login",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "parameters": [
+                    {
+                        "name": "Request",
+                        "in": "query",
+                        "description": "Log-in with email and password.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful and token generated."
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout of the application.",
+                "description": "Logout",
+                "operationId": "3f19b742e4ead13f81ba0d6c0d46ac1b",
+                "parameters": [
+                    {
+                        "name": "Request",
+                        "in": "query",
+                        "description": "session started.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logout successful."
+                    },
+                    "404": {
+                        "description": "ERROR"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows all the users ",
+                "description": "Display a listing of Users.",
+                "operationId": "53948fa42a9f18bef63d07dd4967e376",
+                "responses": {
+                    "200": {
+                        "description": "List all the users of the database"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/users/rol/2": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows all the students ",
+                "description": "Display a listing of students.",
+                "operationId": "154e38f3b2db90fab633db4e2aeb4f28",
+                "responses": {
+                    "200": {
+                        "description": "List all the students of the database"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/users/rol/1": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows all the professors ",
+                "description": "Display a listing of Professors.",
+                "operationId": "e9af3372dc4ccca4f0ba9c833ee9e477",
+                "responses": {
+                    "200": {
+                        "description": "List all the professors of the database"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/users/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a id",
+                "description": "Display a user based on their id.",
+                "operationId": "dd1212e374285ce9597226230edcc696",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Get User By Id ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an id"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/userByDni/{DNI}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a dni",
+                "description": "Display a user based on their dni.",
+                "operationId": "c7583a56bb24390c24ab645f7bf89863",
+                "parameters": [
+                    {
+                        "name": "DNI",
+                        "in": "query",
+                        "description": "Get User By DNI ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an dni"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/userByCorreo/{correo}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a mail",
+                "description": "Display a user based on their mail.",
+                "operationId": "7ab1fdc12280df36747fd0015a311f72",
+                "parameters": [
+                    {
+                        "name": "mail",
+                        "in": "query",
+                        "description": "Get User By mail ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an mail"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/Student/{Name}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a name",
+                "description": "Display a user based on their name.",
+                "operationId": "ccb684dc79ff60d6544546b933b7ad24",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get User By name ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an name"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/users/course/{Course_year}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a Course_year",
+                "description": "Display a user based on their Course_year.",
+                "operationId": "11c243761843d2cc457fe96624adcfc7",
+                "parameters": [
+                    {
+                        "name": "Course_year",
+                        "in": "query",
+                        "description": "Get User By Course_year ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an Course_year"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/users/cycle/{Cycle}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Shows an user based on a cycle",
+                "description": "Display a user based on their cycle.",
+                "operationId": "c166c956fba80449d6d257d90386bf68",
+                "parameters": [
+                    {
+                        "name": "cycle",
+                        "in": "query",
+                        "description": "Get User By cycle ",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shows all the information about of a user based that matches an cycle"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/addstudent": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Adds a new student ",
+                "description": "Adds a new student to the database.",
+                "operationId": "732a8fb066908dfdbc8ed44bd6c93d4b",
+                "responses": {
+                    "200": {
+                        "description": "Adds a new student to the database"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/ap/user/addprofessor": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Adds a new professor ",
+                "description": "Adds a new professor to the database.",
+                "operationId": "6523536165390eaec4fa92e54ebcc747",
+                "responses": {
+                    "200": {
+                        "description": "Adds a new professor to the database"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/addstudents": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Adds an array of new students ",
+                "description": "Adds a all students to the database from a json file.",
+                "operationId": "c653e47f67b1591a0330841da601e61d",
+                "responses": {
+                    "200": {
+                        "description": "Adds all students to the database from a json file"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/addprofessors": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Adds an array of new professors ",
+                "description": "Adds a all professor to the database from a json file.",
+                "operationId": "259dd1f5ff3e5c177e8364b1f54b33eb",
+                "responses": {
+                    "200": {
+                        "description": "Adds all professor to the database from a json file"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/edit/{id}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Updates an user based on their id",
+                "description": "Updates an user based on their id",
+                "operationId": "e5a477d65f55234e354e97c4c1accb51",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Update user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update an user using their id as reference"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Remove an user based on their id",
+                "description": "Remove an user based on their id",
+                "operationId": "b79510cabd682d3a33fe59fe4c84099c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Delete user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove an user using their id as reference"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        },
+        "/api/user/delete/rol/{rol}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Remove an user based on their irold",
+                "description": "Remove an user based on their rol",
+                "operationId": "99bd63e890447100a0706a9049b53905",
+                "parameters": [
+                    {
+                        "name": "rol",
+                        "in": "query",
+                        "description": "Delete user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove an user using their rol as reference"
+                    },
+                    "404": {
+                        "description": "An error has ocurred."
+                    }
+                }
+            }
+        }
+    }
+}

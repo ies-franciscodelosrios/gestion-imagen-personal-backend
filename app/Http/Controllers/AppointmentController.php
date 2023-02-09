@@ -19,7 +19,7 @@ class AppointmentController extends Controller
      *
      * @OA\Get(
      *     path="/api/appointments",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Show all appointments saved",
      *     @OA\Response(
      *         response=200,
@@ -57,7 +57,7 @@ class AppointmentController extends Controller
      *
      * @OA\Get(
      *     path="/api/appointment/{id}",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Get Appointment By ID",
      *  @OA\Parameter(
      *         name="id",
@@ -100,7 +100,7 @@ class AppointmentController extends Controller
      *
      * @OA\Get(
      *     path="/api/appointment/dni/client/{DNI_Client}",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Get Appointment By DNI_Client",
      *  @OA\Parameter(
      *         name="DNI_Client",
@@ -142,7 +142,7 @@ class AppointmentController extends Controller
      *
      * @OA\Get(
      *     path="/api/appointment/dni/student/{DNI_Student}",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Get Appointment By DNI_Student",
      *  @OA\Parameter(
      *         name="DNI_Student",
@@ -187,7 +187,7 @@ class AppointmentController extends Controller
      *
      * @OA\Post(
      *     path="/api/appointment/add",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Add appointment",
      *     @OA\Response(
      *         response=200,
@@ -225,7 +225,7 @@ class AppointmentController extends Controller
      *
      * @OA\Put(
      *     path="/api/appointment/edit/{id}",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Edit appointment by id",
      *  @OA\Parameter(
      *         name="appointment",
@@ -268,7 +268,7 @@ class AppointmentController extends Controller
      *
      * @OA\Delete(
      *     path="/api/appointment/edit/{id}",
-     *     tags={"appointments"},
+     *     tags={"Appointments"},
      *     summary="Delete appointment by id",
      *  @OA\Parameter(
      *         name="appointment",
