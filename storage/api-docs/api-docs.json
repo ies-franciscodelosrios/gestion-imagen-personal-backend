@@ -226,6 +226,154 @@
                 }
             }
         },
+        "/api/client": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Showing the whole list of the clients",
+                "description": "This function will alow you to show all clients records.",
+                "operationId": "7068291d5949f80e436f10b65573b9ba",
+                "responses": {
+                    "200": {
+                        "description": "Clients registry found"
+                    },
+                    "404": {
+                        "description": "No clients saved"
+                    }
+                }
+            }
+        },
+        "/api/client/{data}": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Searching a client",
+                "description": "This function will alow you to search for an specific client by his/her id, DNI or name and surname.",
+                "operationId": "d93135a2abbf01ab5b8f25621fd53346",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "The variable we need to share the information all over the function",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client found"
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
+        "/api/client/add": {
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Adding a new client",
+                "description": "This function will add a new client in the database knowing that DNIs can't be the same and showing an error message in case of repetition.",
+                "operationId": "a71eca4a81d75d7f7f893333375755d2",
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "query",
+                        "description": "It's used for making a request",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "The validation has fail"
+                    },
+                    "201": {
+                        "description": "Client created successfully"
+                    }
+                }
+            }
+        },
+        "/api/client/edit/{id}": {
+            "put": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Editing a client",
+                "description": "This function will alow you to edit an specific client by his/her id.",
+                "operationId": "1692348c66b8f6cf15af3f6f4335729b",
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "query",
+                        "description": "It's used for making a request",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client deleted"
+                    },
+                    "404": {
+                        "description": "No client deleted"
+                    }
+                }
+            }
+        },
+        "/api/client/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Deleting a client",
+                "description": "This function will alow you to delete an specific client by his/her id.",
+                "operationId": "13f3808143771db6cbb28cf978c17014",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "The variable we need to identify each client",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client deleted"
+                    },
+                    "404": {
+                        "description": "No client deleted"
+                    }
+                }
+            }
+        },
+        "/api/client/delete/all": {
+            "delete": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Deleting all the clients",
+                "description": "This function will alow you to destroy all client records.",
+                "operationId": "f8ff2ba6dfeeae38d0baa0c593a4082e",
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "query",
+                        "description": "It's used for making a request",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Clients deleted"
+                    },
+                    "404": {
+                        "description": "No clients deleted"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
