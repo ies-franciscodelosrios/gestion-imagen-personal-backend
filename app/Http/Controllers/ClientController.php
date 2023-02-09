@@ -31,18 +31,14 @@ class ClientController extends Controller
     public function addClient(Request $request)
     {
 
-    // Validación de datos de entrada
         $validator = Validator::make($request->all(), [
             'DNI' => 'required|unique:clients',
-            // Agrega las demás reglas de validación que necesites
         ]);
 
-        // Si la validación falla, regresa una respuesta con el error
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        // Crea un nuevo objeto de cliente
         $client = new Client;
         $client->DNI = $request->DNI;
         $client->Name = $request->Name;
@@ -56,12 +52,9 @@ class ClientController extends Controller
         $client->Background_Aesthetic = $request->Background_Aesthetic;
         $client->Asthetic_Routine = $request->Asthetic_Routine;
         $client->Hairdressing_Routine = $request->Hairdressing_Routine;
-        // Asigna las demás propiedades al objeto de cliente
 
-        // Guarda el cliente en la base de datos
         $client->save();
 
-        // Regresa una respuesta de éxito
         return response()->json(['message' => 'Cliente creado con éxito'], 201);
     }
 
@@ -85,13 +78,7 @@ class ClientController extends Controller
         ], 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function editById(Request $request)
     {
         $client = Client::findOrFail($request->id);

@@ -9,11 +9,17 @@ class AppointmentController extends Controller
 {
     /*  GET */
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+/**
+ * Display a listing of the resource.
+ * Mostramos el listado de los regitros solicitados.
+ *
+ * @Get(
+ *     path="/api/appointments",
+ *     tags={"appointments"},
+ *     summary="Mostar listado de todas las citas",
+ *
+ * )
+ */
     public function getAll()
     {
         $appointment = Appointment::all();
@@ -35,12 +41,7 @@ class AppointmentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function getAppointmentById($id)
     {
         $appointment = Appointment::find($id);
@@ -57,16 +58,11 @@ class AppointmentController extends Controller
             'message' => 'EMPTY REGISTRY',
         ], 404);
 
-        return $appointment;
+
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $DNI
-     * @return \Illuminate\Http\Response
-     */
+
     public function getAppointmentByDNIClient($DNI)
     {
         $appointment = Appointment::where('DNI_client', $DNI)->first();
@@ -86,12 +82,7 @@ class AppointmentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $DNI
-     * @return \Illuminate\Http\Response
-     */
+
     public function getClientByDniStudent($DNI)
     {
         $appointment = Appointment::where('DNI_Student', $DNI)->first();
@@ -108,18 +99,13 @@ class AppointmentController extends Controller
             'message' => 'STUDENT DNI NOT FOUND',
         ], 404);
 
-        return $appointment;
+
     }
     /*___________________________________________________________________________________________________________________ */
 
     /*  POST */
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function addAppointment(Request $request)
     {
         $appointment = new Appointment();
@@ -141,13 +127,7 @@ class AppointmentController extends Controller
 
     /*  PUT */
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function editAppointment(Request $request)
     {
         $appointment = Appointment::findOrFail($request->id);
@@ -168,13 +148,7 @@ class AppointmentController extends Controller
 
     /*___________________________________________________________________________________________________________________ */
 
-    /*  DELETE */
-    /**
-     * Remove the specified resource from storage.
-     *
-     *@param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function DeleteAppointmenById($id)
     {
         $appointment = Appointment::destroy($id);
@@ -191,6 +165,6 @@ class AppointmentController extends Controller
             'message' => 'REGISTRY NOT FOUND',
         ], 404);
 
-        return $appointment;
+
     }
 }
