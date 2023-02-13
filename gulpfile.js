@@ -43,8 +43,8 @@ function Delete_Database(cb) {
 function create_db(cb) {
     var connection = mysql.createConnection({
         host: "localhost",
-        user: "root",
-        password: "",
+        user: "sail",
+        password: "password",
     });
 
     connection.connect();
