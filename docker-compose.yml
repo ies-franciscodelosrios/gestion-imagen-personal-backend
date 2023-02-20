@@ -10,7 +10,7 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
+            - '${APP_PORT:-8000}:8000'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
@@ -48,7 +48,7 @@ services:
     phpmyadmin:
         image: phpmyadmin
         ports:
-            - 8080:80
+            - 80:80
         restart: always
         environment:
             - PMA_HOST=mysql
