@@ -42,14 +42,14 @@ Route::middleware('auth:sanctum')->get('/appointment/dni/client/{DNI_Client}',[A
 Route::middleware('auth:sanctum')->get('/appointment/dni/student/{DNI_Student}',[App\Http\Controllers\AppointmentController::class, 'getClientByDniStudent']);
 
 /*  METODOS POST DE Appointment */
-Route::middleware('auth:sanctum')->post('/appointment/add',[App\Http\Controllers\AppointmentController::class, 'addAppointment']);
+Route::middleware('auth:sanctum')->post('/appointment',[App\Http\Controllers\AppointmentController::class, 'addAppointment']);
 
 /*  METODOS PUT DE Appointment */
-Route::middleware('auth:sanctum')->put('/appointment/edit/{id}',[App\Http\Controllers\AppointmentController::class, 'editAppointment']);
+Route::middleware('auth:sanctum')->put('/appointment/{id}',[App\Http\Controllers\AppointmentController::class, 'editAppointment']);
 
 /*  METODOS DELETE DE Appointment */
 Route::middleware('auth:sanctum')->delete('/appointment/delete-all',[App\Http\Controllers\AppointmentController::class, 'deleteAll']);
-Route::middleware('auth:sanctum')->delete('/appointment/delete/{id}',[App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
+Route::middleware('auth:sanctum')->delete('/appointment/{id}',[App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -61,14 +61,14 @@ Route::middleware('auth:sanctum')->get('/clients',[App\Http\Controllers\ClientCo
 Route::middleware('auth:sanctum')->get('/client/{data}',[App\Http\Controllers\ClientController::class, 'searchClient']);
 
 /*  METODOS POST DE Client */
-Route::middleware('auth:sanctum')->post('/client/add',[App\Http\Controllers\ClientController::class, 'addClient']);
+Route::middleware('auth:sanctum')->post('/client',[App\Http\Controllers\ClientController::class, 'addClient']);
 
 /*  METODOS PUT DE Client */
-Route::middleware('auth:sanctum')->put('/client/edit/{id}',[App\Http\Controllers\ClientController::class, 'editById']);
+Route::middleware('auth:sanctum')->put('/client/{id}',[App\Http\Controllers\ClientController::class, 'editById']);
 
 /*  METODOS DELETE DE Client */
-Route::middleware('auth:sanctum')->delete('/client/delete/{id}',[App\Http\Controllers\ClientController::class, 'deleteById']);
-Route::middleware('auth:sanctum')->delete('/client/delete/all',[App\Http\Controllers\ClientController::class, 'deleteAll']);
+Route::middleware('auth:sanctum')->delete('/client/{id}',[App\Http\Controllers\ClientController::class, 'deleteById']);
+Route::middleware('auth:sanctum')->delete('/client/delete-all',[App\Http\Controllers\ClientController::class, 'deleteAll']);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -93,13 +93,14 @@ Route::middleware('auth:sanctum')->post('/user/addstudents',[App\Http\Controller
 Route::middleware('auth:sanctum')->post('/user/addprofessors',[App\Http\Controllers\UsersController::class, 'addAllProfessor']);
 
 /*  METODOS PUT DE User */
-Route::middleware('auth:sanctum')->put('/user/edit/{id}',[App\Http\Controllers\UsersController::class, 'editUser']);
+Route::middleware('auth:sanctum')->put('/user/{id}',[App\Http\Controllers\UsersController::class, 'editUser']);
 
 /*  METODOS DELETE DE User */
-Route::middleware('auth:sanctum')->delete('/user/delete/{id}',[App\Http\Controllers\UsersController::class, 'deleteUser']);
+Route::middleware('auth:sanctum')->delete('/user/{id}',[App\Http\Controllers\UsersController::class, 'deleteUser']);
 Route::middleware('auth:sanctum')->delete('/user/delete/rol/{rol}',[App\Http\Controllers\UsersController::class, 'deleteByRol']);
 /* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
  */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
 
 
