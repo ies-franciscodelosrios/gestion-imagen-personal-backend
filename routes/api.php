@@ -102,6 +102,3 @@ Route::middleware('auth:sanctum')->delete('/user/delete/rol/{rol}',[App\Http\Con
 /* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByRol']);
  */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
-
-
