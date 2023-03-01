@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->date('Birth_Date');
             $table->integer('Phone');
             $table->string('Email')->unique();
-            $table->string('More_Info')->nullable();
+            $table->text('More_Info')->nullable();
             $table->text('Life_Style');
             $table->text('Background_Health');
             $table->text('Background_Aesthetic');

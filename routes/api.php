@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->delete('/appointment/{id}',[App\Http\Controll
 
 /*  METODOS GET DE Client */
 Route::middleware('auth:sanctum')->get('/clients',[App\Http\Controllers\ClientController::class, 'getClientAll']);
+Route::middleware('auth:sanctum')->get('/client/id/{id}',[App\Http\Controllers\ClientController::class, 'searchClientByid']);
 Route::middleware('auth:sanctum')->get('/client/{data}',[App\Http\Controllers\ClientController::class, 'searchClient']);
 
 /*  METODOS POST DE Client */
