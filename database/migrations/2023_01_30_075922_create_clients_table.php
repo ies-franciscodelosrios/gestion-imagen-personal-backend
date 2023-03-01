@@ -21,12 +21,12 @@ class CreateClientsTable extends Migration
             $table->date('Birth_Date');
             $table->integer('Phone');
             $table->string('Email')->unique();
-            $table->string('More_Info')->nullable();
-            $table->string('Life_Style');
-            $table->string('Background_Health');
-            $table->string('Background_Aesthetic');
-            $table->string('Asthetic_Routine');
-            $table->string('Hairdressing_Routine');
+            $table->text('More_Info')->nullable();
+            $table->text('Life_Style');
+            $table->text('Background_Health');
+            $table->text('Background_Aesthetic');
+            $table->text('Asthetic_Routine');
+            $table->text('Hairdressing_Routine');
             $table->timestamps();
         });
     }

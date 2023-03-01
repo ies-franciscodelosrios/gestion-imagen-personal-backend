@@ -88,6 +88,48 @@ class ClientController extends Controller
      ], 404);
  }
 
+     /**
+ * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
+ *
+ * @OA\Get(
+ *     path="/api/client/{data}",
+ *     tags={"Client"},
+ *     summary="Searching a client",
+ *    @OA\Parameter(
+ *        name="query",
+ *        in="query",
+ *        description="The variable we need to share the information all over the function",
+ *        required=true
+ *    ),
+ *    @OA\Response(
+ *        response=200,
+ *        description="Client found"
+ *    ),
+ *    @OA\Response(
+ *        response=404,
+ *        description="Client not found"
+ *    )
+ * )
+ */
+
+ public function searchClientByid($ID)
+ {
+
+     $client= Client::where('id', $ID)->first();
+
+     if ($client) {
+         return response()->json([
+             'status' => 1,
+             'message' => 'GET USER BY ID '.$ID,
+             "users"=>$client
+         ], 200);
+     }
+
+     return response()->json([
+         'status' => -1,
+         'message' => 'EMPTY',
+     ], 404);
+ }
 /**
  * This function will add a new client in the database knowing that DNIs can't be the same and showing an error message in case of repetition.
  *
