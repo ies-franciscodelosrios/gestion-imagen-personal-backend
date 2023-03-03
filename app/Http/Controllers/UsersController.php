@@ -381,8 +381,8 @@ class UsersController extends Controller
         $user->Cycle = $request->Cycle;
         $user->Name = $request->Name;
         $user->Surname = $request->Surname;
-        $user->Email = $request->Email;
-        $user->Password = $request->Password;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->Others = $request->Others;
         $user->save();
     }
