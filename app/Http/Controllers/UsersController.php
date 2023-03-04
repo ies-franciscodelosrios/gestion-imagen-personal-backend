@@ -413,8 +413,8 @@ class UsersController extends Controller
         $user->Cycle = $request->Cycle;
         $user->Name = $request->Name;
         $user->Surname = $request->Surname;
-        $user->Email = $request->Email;
-        $user->Password = $request->Password;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->Others = $request->Others;
 
         $user->save();
@@ -489,12 +489,13 @@ class UsersController extends Controller
     public function editUser(Request $request)
     {
         $user = User::findOrFail($request->id);
+        $user->DNI = $request->DNI;
         $user->Course_year = $request->Course_year;
         $user->Cycle = $request->Cycle;
         $user->Name = $request->Name;
         $user->Surname = $request->Surname;
-        $user->Email = $request->Email;
-        $user->Password = $request->Password;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->Others = $request->Others;
 
         $user->save();
