@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
                 'Email' => 'josemaria@iestablero',
                 'email_verified_at' => now(),
                 'Password' => Hash::make('root'),
-                'Others' => '',
+                'Others' => ' ',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
