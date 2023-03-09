@@ -82,6 +82,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ],[
+
                 'DNI' => '31000003u',
                 'Rol' => 1,
                 'Course_year' => now(),
@@ -257,13 +258,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        /**
-         * Database faq seeders
-         */
-        DB::table('faq')->insert([
-            [
-                'Question' =>  'faqData: { // payment  payment: { icon: "CreditCard", title: "Payment", subtitle: "Which license do I need?", qandA: [ { question: "Does my subscription automatically renew?",  ans: "Pastry pudding cookie toffee bonbon jujubes jujubes powder topping. Jelly beans gummi bears sweet roll bonbon muffin liquorice. Wafer lollipop sesame snaps. Brownie macaroon cookie muffin cupcake candy caramels tiramisu. Oat cake chocolate cake sweet jelly-o brownie biscuit marzipan. Jujubes donut marzipan chocolate bar. Jujubes sugar plum jelly beans tiramisu icing cheesecake."}'
-            ]
-        ]);
     }
 }
