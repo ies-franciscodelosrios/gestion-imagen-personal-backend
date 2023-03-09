@@ -92,7 +92,7 @@ class ClientController extends Controller
  * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
  *
  * @OA\Get(
- *     path="/api/client/{data}",
+ *     path="/api/client/{id}",
  *     tags={"Client"},
  *     summary="Searching a client",
  *    @OA\Parameter(
