@@ -142,6 +142,36 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
+            ],[
+                'DNI' => '32000002u',
+                'Rol' => 2,
+                'Course_year' => now(),
+                'Cycle' => 'ninguno',
+                'Name' => 'Alca',
+                'Surname' => 'Montes',
+                'Email' => 'alca@iestablero',
+                'email_verified_at' => now(),
+                'Password' => Hash::make('root'),
+                'Others' => ' ',
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+
+            ],[
+                'DNI' => '32000003u',
+                'Rol' => 2,
+                'Course_year' => now(),
+                'Cycle' => 'ninguno',
+                'Name' => 'Miguel',
+                'Surname' => 'Carmona',
+                'Email' => 'miqui@iestablero',
+                'email_verified_at' => now(),
+                'Password' => Hash::make('root'),
+                'Others' => ' ',
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+
             ]
         ]);
 

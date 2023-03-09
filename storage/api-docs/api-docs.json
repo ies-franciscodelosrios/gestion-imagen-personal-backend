@@ -270,6 +270,32 @@
                 }
             }
         },
+        "/api/client/{id}": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Searching a client",
+                "description": "This function will alow you to search for an specific client by his/her id, DNI or name and surname.",
+                "operationId": "de2533992f841a62f13508469fde8f71",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "The variable we need to share the information all over the function",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client found"
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
         "/api/client/add": {
             "post": {
                 "tags": [
