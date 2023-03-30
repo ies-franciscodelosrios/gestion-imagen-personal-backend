@@ -33,7 +33,7 @@ class UsersController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL USERS',
-                "users"=>$users
+                "data"=>$users
             ], 200);
         }
 
@@ -62,14 +62,14 @@ class UsersController extends Controller
      */
     public function getAllStudents()
     {
-        $users = User::where('Rol', 2)->get();
+        $users = User::where('rol', 2)->get();
         $count = count($users);
         if ($users) {
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL STUDENTS',
                 'count'=> $count,
-                "users"=>$users
+                "data"=>$users
             ], 200);
         }
 
@@ -98,14 +98,14 @@ class UsersController extends Controller
      */
     public function getAllProfessor()
     {
-        $users = User::where('Rol', 1)->get();
+        $users = User::where('rol', 1)->get();
         $count = count($users);
         if ($users) {
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL PROFESSORS',
                 'count'=> $count,
-                "users"=>$users
+                "data"=>$users
             ], 200);
         }
 
@@ -137,15 +137,16 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByID($ID){
+    public function getUserByID(Request $request){
 
-        $users= User::where('id', $ID)->first();
+        $id = $request->id;
+        $users= User::where('id', $id)->first();
 
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID '.$ID,
-                "users"=>$users
+                'message' => 'GET USER BY ID '.$id,
+                "data"=>$users
             ], 200);
         }
 
@@ -159,13 +160,13 @@ class UsersController extends Controller
      * Display a user based on their dni.
      *
      * @OA\Get(
-     *     path="/api/userByDni/{DNI}",
+     *     path="/api/userBydni/{dni}",
      *     tags={"Users"},
      *     summary="Shows an user based on a dni",
      * @OA\Parameter(
-     *         name="DNI",
+     *         name="dni",
      *         in="query",
-     *         description="Get User By DNI ",
+     *         description="Get User By dni ",
      *         required=true,
      *      ),
      * @OA\Response(
@@ -178,15 +179,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByDni($DNI)
+    public function getUserBydni(Request $request)
     {
-
-       $users= User::where('DNI', $DNI)->first();
+       $dni = $request->dni;
+       $users= User::where('dni', $dni)->first();
        if ($users) {
            return response()->json([
                'status' => 1,
-               'message' => 'GET USER BY DNI '.$DNI,
-               "users"=>$users
+               'message' => 'GET USER BY dni '.$dni,
+               "data"=>$users
            ], 200);
        }
 
@@ -219,13 +220,14 @@ class UsersController extends Controller
      *     )
      * )
      */
-       public function getUserByCorreo($Correo){
-        $users= User::where('Email', $Correo)->first();
+       public function getUserByCorreo(Request $request){
+        $email = $request->email;
+        $users= User::where('email', $email)->first();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CORREO '.$Correo,
-                "users"=>$users
+                'message' => 'GET USER BY CORREO '.$email,
+                "data"=>$users
             ], 200);
         }
 
@@ -239,7 +241,7 @@ class UsersController extends Controller
      * Display a user based on their name.
      *
      * @OA\Get(
-     *     path="/api/user/Student/{Name}",
+     *     path="/api/user/Student/{name}",
      *     tags={"Users"},
      *     summary="Shows an user based on a name",
      * @OA\Parameter(
@@ -258,14 +260,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByName($Name)
+    public function getUserByName(Request $request)
     {
-        $users = User::where('Name', $Name)->get();
+        $name = $request->name;
+        $users = User::where('name', $name)->get();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY NAME '.$Name,
-                "users"=>$users
+                'message' => 'GET USER BY NAME '.$name,
+                "data"=>$users
             ], 200);
         }
 
@@ -276,21 +279,21 @@ class UsersController extends Controller
     }
 
 /**
-     * Display a user based on their Course_year.
+     * Display a user based on their course_year.
      *
      * @OA\Get(
-     *     path="/api/users/course/{Course_year}",
+     *     path="/api/users/course/{course_year}",
      *     tags={"Users"},
-     *     summary="Shows an user based on a Course_year",
+     *     summary="Shows an user based on a course_year",
      * @OA\Parameter(
-     *         name="Course_year",
+     *         name="course_year",
      *         in="query",
-     *         description="Get User By Course_year ",
+     *         description="Get User By course_year ",
      *         required=true,
      *      ),
      * @OA\Response(
      *          response=200,
-     *         description="Shows all the information about of a user based that matches an Course_year"
+     *         description="Shows all the information about of a user based that matches an course_year"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -298,14 +301,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByCourse($Course_year)
+    public function getUserByCourse(Request $request)
     {
-        $users = User::where('Course_year', $Course_year)->get();
+        $course_year = $request->course_year;
+        $users = User::where('course_year', $course_year)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR '.$Course_year,
-                "users"=>$users
+                'message' => 'GET USER BY COURSE YEAR '.$course_year,
+                "data"=>$users
             ], 200);
         }
 
@@ -319,7 +323,7 @@ class UsersController extends Controller
      * Display a user based on their cycle.
      *
      * @OA\Get(
-     *     path="/api/users/cycle/{Cycle}",
+     *     path="/api/users/cycle/{cycle}",
      *     tags={"Users"},
      *     summary="Shows an user based on a cycle",
      * @OA\Parameter(
@@ -338,14 +342,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByCycle($Cycle)
+    public function getUserBycycle(Request $request)
     {
-        $users = User::where('Cycle', $Cycle)->get();
+        $cycle = $request->cycle;
+        $users = User::where('cycle', $cycle)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CYCLE '.$Cycle,
-                "users"=>$users
+                'message' => 'GET USER BY cycle '.$cycle,
+                "data"=>$users
             ], 200);
         }
 
@@ -375,15 +380,15 @@ class UsersController extends Controller
     public function addStudent(Request $request)
     {
         $user = new User();
-        $user->DNI = $request->DNI;
-        $user->Rol = 2;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->rol = 2;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->Others = $request->Others;
+        $user->others = $request->others;
         $user->save();
     }
 
@@ -407,15 +412,15 @@ class UsersController extends Controller
     public function addProfessor(Request $request)
     {
         $user = new User();
-        $user->DNI = $request->DNI;
-        $user->Rol = 1;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->rol = 1;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->Others = $request->Others;
+        $user->others = $request->others;
 
         $user->save();
     }
@@ -489,14 +494,14 @@ class UsersController extends Controller
     public function editUser(Request $request)
     {
         $user = User::findOrFail($request->id);
-        $user->DNI = $request->DNI;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->Others = $request->Others;
+        $user->others = $request->others;
 
         $user->save();
 
@@ -526,8 +531,9 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function deleteUser($id)
+    public function deleteUser(Request $request)
     {
+        $id = $request->id;
         $users = User::destroy($id);
         if ($users) {
             return response()->json([
@@ -566,14 +572,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function deleteByRol($rol)
+    public function deleteByrol(Request $request)
     {
+        $rol = $request->rol;
         if ($rol !== 0) {
-            $users = User::where('Rol', $rol)->delete();
+            $users = User::where('rol', $rol)->delete();
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'USER DELETE WHITH ROL IS '+$rol,
+                    'message' => 'USER DELETE WHITH rol IS '+$rol,
                 ], 200);
             }
 
@@ -584,12 +591,12 @@ class UsersController extends Controller
         }
     }
 
-   /*  public function deleteAllByRol()
+   /*  public function deleteAllByrol()
     {
         $rol = [1, 2];
 
         foreach ($rol as $key => $value) {
-            $users = User::where('Rol', $value)->delete();
+            $users = User::where('rol', $value)->delete();
         }
 
         return $users;

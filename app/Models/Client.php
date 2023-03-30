@@ -10,17 +10,17 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'DNI',
-        'Name',
-        'Surname',
-        'Birth_Date',
-        'Phone',
-        'Email',
-        'More_Info',
-        'Life_Style',
-        'Background_Health',
-        'Background_Aesthetic',
-        'Asthetic_Routine',
-        'Hairdressing_Routine',
+        'dni',
+        'name',
+        'surname',
+        'birth_date',
+        'phone',
+        'email',
+        'more_info',
+        'life_style',
+        'background_health',
+        'background_aesthetic',
+        'asthetic_routine',
+        'hairdressing_routine',
     ];
 }
