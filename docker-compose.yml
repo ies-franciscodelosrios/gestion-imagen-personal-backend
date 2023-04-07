@@ -42,7 +42,6 @@ services:
         image: phpmyadmin
         ports:
             - '${PHPMYADMIN_PORT:-8001}:80'
-        restart: always
         environment:
             - PMA_HOST=mysql
         networks:
