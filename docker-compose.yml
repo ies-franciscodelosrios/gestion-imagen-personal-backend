@@ -1,14 +1,13 @@
 version: '3'
 services:
-    laravel.test:
-        build:
-            context: ./vendor/laravel/sail/runtimes/8.2
+    laravel:
+        build: 
+            context: .
             dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: sail-8.2/app
+        command: 'php artisan serve --host=0.0.0.0:8000'
+        container_name: api
         ports:
-            - '${APP_PORT:-8000}:80'
+            - '${APP_PORT:-8000}:8000'
         environment:
             WWWUSER: '${WWWUSER}'
         volumes:
