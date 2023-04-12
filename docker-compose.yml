@@ -1,15 +1,13 @@
 version: '3'
 services:
     laravel:
-        container_name: api
-        build:
-            context: ./vendor/laravel/sail/runtimes/8.2
+        build: 
+            context: .
             dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: sail-8.2/app
+        command: 'php artisan serve --host=0.0.0.0:8000'
+        container_name: api
         ports:
-            - '${APP_PORT:-8000}:80'
+            - '${APP_PORT:-8000}:8000'
         environment:
             WWWUSER: '${WWWUSER}'
         volumes:
@@ -46,7 +44,6 @@ services:
         image: phpmyadmin
         ports:
             - '${PHPMYADMIN_PORT:-8001}:80'
-        restart: always
         environment:
             - PMA_HOST=mysql
         networks:
