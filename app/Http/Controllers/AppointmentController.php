@@ -41,7 +41,7 @@ class AppointmentController extends Controller
                 'status' => 1,
                 'message' => 'ALL APPOINTMENTS',
                 'count' => $count,
-                "users" => $appointment
+                "data" => $appointment
             ], 200);
         }
 
@@ -75,14 +75,15 @@ class AppointmentController extends Controller
      *     )
      * )
      */
-    public function getAppointmentById($id)
+    public function getAppointmentById(Request $request)
     {
+        $id = $request->id;
         $appointment = Appointment::find($id);
         if ($appointment) {
             return response()->json([
                 'status' => 1,
                 'message' => 'FOUND ID: ' . $id,
-                "users" => $appointment
+                "data" => $appointment
             ], 200);
         }
 
@@ -96,21 +97,21 @@ class AppointmentController extends Controller
     }
 
 /**
-     * Find appointment by DNI_Client
+     * Find appointment by dni_client
      *
      * @OA\Get(
-     *     path="/api/appointment/dni/client/{DNI_Client}",
+     *     path="/api/appointment/dni/client/{dni_client}",
      *     tags={"Appointments"},
-     *     summary="Get Appointment By DNI_Client",
+     *     summary="Get Appointment By dni_client",
      *  @OA\Parameter(
-     *         name="DNI_Client",
+     *         name="dni_client",
      *         in="query",
-     *         description="Get Appointment By DNI_Client",
+     *         description="Get Appointment By dni_client",
      *         required=true,
      *      ),
      *     @OA\Response(
      *         response=200,
-     *         description="Get Appointment By DNI_Client"
+     *         description="Get Appointment By dni_client"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -118,41 +119,42 @@ class AppointmentController extends Controller
      *     )
      * )
      */
-    public function getAppointmentByDNIClient($DNI)
+    public function getAppointmentBydniClient(Request $request)
     {
-        $appointment = Appointment::where('DNI_client', $DNI)->first();
+        $dni = $request->dni;
+        $appointment = Appointment::where('dni_client', $dni)->first();
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND CLIENT DNI: ' . $DNI,
-                "users" => $appointment
+                'message' => 'FOUND CLIENT dni: ' . $dni,
+                "data" => $appointment
             ], 200);
         }
 
         return response()->json([
             'status' => 0,
-            'message' => 'CLIENT DNI NOT FOUND',
+            'message' => 'CLIENT dni NOT FOUND',
         ], 404);
 
 
     }
 
 /**
-     * Find appointment by DNI_Student
+     * Find appointment by dni_student
      *
      * @OA\Get(
-     *     path="/api/appointment/dni/student/{DNI_Student}",
+     *     path="/api/appointment/dni/student/{dni_student}",
      *     tags={"Appointments"},
-     *     summary="Get Appointment By DNI_Student",
+     *     summary="Get Appointment By dni_student",
      *  @OA\Parameter(
-     *         name="DNI_Student",
+     *         name="dni_student",
      *         in="query",
-     *         description="Get Appointment By DNI_Student",
+     *         description="Get Appointment By dni_student",
      *         required=true,
      *      ),
      *     @OA\Response(
      *         response=200,
-     *         description="Get Appointment By DNI_Student"
+     *         description="Get Appointment By dni_student"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -160,20 +162,21 @@ class AppointmentController extends Controller
      *     )
      * )
      */
-    public function getClientByDniStudent($DNI)
+    public function getClientBydniStudent(Request $request)
     {
-        $appointment = Appointment::where('DNI_Student', $DNI)->first();
+        $dni = $request->dni;
+        $appointment = Appointment::where('dni_student', $dni)->first();
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND STUDENT DNI: ' . $DNI,
-                "users" => $appointment
+                'message' => 'FOUND STUDENT dni: ' . $dni,
+                "data" => $appointment
             ], 200);
         }
 
         return response()->json([
             'status' => 0,
-            'message' => 'STUDENT DNI NOT FOUND',
+            'message' => 'STUDENT dni NOT FOUND',
         ], 404);
 
 
@@ -202,15 +205,15 @@ class AppointmentController extends Controller
     public function addAppointment(Request $request)
     {
         $appointment = new Appointment();
-        $appointment->Date = $request->Date;
-        $appointment->DNI_client = $request->DNI_client;
-        $appointment->DNI_Student = $request->DNI_Student;
-        $appointment->Treatment = $request->Treatment;
+        $appointment->date = $request->date;
+        $appointment->dni_client = $request->dni_client;
+        $appointment->dni_student = $request->dni_student;
+        $appointment->treatment = $request->treatment;
 
-        $appointment->Protocol = $request->Protocol;
-        $appointment->Consultancy = $request->Consultancy;
-        $appointment->Tracking = $request->Tracking;
-        $appointment->Survey = $request->Survey;
+        $appointment->protocol = $request->protocol;
+        $appointment->consultancy = $request->consultancy;
+        $appointment->tracking = $request->tracking;
+        $appointment->survey = $request->survey;
 
         $appointment->save();
 
@@ -246,15 +249,15 @@ class AppointmentController extends Controller
     public function editAppointment(Request $request)
     {
         $appointment = Appointment::findOrFail($request->id);
-        $appointment->Date = $request->Date;
-        $appointment->DNI_client = $request->DNI_client;
-        $appointment->DNI_Student = $request->DNI_Student;
-        $appointment->Treatment = $request->Treatment;
+        $appointment->date = $request->date;
+        $appointment->dni_client = $request->dni_client;
+        $appointment->dni_student = $request->dni_student;
+        $appointment->treatment = $request->treatment;
 
-        $appointment->Protocol = $request->Protocol;
-        $appointment->Consultancy = $request->Consultancy;
-        $appointment->Tracking = $request->Tracking;
-        $appointment->Survey = $request->Survey;
+        $appointment->protocol = $request->protocol;
+        $appointment->consultancy = $request->consultancy;
+        $appointment->tracking = $request->tracking;
+        $appointment->survey = $request->survey;
 
         $appointment->save();
 
@@ -286,14 +289,15 @@ class AppointmentController extends Controller
      *     )
      * )
      */
-    public function DeleteAppointmenById($id)
+    public function DeleteAppointmenById(Request $request)
     {
+        $id = $request->id;
         $appointment = Appointment::destroy($id);
         if ($appointment) {
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY WITH ID: ' . $id . ' DELETED',
-                "users" => $appointment
+                "data" => $appointment
             ], 200);
         }
 

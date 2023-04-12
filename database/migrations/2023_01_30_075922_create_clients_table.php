@@ -15,18 +15,18 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('DNI')->unique();
-            $table->string('Name');
-            $table->string('Surname');
-            $table->date('Birth_Date');
-            $table->integer('Phone');
-            $table->string('Email')->unique();
-            $table->text('More_Info')->nullable();
-            $table->text('Life_Style');
-            $table->text('Background_Health');
-            $table->text('Background_Aesthetic');
-            $table->text('Asthetic_Routine');
-            $table->text('Hairdressing_Routine');
+            $table->string('dni')->unique();
+            $table->string('name');
+            $table->string('surname');
+            $table->date('birth_date');
+            $table->integer('phone');
+            $table->string('email')->unique();
+            $table->text('more_info')->nullable();
+            $table->text('life_style');
+            $table->text('background_health');
+            $table->text('background_aesthetic');
+            $table->text('asthetic_routine');
+            $table->text('hairdressing_routine');
             $table->timestamps();
         });
     }

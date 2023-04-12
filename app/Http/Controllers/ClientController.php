@@ -3,11 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+
+    public function getStats(){
+        $clientCount = Client::count(); // Total number of data
+        $appointmentCount = Appointment::count(); // Total number of appointments
+        
+        $teachersCount = User::where('rol', 1)->count(); // Number of normal data
+        $studentsCount = User::where('rol', 2)->count(); // Number of super admins
+        
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'REGISTRY FOUND',
+            "data"=> [
+                'clients' => $clientCount,
+                'appointments' => $appointmentCount,
+                'teachers' => $teachersCount,
+                'students' => $studentsCount
+                ]
+        ], 200);
+    }
+
+    public function getClientPaged(Request $request){
+        try {
+            $perPage = $request->perpage;
+            $searchText = $request->searchtext;
+            $page = $request->page;
+    
+            $clients = Client::when($searchText, function ($query, $searchText) {
+                return $query->where('name', 'like', "%".$searchText."%")->orWhere('dni', 'like', '%'.$searchText.'%')->orWhere('surname', 'like', '%'.$searchText.'%');
+            })->paginate($perPage, ['*'], 'page');
+    
+            return response()->json([
+                'status' => 1,
+                'message' => 'REGISTRY FOUND',
+                "data"=>$clients
+            ], 200);
+        } catch (\Throwable $th) {
+            print($th);
+            return response()->json([
+                'status' => 0,
+                'message' => 'NO CLIENTS FOUND '+$th,
+            ], 404);
+        }
+
+    }
 
 /**
  * This function will alow you to show all clients records.
@@ -35,7 +82,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                "users"=>$clients
+                "data"=>$clients
             ], 200);
         }
 
@@ -46,7 +93,7 @@ class ClientController extends Controller
     }
 
     /**
- * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
+ * This function will alow you to search for an specific client by his/her id, dni or name and surname.
  *
  * @OA\Get(
  *     path="/api/client/{data}",
@@ -69,16 +116,17 @@ class ClientController extends Controller
  * )
  */
 
- public function searchClient($query)
+ public function searchClient(Request $request)
  {
-     $client= Client::where('id', 'like', '%'.$query.'%')->orWhere('DNI', 'like', '%'.$query.'%')
-     ->orWhere('Name', 'like', '%'.$query.'%')
-     ->orWhere('Surname', 'like', '%'.$query.'%')->first();
+     $searchtext = $request->searchtext;
+     $client= Client::where('id', 'like', '%'.$searchtext.'%')->orWhere('dni', 'like', '%'.$searchtext.'%')
+     ->orWhere('name', 'like', '%'.$searchtext.'%')
+     ->orWhere('surname', 'like', '%'.$searchtext.'%')->first();
      if ($client) {
          return response()->json([
              'status' => 1,
              'message' => 'CLIENT FOUND',
-             "users"=>$client
+             "data"=>$client
          ], 200);
      }
 
@@ -89,7 +137,7 @@ class ClientController extends Controller
  }
 
      /**
- * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
+ * This function will alow you to search for an specific client by his/her id, dni or name and surname.
  *
  * @OA\Get(
  *     path="/api/client/{id}",
@@ -112,16 +160,17 @@ class ClientController extends Controller
  * )
  */
 
- public function searchClientByid($ID)
+ public function searchClientByid(Request $request)
  {
 
-     $client= Client::where('id', $ID)->first();
+     $id = $request->id;
+     $client= Client::where('id', $id)->first();
 
      if ($client) {
          return response()->json([
              'status' => 1,
-             'message' => 'GET USER BY ID '.$ID,
-             "users"=>$client
+             'message' => 'GET USER BY ID '.$id,
+             "data"=>$client
          ], 200);
      }
 
@@ -131,7 +180,7 @@ class ClientController extends Controller
      ], 404);
  }
 /**
- * This function will add a new client in the database knowing that DNIs can't be the same and showing an error message in case of repetition.
+ * This function will add a new client in the database knowing that dnis can't be the same and showing an error message in case of repetition.
  *
  * @OA\Post(
  *     path="/api/client/add",
@@ -158,7 +207,7 @@ class ClientController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'DNI' => 'required|unique:clients',
+            'dni' => 'required|unique:clients',
         ]);
 
         if ($validator->fails()) {
@@ -166,18 +215,18 @@ class ClientController extends Controller
         }
 
         $client = new Client;
-        $client->DNI = $request->DNI;
-        $client->Name = $request->Name;
-        $client->Surname = $request->Surname;
-        $client->Birth_Date = $request->Birth_Date;
-        $client->Phone = $request->Phone;
-        $client->Email = $request->Email;
-        $client->More_Info = $request->More_Info;
-        $client->Life_Style = $request->Life_Style;
-        $client->Background_Health = $request->Background_Health;
-        $client->Background_Aesthetic = $request->Background_Aesthetic;
-        $client->Asthetic_Routine = $request->Asthetic_Routine;
-        $client->Hairdressing_Routine = $request->Hairdressing_Routine;
+        $client->dni = $request->dni;
+        $client->name = $request->name;
+        $client->surname = $request->surname;
+        $client->birth_date = $request->birth_date;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->more_info = $request->more_info;
+        $client->life_style = $request->life_style;
+        $client->background_health = $request->background_health;
+        $client->background_aesthetic = $request->background_aesthetic;
+        $client->asthetic_routine = $request->asthetic_routine;
+        $client->hairdressing_routine = $request->hairdressing_routine;
 
         $client->save();
 
@@ -213,18 +262,18 @@ class ClientController extends Controller
     public function editById(Request $request)
     {
         $client = Client::findOrFail($request->id);
-        $client->DNI = $request->DNI;
-        $client->Name = $request->Name;
-        $client->Surname = $request->Surname;
-        $client->Birth_Date = $request->Birth_Date;
-        $client->Phone = $request->Phone;
-        $client->Email = $request->Email;
-        $client->More_Info = $request->More_Info;
-        $client->Life_Style = $request->Life_Style;
-        $client->Background_Health = $request->Background_Health;
-        $client->Background_Aesthetic = $request->Background_Aesthetic;
-        $client->Asthetic_Routine = $request->Asthetic_Routine;
-        $client->Hairdressing_Routine = $request->Hairdressing_Routine;
+        $client->dni = $request->dni;
+        $client->name = $request->name;
+        $client->surname = $request->surname;
+        $client->birth_date = $request->birth_date;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->more_info = $request->more_info;
+        $client->life_style = $request->life_style;
+        $client->background_health = $request->background_health;
+        $client->background_aesthetic = $request->background_aesthetic;
+        $client->asthetic_routine = $request->asthetic_routine;
+        $client->hairdressing_routine = $request->hairdressing_routine;
 
         $client->save();
 
@@ -255,8 +304,9 @@ class ClientController extends Controller
  * )
  */
 
-    public function deleteById($id)
+    public function deleteById(Request $request)
     {
+        $id = $request->id;
         $client = Client::destroy($id);
         if ($client) {
             return response()->json([
