@@ -6,6 +6,7 @@ services:
             dockerfile: Dockerfile
         command: 'php artisan serve --host=0.0.0.0:8000'
         container_name: api
+        restart: always
         ports:
             - '${APP_PORT:-8000}:8000'
         environment:
@@ -18,6 +19,7 @@ services:
             - mysql
     mysql:
         container_name: db
+        restart: always
         image: 'bitnami/mysql:latest'
         ports:
             - '${DB_PORT:-3306}:${DB_PORT:-3306}'
@@ -39,8 +41,15 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    frontend:
+        container_name: iestablero-web
+        restart: always
+        image: juanfran21/iestablero
+        ports:
+            - '80:80'
     phpmyadmin:
         container_name: phpmyadmin
+        restart: always
         image: phpmyadmin
         ports:
             - '${PHPMYADMIN_PORT:-8001}:80'
