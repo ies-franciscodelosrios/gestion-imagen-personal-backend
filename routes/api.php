@@ -40,6 +40,8 @@ Route::middleware('auth:sanctum')->get('/appointments',[App\Http\Controllers\App
 Route::middleware('auth:sanctum')->get('/appointment/id',[App\Http\Controllers\AppointmentController::class, 'getAppointmentById']);
 Route::middleware('auth:sanctum')->get('/appointment/dni/client',[App\Http\Controllers\AppointmentController::class, 'getAppointmentBydniClient']);
 Route::middleware('auth:sanctum')->get('/appointment/dni/student',[App\Http\Controllers\AppointmentController::class, 'getClientBydniStudent']);
+Route::middleware('auth:sanctum')->get('/appointments/paged', [App\Http\Controllers\AppointmentController::class, 'getAppointmentsByDniStudent']);
+
 
 /*  METODOS POST DE Appointment */
 Route::middleware('auth:sanctum')->post('/appointment',[App\Http\Controllers\AppointmentController::class, 'addAppointment']);
