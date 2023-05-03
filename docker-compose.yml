@@ -46,7 +46,7 @@ services:
         restart: always
         image: juanfran21/iestablero
         ports:
-            - '80:80'
+            - '8080:80'
     phpmyadmin:
         container_name: phpmyadmin
         restart: always

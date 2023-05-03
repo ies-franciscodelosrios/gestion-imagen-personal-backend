@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @OA\Info(title="API PERICLES", version="1.0")
@@ -51,6 +52,36 @@ class AppointmentController extends Controller
         ], 404);
 
     }
+
+    public function getAppointmentsByDniStudent(Request $request){
+
+        $dni_student = $request->dni_student;
+    $query = DB::table('appointments')
+        ->where('dni_student', $dni_student);
+
+    // Agregar filtro de búsqueda si se proporciona un texto de búsqueda
+    if ($request->has('searchtext')) {
+        $searchText = $request->input('searchtext');
+        $query->where(function ($q) use ($searchText) {
+            $q->where('treatment', 'like', '%' . $searchText . '%')
+                ->orWhere('protocol', 'like', '%' . $searchText . '%')
+                ->orWhere('consultancy', 'like', '%' . $searchText . '%')
+                ->orWhere('tracking', 'like', '%' . $searchText . '%')
+                ->orWhere('survey', 'like', '%' . $searchText . '%');
+        });
+    }
+
+    // Paginar los resultados
+    $appointments = $query->paginate(
+        $request->input('perpage', 10), 
+        ['*'], 
+        'page', 
+        $request->input('page', 1)
+    );
+
+    return response()->json($appointments);
+}
+
 
     /**
      * Find appointment by id.
