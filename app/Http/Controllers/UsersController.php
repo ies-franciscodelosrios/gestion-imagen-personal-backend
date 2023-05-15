@@ -388,7 +388,15 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'password requirements not met',
+            ], 404);
+        }
+       
         $user->others = $request->others;
         $user->save();
     }
@@ -420,8 +428,14 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->others = $request->others;
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'password requirements not met',
+            ], 404);
+        }        $user->others = $request->others;
 
         $user->save();
     }
@@ -501,8 +515,14 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->others = $request->others;
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'password requirements not met',
+            ], 404);
+        }        $user->others = $request->others;
 
         $user->save();
 
