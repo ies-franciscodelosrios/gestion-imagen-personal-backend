@@ -41,12 +41,12 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-    frontend:
-        container_name: iestablero-web
-        restart: always
-        image: juanfran21/iestablero
-        ports:
-            - '80:80'
+    # frontend:
+    #     container_name: iestablero-web
+    #     restart: always
+    #     image: juanfran21/iestablero
+    #     ports:
+    #         - '80:80'
     phpmyadmin:
         container_name: phpmyadmin
         restart: always
