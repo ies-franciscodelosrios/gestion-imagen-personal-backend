@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,37 +52,49 @@ class AppointmentController extends Controller
             'status' => 0,
             'message' => 'EMPTY REGISTRY',
         ], 404);
-
     }
 
-    public function getAppointmentsByDniStudent(Request $request){
+    public function getAppointmentsByDniStudent(Request $request)
+    {
+        $query = Appointment::query();
+    
+        if ($request->has('dni_student') && strlen($request->dni_student) === 9) {
+            $query->where('dni_student', $request->dni_student);
+        }
+    
+        if ($request->has('dni_client') && strlen($request->dni_client) === 9) {
+            $query->where('dni_client', $request->dni_client);
+        }
+    
+        // Cargar relaciones de usuario y cliente
+        $query->with('student', 'client');
 
-        $dni_student = $request->dni_student;
-    $query = DB::table('appointments')
-        ->where('dni_student', $dni_student);
+        // Agregar filtro de búsqueda si se proporciona un texto de búsqueda
+        if ($request->has('searchtext')) {
+            $searchText = $request->input('searchtext');
+            $query->where(function ($q) use ($searchText) {
+                $q->where('treatment', 'like', '%' . $searchText . '%')
+                    ->orWhere('protocol', 'like', '%' . $searchText . '%')
+                    ->orWhere('consultancy', 'like', '%' . $searchText . '%')
+                    ->orWhere('tracking', 'like', '%' . $searchText . '%')
+                    ->orWhere('date', 'like', '%' . $searchText . '%')
+                    ->orWhere('survey', 'like', '%' . $searchText . '%')
+                    ->orWhereHas('student', function ($q) use ($searchText) {
+                        $q->where('name', 'like', '%' . $searchText . '%')
+                            ->orWhere('surname', 'like', '%' . $searchText . '%');
+                    })
+                    ->orWhereHas('client', function ($q) use ($searchText) {
+                        $q->where('name', 'like', '%' . $searchText . '%');
+                    });
+            });
+        }
 
-    // Agregar filtro de búsqueda si se proporciona un texto de búsqueda
-    if ($request->has('searchtext')) {
-        $searchText = $request->input('searchtext');
-        $query->where(function ($q) use ($searchText) {
-            $q->where('treatment', 'like', '%' . $searchText . '%')
-                ->orWhere('protocol', 'like', '%' . $searchText . '%')
-                ->orWhere('consultancy', 'like', '%' . $searchText . '%')
-                ->orWhere('tracking', 'like', '%' . $searchText . '%')
-                ->orWhere('survey', 'like', '%' . $searchText . '%');
-        });
+        // Paginar los resultados
+        $perPage = $request->input('perpage', 10);
+        $appointments = $query->paginate($perPage, ['*'], 'page', $request->input('page', 1));
+    
+        return response()->json($appointments);
     }
-
-    // Paginar los resultados
-    $appointments = $query->paginate(
-        $request->input('perpage', 10), 
-        ['*'], 
-        'page', 
-        $request->input('page', 1)
-    );
-
-    return response()->json($appointments);
-}
 
 
     /**
@@ -122,12 +136,9 @@ class AppointmentController extends Controller
             'status' => 0,
             'message' => 'EMPTY REGISTRY',
         ], 404);
-
-
-
     }
 
-/**
+    /**
      * Find appointment by dni_client
      *
      * @OA\Get(
@@ -166,11 +177,9 @@ class AppointmentController extends Controller
             'status' => 0,
             'message' => 'CLIENT dni NOT FOUND',
         ], 404);
-
-
     }
 
-/**
+    /**
      * Find appointment by dni_student
      *
      * @OA\Get(
@@ -209,14 +218,12 @@ class AppointmentController extends Controller
             'status' => 0,
             'message' => 'STUDENT dni NOT FOUND',
         ], 404);
-
-
     }
     /*___________________________________________________________________________________________________________________ */
 
     /*  POST */
 
-/**
+    /**
      * Add appointment
      *
      * @OA\Post(
@@ -247,14 +254,13 @@ class AppointmentController extends Controller
         $appointment->survey = $request->survey;
 
         $appointment->save();
-
     }
 
     /*___________________________________________________________________________________________________________________ */
 
     /*  PUT */
 
-/**
+    /**
      * Edit appointment by id
      *
      * @OA\Put(
@@ -297,7 +303,7 @@ class AppointmentController extends Controller
 
     /*___________________________________________________________________________________________________________________ */
 
-/**
+    /**
      * Delete appointment by id
      *
      * @OA\Delete(
@@ -336,7 +342,5 @@ class AppointmentController extends Controller
             'status' => 0,
             'message' => 'REGISTRY NOT FOUND',
         ], 404);
-
-
     }
 }

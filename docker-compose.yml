@@ -12,7 +12,7 @@ services:
         environment:
             WWWUSER: '${WWWUSER}'
         volumes:
-            - '.:/var/www/html'
+            - '.:/app'  # Montar el directorio actual en /app dentro del contenedor
         networks:
             - sail
         depends_on:
