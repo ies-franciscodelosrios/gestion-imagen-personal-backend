@@ -19,4 +19,14 @@ class Appointment extends Model
         'tracking',
         'survey',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'dni_student', 'dni');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'dni_client', 'dni');
+    }
 }
