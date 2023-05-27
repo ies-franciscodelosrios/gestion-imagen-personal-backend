@@ -103,6 +103,9 @@ Route::middleware('auth:sanctum')->put('/user',[App\Http\Controllers\UsersContro
 /*  METODOS DELETE DE User */
 Route::middleware('auth:sanctum')->delete('/user/id',[App\Http\Controllers\UsersController::class, 'deleteUser']);
 Route::middleware('auth:sanctum')->delete('/user/delete/rol',[App\Http\Controllers\UsersController::class, 'deleteByrol']);
+Route::middleware('auth:sanctum')->delete('/delete-cloudinary',[App\Http\Controllers\UsersController::class, 'deleteImage']);
+Route::middleware('auth:sanctum')->get('/get-cloudinary',[App\Http\Controllers\UsersController::class, 'getAllImages']);
+
 /* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByrol']);
  */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
