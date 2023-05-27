@@ -33,21 +33,42 @@ class ClientController extends Controller
 
     public function getClientPaged(Request $request){
         try {
+            // Obtener los parámetros de la solicitud
+            $sort = $request->sort;
+            $sortColumn = $request->sortcolumn;
+            $page = $request->page;
             $perPage = $request->perpage;
             $searchText = $request->searchtext;
-            $page = $request->page;
-    
-            $clients = Client::when($searchText, function ($query, $searchText) {
-                return $query->where('name', 'like', "%".$searchText."%")->orWhere('dni', 'like', '%'.$searchText.'%')->orWhere('surname', 'like', '%'.$searchText.'%');
-            })->paginate($perPage, ['*'], 'page');
-    
+
+            // Construir la consulta para obtener los clientes
+            $query = Client::query();
+
+            // Aplicar el ordenamiento
+            $query->orderBy($sortColumn, $sort);
+
+            // Aplicar el filtrado por texto de búsqueda
+            if (!empty($searchText)) {
+                $query->where(function ($q) use ($searchText) {
+                    $q->where('name', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('surname', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('birth_date', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('dni', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('email', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $searchText . '%');
+                    // Añade más condiciones de búsqueda según los campos necesarios
+                });
+            }
+
+            // Obtener los clientes paginados
+            $clients = $query->paginate($perPage, ['*'], 'page', $page);
+
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
                 "data"=>$clients
             ], 200);
+
         } catch (\Throwable $th) {
-            print($th);
             return response()->json([
                 'status' => 0,
                 'message' => 'NO CLIENTS FOUND '+$th,
