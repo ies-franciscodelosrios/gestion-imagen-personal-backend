@@ -30,9 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'cloudinary' => [
-        'cloud_name' =>'djqsy6b2p',
-        'api_key' => '269882361552326',
-        'api_secret' => 'seHWgQJqGzNUu4ypLSgynXOrHE4',
+        'cloud_url' => env('CLOUDINARY_URL'),
+        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+        'api_key' => env('CLOUDINARY_API_KEY'),
+        'api_secret' => env('CLOUDINARY_API_SECRET'),
+        'secure' => true,
     ],
     
 
