@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFaqTable extends Migration
+class CreatePhotoUrlsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateFaqTable extends Migration
      */
     public function up()
     {
-        Schema::create('faq', function ($table) {
-            $table->bigIncrements('id');
-            $table->text('Question');
+        Schema::create('photo_urls', function (Blueprint $table) {
+            $table->id();
+            $table->string('url'); 
+            $table->morphs('imageable'); // Polymorphic relationship
+            $table->timestamps();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateFaqTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faq');
+        Schema::dropIfExists('photo_urls');
     }
 }

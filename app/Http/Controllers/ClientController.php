@@ -3,11 +3,81 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
+use App\Models\Appointment;
+use App\Models\PhotoUrl;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+
+    public function getStats(){
+        $clientCount = Client::count(); // Total number of data
+        $appointmentCount = Appointment::count(); // Total number of appointments
+        
+        $teachersCount = User::where('rol', 1)->count(); // Number of normal data
+        $studentsCount = User::where('rol', 2)->count(); // Number of super admins
+        
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'REGISTRY FOUND',
+            "data"=> [
+                'clients' => $clientCount,
+                'appointments' => $appointmentCount,
+                'teachers' => $teachersCount,
+                'students' => $studentsCount
+                ]
+        ], 200);
+    }
+
+    public function getClientPaged(Request $request){
+        try {
+            // Obtener los parámetros de la solicitud
+            $sort = $request->sort;
+            $sortColumn = $request->sortcolumn;
+            $page = $request->page;
+            $perPage = $request->perpage;
+            $searchText = $request->searchtext;
+
+            // Construir la consulta para obtener los clientes
+            $query = Client::query();
+
+            // Aplicar el ordenamiento
+            $query->orderBy($sortColumn, $sort);
+
+            // Aplicar el filtrado por texto de búsqueda
+            if (!empty($searchText)) {
+                $query->where(function ($q) use ($searchText) {
+                    $q->where('name', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('surname', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('birth_date', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('dni', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('email', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $searchText . '%');
+                    // Añade más condiciones de búsqueda según los campos necesarios
+                });
+            }
+
+            // Obtener los clientes paginados
+            $clients = $query->paginate($perPage, ['*'], 'page', $page);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'REGISTRY FOUND',
+                "data"=>$clients
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'NO CLIENTS FOUND '+$th,
+            ], 404);
+        }
+
+    }
 
 /**
  * This function will alow you to show all clients records.
@@ -35,7 +105,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                "users"=>$clients
+                "data"=>$clients
             ], 200);
         }
 
@@ -46,7 +116,7 @@ class ClientController extends Controller
     }
 
     /**
- * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
+ * This function will alow you to search for an specific client by his/her id, dni or name and surname.
  *
  * @OA\Get(
  *     path="/api/client/{data}",
@@ -69,16 +139,17 @@ class ClientController extends Controller
  * )
  */
 
- public function searchClient($query)
+ public function searchClient(Request $request)
  {
-     $client= Client::where('id', 'like', '%'.$query.'%')->orWhere('DNI', 'like', '%'.$query.'%')
-     ->orWhere('Name', 'like', '%'.$query.'%')
-     ->orWhere('Surname', 'like', '%'.$query.'%')->first();
+     $searchtext = $request->searchtext;
+     $client= Client::where('id', 'like', '%'.$searchtext.'%')->orWhere('dni', 'like', '%'.$searchtext.'%')
+     ->orWhere('name', 'like', '%'.$searchtext.'%')
+     ->orWhere('surname', 'like', '%'.$searchtext.'%')->first();
      if ($client) {
          return response()->json([
              'status' => 1,
              'message' => 'CLIENT FOUND',
-             "users"=>$client
+             "data"=>$client
          ], 200);
      }
 
@@ -89,7 +160,7 @@ class ClientController extends Controller
  }
 
      /**
- * This function will alow you to search for an specific client by his/her id, DNI or name and surname.
+ * This function will alow you to search for an specific client by his/her id, dni or name and surname.
  *
  * @OA\Get(
  *     path="/api/client/{id}",
@@ -112,16 +183,17 @@ class ClientController extends Controller
  * )
  */
 
- public function searchClientByid($ID)
+ public function searchClientByid(Request $request)
  {
 
-     $client= Client::where('id', $ID)->first();
+     $id = $request->id;
+     $client= Client::where('id', $id)->first();
 
      if ($client) {
          return response()->json([
              'status' => 1,
-             'message' => 'GET USER BY ID '.$ID,
-             "users"=>$client
+             'message' => 'GET USER BY ID '.$id,
+             "data"=>$client
          ], 200);
      }
 
@@ -131,7 +203,7 @@ class ClientController extends Controller
      ], 404);
  }
 /**
- * This function will add a new client in the database knowing that DNIs can't be the same and showing an error message in case of repetition.
+ * This function will add a new client in the database knowing that dnis can't be the same and showing an error message in case of repetition.
  *
  * @OA\Post(
  *     path="/api/client/add",
@@ -158,7 +230,7 @@ class ClientController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'DNI' => 'required|unique:clients',
+            'dni' => 'required|unique:clients',
         ]);
 
         if ($validator->fails()) {
@@ -166,18 +238,18 @@ class ClientController extends Controller
         }
 
         $client = new Client;
-        $client->DNI = $request->DNI;
-        $client->Name = $request->Name;
-        $client->Surname = $request->Surname;
-        $client->Birth_Date = $request->Birth_Date;
-        $client->Phone = $request->Phone;
-        $client->Email = $request->Email;
-        $client->More_Info = $request->More_Info;
-        $client->Life_Style = $request->Life_Style;
-        $client->Background_Health = $request->Background_Health;
-        $client->Background_Aesthetic = $request->Background_Aesthetic;
-        $client->Asthetic_Routine = $request->Asthetic_Routine;
-        $client->Hairdressing_Routine = $request->Hairdressing_Routine;
+        $client->dni = $request->dni;
+        $client->name = $request->name;
+        $client->surname = $request->surname;
+        $client->birth_date = $request->birth_date;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->more_info = $request->more_info;
+        $client->life_style = $request->life_style;
+        $client->background_health = $request->background_health;
+        $client->background_aesthetic = $request->background_aesthetic;
+        $client->asthetic_routine = $request->asthetic_routine;
+        $client->hairdressing_routine = $request->hairdressing_routine;
 
         $client->save();
 
@@ -213,18 +285,18 @@ class ClientController extends Controller
     public function editById(Request $request)
     {
         $client = Client::findOrFail($request->id);
-        $client->DNI = $request->DNI;
-        $client->Name = $request->Name;
-        $client->Surname = $request->Surname;
-        $client->Birth_Date = $request->Birth_Date;
-        $client->Phone = $request->Phone;
-        $client->Email = $request->Email;
-        $client->More_Info = $request->More_Info;
-        $client->Life_Style = $request->Life_Style;
-        $client->Background_Health = $request->Background_Health;
-        $client->Background_Aesthetic = $request->Background_Aesthetic;
-        $client->Asthetic_Routine = $request->Asthetic_Routine;
-        $client->Hairdressing_Routine = $request->Hairdressing_Routine;
+        $client->dni = $request->dni;
+        $client->name = $request->name;
+        $client->surname = $request->surname;
+        $client->birth_date = $request->birth_date;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->more_info = $request->more_info;
+        $client->life_style = $request->life_style;
+        $client->background_health = $request->background_health;
+        $client->background_aesthetic = $request->background_aesthetic;
+        $client->asthetic_routine = $request->asthetic_routine;
+        $client->hairdressing_routine = $request->hairdressing_routine;
 
         $client->save();
 
@@ -255,8 +327,9 @@ class ClientController extends Controller
  * )
  */
 
-    public function deleteById($id)
+    public function deleteById(Request $request)
     {
+        $id = $request->id;
         $client = Client::destroy($id);
         if ($client) {
             return response()->json([
@@ -310,5 +383,86 @@ class ClientController extends Controller
             'status' => -1,
             'message' => 'ERROR',
         ], 404);
+    }
+
+    public function getPhotosUrl(Request $request)
+    {
+        try{
+            $client = Client::findOrFail($request->id);
+
+            $images = $client->photoUrls;
+
+            return response()->json(['images' => $images], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al traer imagenes'], 500);
+        }    
+    }
+
+    public function storePhotoUrl(Request $request)
+    {
+        try{
+            // Validar la solicitud y asegurarse de que se haya enviado una imagen
+            $client = Client::findOrFail($request->id);
+
+            // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl = new PhotoUrl([
+                'url' => $request->url
+            ]);
+
+            $client->photoUrls()->save($photoUrl);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto guardada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+        }
+    }
+
+    public function deletePhotoUrl(Request $request)
+    {
+        try{
+            $client = Client::findOrFail($request->id);
+
+            try {
+                // Buscar la imagen en Cloudinary
+                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $images = Cloudinary::search()->expression($search)->execute();
+    
+                // Verificar si se encontró la imagen
+                if (!$images['resources']) {
+                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                }
+    
+                // Eliminar la imagen de Cloudinary
+                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                    'invalidate' => true,
+                    'folder' => 'iestablero'
+                ]);
+                
+            } catch (\Exception $e) {
+                // Error al eliminar la imagen
+                return response()->json(['error' => $e], 500);
+            }
+            
+            // Verificar que la imagen exista para el usuario
+            $photoUrl = $client->photoUrls()->findOrFail($request->photo_id);
+
+            // Eliminar la imagen de tu almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto eliminada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+        }
     }
 }

@@ -15,28 +15,28 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('Date')->nullable();
+            $table->date('date')->nullable();
 
-            $table->string('DNI_client')->nullable();
+            $table->string('dni_client')->nullable();
 
-            $table->foreign('DNI_client')->references('DNI')->on('clients')
+            $table->foreign('dni_client')->references('dni')->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->string('DNI_Student')->nullable();
+            $table->string('dni_student')->nullable();
 
-            $table->foreign('DNI_Student')->references('DNI')->on('users')
+            $table->foreign('dni_student')->references('dni')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->integer('Treatment')->nullable();
-            $table->text('Protocol')->nullable();
-            $table->text('Consultancy')->nullable();
-            $table->text('Tracking')->nullable();
-            $table->text('Survey')->nullable();
+            $table->integer('treatment')->nullable();
+            $table->text('protocol')->nullable();
+            $table->text('consultancy')->nullable();
+            $table->text('tracking')->nullable();
+            $table->text('survey')->nullable();
             $table->timestamps();
 
-            /*  $table->primary(['Date', 'DNI_client']); */
+            /*  $table->primary(['date', 'dni_client']); */
         });
     }
 

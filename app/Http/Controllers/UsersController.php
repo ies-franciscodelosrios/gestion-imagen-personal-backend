@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PhotoUrl;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -33,7 +36,7 @@ class UsersController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL USERS',
-                "users"=>$users
+                "data" => $users
             ], 200);
         }
 
@@ -43,7 +46,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-      /**
+    /**
      * Display a listing of students.
      *
      * @OA\Get(
@@ -62,14 +65,14 @@ class UsersController extends Controller
      */
     public function getAllStudents()
     {
-        $users = User::where('Rol', 2)->get();
+        $users = User::where('rol', 2)->get();
         $count = count($users);
         if ($users) {
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL STUDENTS',
-                'count'=> $count,
-                "users"=>$users
+                'count' => $count,
+                "data" => $users
             ], 200);
         }
 
@@ -79,7 +82,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-      /**
+    /**
      * Display a listing of Professors.
      *
      * @OA\Get(
@@ -98,14 +101,14 @@ class UsersController extends Controller
      */
     public function getAllProfessor()
     {
-        $users = User::where('Rol', 1)->get();
+        $users = User::where('rol', 1)->get();
         $count = count($users);
         if ($users) {
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL PROFESSORS',
-                'count'=> $count,
-                "users"=>$users
+                'count' => $count,
+                "data" => $users
             ], 200);
         }
 
@@ -137,15 +140,17 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByID($ID){
+    public function getUserByID(Request $request)
+    {
 
-        $users= User::where('id', $ID)->first();
+        $id = $request->id;
+        $users = User::where('id', $id)->first();
 
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID '.$ID,
-                "users"=>$users
+                'message' => 'GET USER BY ID ' . $id,
+                "data" => $users
             ], 200);
         }
 
@@ -153,19 +158,18 @@ class UsersController extends Controller
             'status' => -1,
             'message' => 'EMPTY',
         ], 404);
-
     }
-     /**
+    /**
      * Display a user based on their dni.
      *
      * @OA\Get(
-     *     path="/api/userByDni/{DNI}",
+     *     path="/api/userBydni/{dni}",
      *     tags={"Users"},
      *     summary="Shows an user based on a dni",
      * @OA\Parameter(
-     *         name="DNI",
+     *         name="dni",
      *         in="query",
-     *         description="Get User By DNI ",
+     *         description="Get User By dni ",
      *         required=true,
      *      ),
      * @OA\Response(
@@ -178,23 +182,22 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByDni($DNI)
+    public function getUserBydni(Request $request)
     {
+        $dni = $request->dni;
+        $users = User::where('dni', $dni)->first();
+        if ($users) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'GET USER BY dni ' . $dni,
+                "data" => $users
+            ], 200);
+        }
 
-       $users= User::where('DNI', $DNI)->first();
-       if ($users) {
-           return response()->json([
-               'status' => 1,
-               'message' => 'GET USER BY DNI '.$DNI,
-               "users"=>$users
-           ], 200);
-       }
-
-       return response()->json([
-           'status' => -1,
-           'message' => 'EMPTY',
-       ], 404);
-
+        return response()->json([
+            'status' => -1,
+            'message' => 'EMPTY',
+        ], 404);
     }
     /**
      * Display a user based on their mail.
@@ -219,13 +222,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-       public function getUserByCorreo($Correo){
-        $users= User::where('Email', $Correo)->first();
+    public function getUserByCorreo(Request $request)
+    {
+        $email = $request->email;
+        $users = User::where('email', $email)->first();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CORREO '.$Correo,
-                "users"=>$users
+                'message' => 'GET USER BY CORREO ' . $email,
+                "data" => $users
             ], 200);
         }
 
@@ -235,11 +240,11 @@ class UsersController extends Controller
         ], 404);
     }
 
-   /**
+    /**
      * Display a user based on their name.
      *
      * @OA\Get(
-     *     path="/api/user/Student/{Name}",
+     *     path="/api/user/Student/{name}",
      *     tags={"Users"},
      *     summary="Shows an user based on a name",
      * @OA\Parameter(
@@ -258,14 +263,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByName($Name)
+    public function getUserByName(Request $request)
     {
-        $users = User::where('Name', $Name)->get();
+        $name = $request->name;
+        $users = User::where('name', $name)->get();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY NAME '.$Name,
-                "users"=>$users
+                'message' => 'GET USER BY NAME ' . $name,
+                "data" => $users
             ], 200);
         }
 
@@ -275,22 +281,22 @@ class UsersController extends Controller
         ], 404);
     }
 
-/**
-     * Display a user based on their Course_year.
+    /**
+     * Display a user based on their course_year.
      *
      * @OA\Get(
-     *     path="/api/users/course/{Course_year}",
+     *     path="/api/users/course/{course_year}",
      *     tags={"Users"},
-     *     summary="Shows an user based on a Course_year",
+     *     summary="Shows an user based on a course_year",
      * @OA\Parameter(
-     *         name="Course_year",
+     *         name="course_year",
      *         in="query",
-     *         description="Get User By Course_year ",
+     *         description="Get User By course_year ",
      *         required=true,
      *      ),
      * @OA\Response(
      *          response=200,
-     *         description="Shows all the information about of a user based that matches an Course_year"
+     *         description="Shows all the information about of a user based that matches an course_year"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -298,14 +304,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByCourse($Course_year)
+    public function getUserByCourse(Request $request)
     {
-        $users = User::where('Course_year', $Course_year)->get();
+        $course_year = $request->course_year;
+        $users = User::where('course_year', $course_year)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR '.$Course_year,
-                "users"=>$users
+                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
+                "data" => $users
             ], 200);
         }
 
@@ -319,7 +326,7 @@ class UsersController extends Controller
      * Display a user based on their cycle.
      *
      * @OA\Get(
-     *     path="/api/users/cycle/{Cycle}",
+     *     path="/api/users/cycle/{cycle}",
      *     tags={"Users"},
      *     summary="Shows an user based on a cycle",
      * @OA\Parameter(
@@ -338,14 +345,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function getUserByCycle($Cycle)
+    public function getUserBycycle(Request $request)
     {
-        $users = User::where('Cycle', $Cycle)->get();
+        $cycle = $request->cycle;
+        $users = User::where('cycle', $cycle)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CYCLE '.$Cycle,
-                "users"=>$users
+                'message' => 'GET USER BY cycle ' . $cycle,
+                "data" => $users
             ], 200);
         }
 
@@ -375,15 +383,15 @@ class UsersController extends Controller
     public function addStudent(Request $request)
     {
         $user = new User();
-        $user->DNI = $request->DNI;
-        $user->Rol = 2;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->rol = 2;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = $request->password;
-        $user->Others = $request->Others;
+        $user->password = Hash::make('root');
+        $user->others = $request->others;
         $user->save();
     }
 
@@ -407,15 +415,15 @@ class UsersController extends Controller
     public function addProfessor(Request $request)
     {
         $user = new User();
-        $user->DNI = $request->DNI;
-        $user->Rol = 1;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->rol = 1;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = $request->password;
-        $user->Others = $request->Others;
+        $user->password = Hash::make('root');
+        $user->others = $request->others;
 
         $user->save();
     }
@@ -489,14 +497,21 @@ class UsersController extends Controller
     public function editUser(Request $request)
     {
         $user = User::findOrFail($request->id);
-        $user->DNI = $request->DNI;
-        $user->Course_year = $request->Course_year;
-        $user->Cycle = $request->Cycle;
-        $user->Name = $request->Name;
-        $user->Surname = $request->Surname;
+        $user->dni = $request->dni;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = $request->password;
-        $user->Others = $request->Others;
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+        } else if (strlen($request->password) >= 1) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'La contraseña debe ser de 8 caracteres al menos.',
+            ], 404);
+        }
+        $user->others = $request->others;
 
         $user->save();
 
@@ -526,13 +541,14 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function deleteUser($id)
+    public function deleteUser(Request $request)
     {
+        $id = $request->id;
         $users = User::destroy($id);
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS '.$id,
+                'message' => 'USER DELETE WHITH ID IS ' . $id,
             ], 200);
         }
 
@@ -566,14 +582,15 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function deleteByRol($rol)
+    public function deleteByrol(Request $request)
     {
+        $rol = $request->rol;
         if ($rol !== 0) {
-            $users = User::where('Rol', $rol)->delete();
+            $users = User::where('rol', $rol)->delete();
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'USER DELETE WHITH ROL IS '+$rol,
+                    'message' => 'USER DELETE WHITH rol IS ' + $rol,
                 ], 200);
             }
 
@@ -584,14 +601,150 @@ class UsersController extends Controller
         }
     }
 
-   /*  public function deleteAllByRol()
+    /*  public function deleteAllByrol()
     {
         $rol = [1, 2];
 
         foreach ($rol as $key => $value) {
-            $users = User::where('Rol', $value)->delete();
+            $users = User::where('rol', $value)->delete();
         }
 
         return $users;
     } */
+
+    public function deleteImage(Request $request)
+    {
+        try {
+            // Buscar la imagen en Cloudinary
+            $search = 'folder:iestablero public_id:' . $request->public_id;
+            $images = Cloudinary::search()->expression($search)->execute();
+
+            // Verificar si se encontró la imagen
+            if (!$images['resources']) {
+                return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+            }
+
+            // Eliminar la imagen de Cloudinary
+            $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                'invalidate' => true,
+                'folder' => 'iestablero'
+            ]);
+            
+            // Verificar si la eliminación fue exitosa
+            if ($result['result'] === 'ok') {
+                return response()->json(['message' => 'La imagen se eliminó correctamente'], 200);
+            } else {
+                return response()->json(['message' => $result], 500);
+            }
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => $e], 500);
+        }
+    }
+
+    public function getAllImages()
+    {
+        try{
+            // Obtener todas las imágenes de Cloudinary
+            $images = Cloudinary::search()->expression('folder:iestablero')->execute();
+
+            // Verificar si se obtuvieron imágenes
+            if (!$images) {
+                return response()->json(['message' => 'No se encontraron imágenes en Cloudinary'], 404);
+            }
+
+            // Recorrer las imágenes y obtener las URLs
+            $imageUrls = [];
+            foreach ($images['resources'] as $image) {
+                $imageUrls[] = $image['url'];
+            }
+
+            return response()->json(['images' => $imageUrls], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al traer imagenes'], 500);
+        }
+    }
+
+    public function getPhotosUrl(Request $request)
+    {
+        try{
+            $user = User::findOrFail($request->id);
+
+            $images = $user->photoUrls;
+
+            return response()->json(['images' => $images], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al traer imagenes'], 500);
+        }    
+    }
+
+    public function storePhotoUrl(Request $request)
+    {
+        try{
+            // Validar la solicitud y asegurarse de que se haya enviado una imagen
+            $user = User::findOrFail($request->id);
+
+            // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl = new PhotoUrl([
+                'url' => $request->url
+            ]);
+
+            $user->photoUrls()->save($photoUrl);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto guardada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+        }
+    }
+
+    public function deletePhotoUrl(Request $request)
+    {
+        try{
+            $user = User::findOrFail($request->id);
+
+            try {
+                // Buscar la imagen en Cloudinary
+                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $images = Cloudinary::search()->expression($search)->execute();
+    
+                // Verificar si se encontró la imagen
+                if (!$images['resources']) {
+                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                }
+    
+                // Eliminar la imagen de Cloudinary
+                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                    'invalidate' => true,
+                    'folder' => 'iestablero'
+                ]);
+                
+            } catch (\Exception $e) {
+                // Error al eliminar la imagen
+                return response()->json(['error' => $e], 500);
+            }
+            
+            // Verificar que la imagen exista para el usuario
+            $photoUrl = $user->photoUrls()->findOrFail($request->photo_id);
+
+            // Eliminar la imagen de tu almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto eliminada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+        }
+    }
+
 }
