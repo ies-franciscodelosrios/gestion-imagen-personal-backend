@@ -117,24 +117,3 @@ Route::middleware('auth:sanctum')->get('/get-cloudinary',[App\Http\Controllers\U
 /* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UsersController::class, 'deleteAllByrol']);
  */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
- /* Photo */
-
- /* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
- /*  METODOS GET DE Photo */
- Route::middleware('auth:sanctum')->get('/appointment-images', [App\Http\Controllers\PhotoController::class, 'getAll']);
- Route::middleware('auth:sanctum')->get('/appointment-images/{id}', [App\Http\Controllers\PhotoController::class, 'getById']);
- Route::middleware('auth:sanctum')->get('7appointment-images/appointment/{id_appointment}', [App\Http\Controllers\PhotoController::class, 'getByAppointment']);
- 
- /*  METODOS POST DE Photo */
- Route::middleware('auth:sanctum')->post('/appointment-images', [App\Http\Controllers\PhotoController::class, 'addPhoto']);
- 
- /*  METODOS PUT DE Photo */
- Route::middleware('auth:sanctum')->put('/appointment-images/{id}', [App\Http\Controllers\PhotoController::class, 'updatePhoto']);
- 
- /*  METODOS DELETE DE Photo */
- Route::middleware('auth:sanctum')->delete('/appointment-images/{id}', [App\Http\Controllers\PhotoController::class, 'destroy']);
- 
- /* ----------------------------------------------------------------------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
