@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Client;
+use App\Models\PhotoUrl;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -343,4 +345,87 @@ class AppointmentController extends Controller
             'message' => 'REGISTRY NOT FOUND',
         ], 404);
     }
+
+
+    public function getPhotosUrl(Request $request)
+    {
+        try{
+            $appointment = Appointment::findOrFail($request->id);
+
+            $images = $appointment->photoUrls;
+
+            return response()->json(['images' => $images], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al traer imagenes'], 500);
+        }    
+    }
+
+    public function storePhotoUrl(Request $request)
+    {
+        try{
+            // Validar la solicitud y asegurarse de que se haya enviado una imagen
+            $appointment = Appointment::findOrFail($request->id);
+
+            // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl = new PhotoUrl([
+                'url' => $request->url
+            ]);
+
+            $appointment->photoUrls()->save($photoUrl);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto guardada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+        }
+    }
+
+    public function deletePhotoUrl(Request $request)
+    {
+        try{
+            $appointment = Appointment::findOrFail($request->id);
+
+            try {
+                // Buscar la imagen en Cloudinary
+                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $images = Cloudinary::search()->expression($search)->execute();
+    
+                // Verificar si se encontró la imagen
+                if (!$images['resources']) {
+                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                }
+    
+                // Eliminar la imagen de Cloudinary
+                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                    'invalidate' => true,
+                    'folder' => 'iestablero'
+                ]);
+                
+            } catch (\Exception $e) {
+                // Error al eliminar la imagen
+                return response()->json(['error' => $e], 500);
+            }
+            
+            // Verificar que la imagen exista para el usuario
+            $photoUrl = $appointment->photoUrls()->findOrFail($request->photo_id);
+
+            // Eliminar la imagen de tu almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
+
+            $photoUrl->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Foto eliminada',
+            ], 200);
+        } catch (\Exception $e) {
+            // Error al eliminar la imagen
+            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+        }
+    }
+
 }
