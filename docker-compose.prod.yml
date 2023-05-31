@@ -1,0 +1,68 @@
+version: '3'
+services:
+    laravel:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        command: 'php artisan serve --host=0.0.0.0:8000'
+        container_name: api
+        restart: always
+        ports:
+            - '${APP_PORT:-8000}:8000'
+        environment:
+            WWWUSER: '${WWWUSER}'
+        volumes:
+            - '.:/app'  # Montar el directorio actual en /app dentro del contenedor
+        networks:
+            - sail
+        depends_on:
+            - mysql
+    mysql:
+        container_name: db
+        restart: always
+        image: 'bitnami/mysql:latest'
+        ports:
+            - '${DB_PORT:-3306}:${DB_PORT:-3306}'
+        environment:
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - 'sail-mysql:/var/lib/mysql'
+            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+    frontend:
+        container_name: iestablero-web
+        restart: always
+        image: juanfran21/iestablero
+        ports:
+            - '80:80'
+    phpmyadmin:
+        container_name: phpmyadmin
+        restart: always
+        image: phpmyadmin
+        ports:
+            - '${PHPMYADMIN_PORT:-8001}:80'
+        environment:
+            - PMA_HOST=mysql
+        networks:
+            - sail
+        depends_on:
+            - mysql
+networks:
+    sail:
+        driver: bridge
+volumes:
+    sail-mysql:
+        driver: local
+ 
