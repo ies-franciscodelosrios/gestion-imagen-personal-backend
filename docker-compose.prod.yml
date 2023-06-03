@@ -44,6 +44,10 @@ services:
     image: juanfran21/iestablero
     ports:
       - '80:80'
+    networks:
+      - sail
+    depends_on:
+      - laravel
   phpmyadmin:
     container_name: phpmyadmin
     restart: always
