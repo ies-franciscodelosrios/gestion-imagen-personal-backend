@@ -45,7 +45,7 @@ migrate_database: up
 	@docker-compose $(file_selected) exec -T laravel php artisan migrate
 
 seed_database:
-	@docker-compose $(file_selected) exec -T laravel php artisan db:seed
+	@docker-compose $(file_selected) exec -T laravel php artisan migrate --seed
 
 pull_code:
 	git checkout develop
