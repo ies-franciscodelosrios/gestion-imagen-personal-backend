@@ -86,6 +86,7 @@ Route::middleware('auth:sanctum')->delete('/client/delete-photo-url',[App\Http\C
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
 /*  METODOS GET DE User */
+Route::middleware('auth:sanctum')->get('/users/paged',[App\Http\Controllers\UsersController::class, 'getUserPaged']); 
 Route::middleware('auth:sanctum')->get('/users',[App\Http\Controllers\UsersController::class, 'getAll']);
 Route::middleware('auth:sanctum')->get('/users/rol/2', [App\Http\Controllers\UsersController::class, 'getAllStudents']);
 Route::middleware('auth:sanctum')->get('/users/rol/1', [App\Http\Controllers\UsersController::class, 'getAllProfessor']);
