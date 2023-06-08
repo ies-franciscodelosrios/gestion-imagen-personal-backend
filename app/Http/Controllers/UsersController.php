@@ -117,6 +117,53 @@ class UsersController extends Controller
             'message' => 'EMPTY',
         ], 404);
     }
+
+    public function getUserPaged(Request $request){
+        try {
+            // Obtener los parámetros de la solicitud
+            $sort = $request->sort;
+            $sortColumn = $request->sortcolumn;
+            $page = $request->page;
+            $perPage = $request->perpage;
+            $searchText = $request->searchtext;
+            $rol = $request->rol;
+
+            // Construir la consulta para obtener los clientes
+            $query = User::query();
+
+            // Aplicar el ordenamiento
+            $query->orderBy($sortColumn, $sort);
+            $query->where('rol', 'LIKE', $rol );
+
+            // Aplicar el filtrado por texto de búsqueda
+            if (!empty($searchText)) {
+                $query->where(function ($q) use ($searchText) {
+                    $q->where('name', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('surname', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('dni', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('email', 'LIKE', '%' . $searchText . '%');
+                    // Añade más condiciones de búsqueda según los campos necesarios
+                });
+            }
+
+            // Obtener los clientes paginados
+            $users = $query->paginate($perPage, ['*'], 'page', $page);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'REGISTRY FOUND',
+                "data"=>$users
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'NO CLIENTS FOUND '+$th,
+            ], 404);
+        }
+
+    }
+
     /**
      * Display a user based on their id.
      *
