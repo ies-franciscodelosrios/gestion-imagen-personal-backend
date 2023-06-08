@@ -16,6 +16,8 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
 
             $table->string('dni_client')->nullable();
 
