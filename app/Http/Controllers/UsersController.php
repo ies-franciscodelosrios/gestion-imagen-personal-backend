@@ -127,13 +127,19 @@ class UsersController extends Controller
             $perPage = $request->perpage;
             $searchText = $request->searchtext;
             $rol = $request->rol;
+            $cycle = $request->cycle;
 
             // Construir la consulta para obtener los clientes
             $query = User::query();
 
             // Aplicar el ordenamiento
             $query->orderBy($sortColumn, $sort);
-            $query->where('rol', 'LIKE', $rol );
+            if($rol){
+                $query->where('rol', 'LIKE', $rol );
+            }
+            if($cycle){
+                $query->where('cycle', 'LIKE', $cycle );
+            }
 
             // Aplicar el filtrado por texto de búsqueda
             if (!empty($searchText)) {
