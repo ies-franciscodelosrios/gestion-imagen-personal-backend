@@ -60,11 +60,11 @@ class AppointmentController extends Controller
     {
         $query = Appointment::query();
     
-        if ($request->has('dni_student') && strlen($request->dni_student) === 9) {
+        if ($request->has('dni_student') && strlen($request->dni_student) >= 1) {
             $query->where('dni_student', $request->dni_student);
         }
     
-        if ($request->has('dni_client') && strlen($request->dni_client) === 9) {
+        if ($request->has('dni_client') && strlen($request->dni_client) >= 1) {
             $query->where('dni_client', $request->dni_client);
         }
     
