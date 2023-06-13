@@ -405,14 +405,14 @@ class AppointmentController extends Controller
                 }
     
                 // Eliminar la imagen de Cloudinary
-                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                Cloudinary::destroy('iestablero/'.$request->public_id, [
                     'invalidate' => true,
                     'folder' => 'iestablero'
                 ]);
                 
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
-                return response()->json(['error' => $e], 500);
+                return response()->json(['error' => 'Error Cloudinary: ' . $e->getMessage()], 500);
             }
             
             // Verificar que la imagen exista para el usuario
