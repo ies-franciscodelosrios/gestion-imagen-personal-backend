@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\User;
 use App\Models\Appointment;
+use App\Models\Client;
 use App\Models\PhotoUrl;
+use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-
-    public function getStats(){
+    public function getStats()
+    {
         $clientCount = Client::count(); // Total number of data
         $appointmentCount = Appointment::count(); // Total number of appointments
-        
+
         $teachersCount = User::where('rol', 1)->count(); // Number of normal data
         $studentsCount = User::where('rol', 2)->count(); // Number of super admins
-        
 
         return response()->json([
             'status' => 1,
             'message' => 'REGISTRY FOUND',
-            "data"=> [
+            'data'=> [
                 'clients' => $clientCount,
                 'appointments' => $appointmentCount,
                 'teachers' => $teachersCount,
-                'students' => $studentsCount
-                ]
+                'students' => $studentsCount,
+            ],
         ], 200);
     }
 
-    public function getClientPaged(Request $request){
+    public function getClientPaged(Request $request)
+    {
         try {
             // Obtener los parámetros de la solicitud
             $sort = $request->sort;
@@ -51,12 +51,12 @@ class ClientController extends Controller
             // Aplicar el filtrado por texto de búsqueda
             if (!empty($searchText)) {
                 $query->where(function ($q) use ($searchText) {
-                    $q->where('name', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('surname', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('birth_date', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('dni', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('email', 'LIKE', '%' . $searchText . '%')
-                        ->orWhere('phone', 'LIKE', '%' . $searchText . '%');
+                    $q->where('name', 'LIKE', '%'.$searchText.'%')
+                        ->orWhere('surname', 'LIKE', '%'.$searchText.'%')
+                        ->orWhere('birth_date', 'LIKE', '%'.$searchText.'%')
+                        ->orWhere('dni', 'LIKE', '%'.$searchText.'%')
+                        ->orWhere('email', 'LIKE', '%'.$searchText.'%')
+                        ->orWhere('phone', 'LIKE', '%'.$searchText.'%');
                     // Añade más condiciones de búsqueda según los campos necesarios
                 });
             }
@@ -67,36 +67,33 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                "data"=>$clients
+                'data'=>$clients,
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
-                'message' => 'NO CLIENTS FOUND '+$th,
+                'message' => 'NO CLIENTS FOUND ' + $th,
             ], 404);
         }
-
     }
 
-/**
- * This function will alow you to show all clients records.
- *
- * @OA\Get(
- *     path="/api/client",
- *     tags={"Client"},
- *     summary="Showing the whole list of the clients",
- *    @OA\Response(
- *        response=200,
- *        description="Clients registry found"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="No clients saved"
- *    )
- * )
- */
-
+    /**
+     * This function will alow you to show all clients records.
+     *
+     * @OA\Get(
+     *     path="/api/client",
+     *     tags={"Client"},
+     *     summary="Showing the whole list of the clients",
+     *    @OA\Response(
+     *        response=200,
+     *        description="Clients registry found"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="No clients saved"
+     *    )
+     * )
+     */
     public function getClientAll()
     {
         $clients = Client::all();
@@ -105,7 +102,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                "data"=>$clients
+                'data'=>$clients,
             ], 200);
         }
 
@@ -116,119 +113,115 @@ class ClientController extends Controller
     }
 
     /**
- * This function will alow you to search for an specific client by his/her id, dni or name and surname.
- *
- * @OA\Get(
- *     path="/api/client/{data}",
- *     tags={"Client"},
- *     summary="Searching a client",
- *    @OA\Parameter(
- *        name="query",
- *        in="query",
- *        description="The variable we need to share the information all over the function",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=200,
- *        description="Client found"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="Client not found"
- *    )
- * )
- */
-
- public function searchClient(Request $request)
- {
-     $searchtext = $request->searchtext;
-     $client= Client::where('id', 'like', '%'.$searchtext.'%')->orWhere('dni', 'like', '%'.$searchtext.'%')
+     * This function will alow you to search for an specific client by his/her id, dni or name and surname.
+     *
+     * @OA\Get(
+     *     path="/api/client/{data}",
+     *     tags={"Client"},
+     *     summary="Searching a client",
+     *    @OA\Parameter(
+     *        name="query",
+     *        in="query",
+     *        description="The variable we need to share the information all over the function",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Client found"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="Client not found"
+     *    )
+     * )
+     */
+    public function searchClient(Request $request)
+    {
+        $searchtext = $request->searchtext;
+        $client = Client::where('id', 'like', '%'.$searchtext.'%')->orWhere('dni', 'like', '%'.$searchtext.'%')
      ->orWhere('name', 'like', '%'.$searchtext.'%')
      ->orWhere('surname', 'like', '%'.$searchtext.'%')->first();
-     if ($client) {
-         return response()->json([
-             'status' => 1,
-             'message' => 'CLIENT FOUND',
-             "data"=>$client
-         ], 200);
-     }
+        if ($client) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'CLIENT FOUND',
+                'data'=>$client,
+            ], 200);
+        }
 
-     return response()->json([
-         'status' => 0,
-         'message' => 'CLIENT NOT FOUND',
-     ], 404);
- }
+        return response()->json([
+            'status' => 0,
+            'message' => 'CLIENT NOT FOUND',
+        ], 404);
+    }
 
-     /**
- * This function will alow you to search for an specific client by his/her id, dni or name and surname.
- *
- * @OA\Get(
- *     path="/api/client/{id}",
- *     tags={"Client"},
- *     summary="Searching a client",
- *    @OA\Parameter(
- *        name="query",
- *        in="query",
- *        description="The variable we need to share the information all over the function",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=200,
- *        description="Client found"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="Client not found"
- *    )
- * )
- */
+    /**
+     * This function will alow you to search for an specific client by his/her id, dni or name and surname.
+     *
+     * @OA\Get(
+     *     path="/api/client/{id}",
+     *     tags={"Client"},
+     *     summary="Searching a client",
+     *    @OA\Parameter(
+     *        name="query",
+     *        in="query",
+     *        description="The variable we need to share the information all over the function",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Client found"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="Client not found"
+     *    )
+     * )
+     */
+    public function searchClientByid(Request $request)
+    {
+        $id = $request->id;
+        $client = Client::where('id', $id)->first();
 
- public function searchClientByid(Request $request)
- {
+        if ($client) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'GET USER BY ID '.$id,
+                'data'=>$client,
+            ], 200);
+        }
 
-     $id = $request->id;
-     $client= Client::where('id', $id)->first();
+        return response()->json([
+            'status' => -1,
+            'message' => 'EMPTY',
+        ], 404);
+    }
 
-     if ($client) {
-         return response()->json([
-             'status' => 1,
-             'message' => 'GET USER BY ID '.$id,
-             "data"=>$client
-         ], 200);
-     }
-
-     return response()->json([
-         'status' => -1,
-         'message' => 'EMPTY',
-     ], 404);
- }
-/**
- * This function will add a new client in the database knowing that dnis can't be the same and showing an error message in case of repetition.
- *
- * @OA\Post(
- *     path="/api/client/add",
- *     tags={"Client"},
- *     summary="Adding a new client",
- *    @OA\Parameter(
- *        name="request",
- *        in="query",
- *        description="It's used for making a request",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=400,
- *        description="The validation has fail"
- *    ),
- *    @OA\Response(
- *        response=201,
- *        description="Client created successfully"
- *    )
- * )
- */
-
+    /**
+     * This function will add a new client in the database knowing that dnis can't be the same and showing an error message in case of repetition.
+     *
+     * @OA\Post(
+     *     path="/api/client/add",
+     *     tags={"Client"},
+     *     summary="Adding a new client",
+     *    @OA\Parameter(
+     *        name="request",
+     *        in="query",
+     *        description="It's used for making a request",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=400,
+     *        description="The validation has fail"
+     *    ),
+     *    @OA\Response(
+     *        response=201,
+     *        description="Client created successfully"
+     *    )
+     * )
+     */
     public function addClient(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'dni' => 'required|unique:clients',
         ]);
@@ -256,32 +249,29 @@ class ClientController extends Controller
         return response()->json(['message' => 'CLIENT CREATED SUCCESSFULLY'], 201);
     }
 
-
-
-/**
- * This function will alow you to edit an specific client by his/her id.
- *
- * @OA\Put(
- *     path="/api/client/edit/{id}",
- *     tags={"Client"},
- *     summary="Editing a client",
- *    @OA\Parameter(
- *        name="request",
- *        in="query",
- *        description="It's used for making a request",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=200,
- *        description="Client deleted"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="No client deleted"
- *    )
- * )
- */
-
+    /**
+     * This function will alow you to edit an specific client by his/her id.
+     *
+     * @OA\Put(
+     *     path="/api/client/edit/{id}",
+     *     tags={"Client"},
+     *     summary="Editing a client",
+     *    @OA\Parameter(
+     *        name="request",
+     *        in="query",
+     *        description="It's used for making a request",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Client deleted"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="No client deleted"
+     *    )
+     * )
+     */
     public function editById(Request $request)
     {
         $client = Client::findOrFail($request->id);
@@ -303,30 +293,29 @@ class ClientController extends Controller
         return $client;
     }
 
-/**
- * This function will alow you to delete an specific client by his/her id.
- *
- * @OA\Delete(
- *     path="/api/client/delete/{id}",
- *     tags={"Client"},
- *     summary="Deleting a client",
- *    @OA\Parameter(
- *        name="id",
- *        in="query",
- *        description="The variable we need to identify each client",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=200,
- *        description="Client deleted"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="No client deleted"
- *    )
- * )
- */
-
+    /**
+     * This function will alow you to delete an specific client by his/her id.
+     *
+     * @OA\Delete(
+     *     path="/api/client/delete/{id}",
+     *     tags={"Client"},
+     *     summary="Deleting a client",
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="query",
+     *        description="The variable we need to identify each client",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Client deleted"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="No client deleted"
+     *    )
+     * )
+     */
     public function deleteById(Request $request)
     {
         $id = $request->id;
@@ -334,7 +323,7 @@ class ClientController extends Controller
         if ($client) {
             return response()->json([
                 'status' => 1,
-                'message' => 'CLIENT WHITH ID '.$id . ' SUCCESSFULLY DELETED',
+                'message' => 'CLIENT WHITH ID '.$id.' SUCCESSFULLY DELETED',
             ], 200);
         }
 
@@ -344,30 +333,29 @@ class ClientController extends Controller
         ], 404);
     }
 
-/**
- * This function will alow you to destroy all client records.
- *
- * @OA\Delete(
- *     path="/api/client/delete/all",
- *     tags={"Client"},
- *     summary="Deleting all the clients",
- *    @OA\Parameter(
- *        name="request",
- *        in="query",
- *        description="It's used for making a request",
- *        required=true
- *    ),
- *    @OA\Response(
- *        response=200,
- *        description="Clients deleted"
- *    ),
- *    @OA\Response(
- *        response=404,
- *        description="No clients deleted"
- *    )
- * )
- */
-
+    /**
+     * This function will alow you to destroy all client records.
+     *
+     * @OA\Delete(
+     *     path="/api/client/delete/all",
+     *     tags={"Client"},
+     *     summary="Deleting all the clients",
+     *    @OA\Parameter(
+     *        name="request",
+     *        in="query",
+     *        description="It's used for making a request",
+     *        required=true
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Clients deleted"
+     *    ),
+     *    @OA\Response(
+     *        response=404,
+     *        description="No clients deleted"
+     *    )
+     * )
+     */
     public function deleteAll(Request $request)
     {
         if ($request->isMethod('delete')) {
@@ -377,8 +365,8 @@ class ClientController extends Controller
                 'status' => 1,
                 'message' => 'ALL RECORDS HAVE BEEN DELETED',
             ], 200);
-
         }
+
         return response()->json([
             'status' => -1,
             'message' => 'ERROR',
@@ -387,7 +375,7 @@ class ClientController extends Controller
 
     public function getPhotosUrl(Request $request)
     {
-        try{
+        try {
             $client = Client::findOrFail($request->id);
 
             $images = $client->photoUrls;
@@ -396,19 +384,19 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             // Error al eliminar la imagen
             return response()->json(['error' => 'Error al traer imagenes'], 500);
-        }    
+        }
     }
 
     public function storePhotoUrl(Request $request)
     {
-        try{
+        try {
             // Validar la solicitud y asegurarse de que se haya enviado una imagen
             $client = Client::findOrFail($request->id);
 
             // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
 
             $photoUrl = new PhotoUrl([
-                'url' => $request->url
+                'url' => $request->url,
             ]);
 
             $client->photoUrls()->save($photoUrl);
@@ -425,30 +413,29 @@ class ClientController extends Controller
 
     public function deletePhotoUrl(Request $request)
     {
-        try{
+        try {
             $client = Client::findOrFail($request->id);
 
             try {
                 // Buscar la imagen en Cloudinary
-                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $search = 'folder:iestablero public_id:'.$request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
-    
+
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
                     return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
                 }
-    
+
                 // Eliminar la imagen de Cloudinary
                 $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
                     'invalidate' => true,
-                    'folder' => 'iestablero'
+                    'folder' => 'iestablero',
                 ]);
-                
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
                 return response()->json(['error' => $e], 500);
             }
-            
+
             // Verificar que la imagen exista para el usuario
             $photoUrl = $client->photoUrls()->findOrFail($request->photo_id);
 

@@ -15,7 +15,7 @@ class CreatePhotoUrlsTable extends Migration
     {
         Schema::create('photo_urls', function (Blueprint $table) {
             $table->id();
-            $table->string('url'); 
+            $table->string('url');
             $table->morphs('imageable'); // Polymorphic relationship
             $table->timestamps();
         });

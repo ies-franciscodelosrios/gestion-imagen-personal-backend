@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PhotoUrl;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,7 +35,7 @@ class UsersController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'ALL USERS',
-                "data" => $users
+                'data' => $users,
             ], 200);
         }
 
@@ -71,7 +71,7 @@ class UsersController extends Controller
                 'status' => 1,
                 'message' => 'ALL STUDENTS',
                 'count' => $count,
-                "data" => $users
+                'data' => $users,
             ], 200);
         }
 
@@ -107,7 +107,7 @@ class UsersController extends Controller
                 'status' => 1,
                 'message' => 'ALL PROFESSORS',
                 'count' => $count,
-                "data" => $users
+                'data' => $users,
             ], 200);
         }
 
@@ -116,6 +116,7 @@ class UsersController extends Controller
             'message' => 'EMPTY',
         ], 404);
     }
+
     /**
      * Display a user based on their id.
      *
@@ -141,15 +142,14 @@ class UsersController extends Controller
      */
     public function getUserByID(Request $request)
     {
-
         $id = $request->id;
         $users = User::where('id', $id)->first();
 
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
-                "data" => $users
+                'message' => 'GET USER BY ID '.$id,
+                'data' => $users,
             ], 200);
         }
 
@@ -158,6 +158,7 @@ class UsersController extends Controller
             'message' => 'EMPTY',
         ], 404);
     }
+
     /**
      * Display a user based on their dni.
      *
@@ -188,8 +189,8 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY dni ' . $dni,
-                "data" => $users
+                'message' => 'GET USER BY dni '.$dni,
+                'data' => $users,
             ], 200);
         }
 
@@ -198,6 +199,7 @@ class UsersController extends Controller
             'message' => 'EMPTY',
         ], 404);
     }
+
     /**
      * Display a user based on their mail.
      *
@@ -228,8 +230,8 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CORREO ' . $email,
-                "data" => $users
+                'message' => 'GET USER BY CORREO '.$email,
+                'data' => $users,
             ], 200);
         }
 
@@ -269,8 +271,8 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY NAME ' . $name,
-                "data" => $users
+                'message' => 'GET USER BY NAME '.$name,
+                'data' => $users,
             ], 200);
         }
 
@@ -310,8 +312,8 @@ class UsersController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
-                "data" => $users
+                'message' => 'GET USER BY COURSE YEAR '.$course_year,
+                'data' => $users,
             ], 200);
         }
 
@@ -351,8 +353,8 @@ class UsersController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY cycle ' . $cycle,
-                "data" => $users
+                'message' => 'GET USER BY cycle '.$cycle,
+                'data' => $users,
             ], 200);
         }
 
@@ -426,6 +428,7 @@ class UsersController extends Controller
 
         $user->save();
     }
+
     /**
      * Adds a all students to the database from a json file.
      *
@@ -443,8 +446,9 @@ class UsersController extends Controller
      *     )
      * )
      */
-
-    public function addAllStudent() {}
+    public function addAllStudent()
+    {
+    }
 
     /**
      * Adds a all professor to the database from a json file.
@@ -463,8 +467,9 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor() {}
-
+    public function addAllProfessor()
+    {
+    }
 
     /**
      * Updates an user based on their id
@@ -543,7 +548,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS ' . $id,
+                'message' => 'USER DELETE WHITH ID IS '.$id,
             ], 200);
         }
 
@@ -552,7 +557,6 @@ class UsersController extends Controller
             'message' => 'EMPTY',
         ], 404);
     }
-
 
     /**
      * Remove an user based on their rol
@@ -611,7 +615,7 @@ class UsersController extends Controller
     {
         try {
             // Buscar la imagen en Cloudinary
-            $search = 'folder:iestablero public_id:' . $request->public_id;
+            $search = 'folder:iestablero public_id:'.$request->public_id;
             $images = Cloudinary::search()->expression($search)->execute();
 
             // Verificar si se encontró la imagen
@@ -620,9 +624,9 @@ class UsersController extends Controller
             }
 
             // Eliminar la imagen de Cloudinary
-            $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
+            $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
                 'invalidate' => true,
-                'folder' => 'iestablero'
+                'folder' => 'iestablero',
             ]);
 
             // Verificar si la eliminación fue exitosa
@@ -684,7 +688,7 @@ class UsersController extends Controller
             // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
 
             $photoUrl = new PhotoUrl([
-                'url' => $request->url
+                'url' => $request->url,
             ]);
 
             $user->photoUrls()->save($photoUrl);
@@ -706,7 +710,7 @@ class UsersController extends Controller
 
             try {
                 // Buscar la imagen en Cloudinary
-                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $search = 'folder:iestablero public_id:'.$request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
 
                 // Verificar si se encontró la imagen
@@ -715,11 +719,10 @@ class UsersController extends Controller
                 }
 
                 // Eliminar la imagen de Cloudinary
-                $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
+                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
                     'invalidate' => true,
-                    'folder' => 'iestablero'
+                    'folder' => 'iestablero',
                 ]);
-
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
                 return response()->json(['error' => $e], 500);
@@ -741,5 +744,4 @@ class UsersController extends Controller
             return response()->json(['error' => 'Error al eliminar imagen'], 500);
         }
     }
-
 }

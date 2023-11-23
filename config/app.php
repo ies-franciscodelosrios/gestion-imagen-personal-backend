@@ -177,7 +177,6 @@ return [
         L5Swagger\L5SwaggerServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
 
-
     ],
 
     /*

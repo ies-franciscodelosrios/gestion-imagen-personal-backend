@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\PhotoUrl;
-use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @OA\Info(title="API PERICLES", version="1.0")
@@ -46,7 +44,7 @@ class AppointmentController extends Controller
                 'status' => 1,
                 'message' => 'ALL APPOINTMENTS',
                 'count' => $count,
-                "data" => $appointment
+                'data' => $appointment,
             ], 200);
         }
 
@@ -59,15 +57,15 @@ class AppointmentController extends Controller
     public function getAppointmentsByDniStudent(Request $request)
     {
         $query = Appointment::query();
-    
+
         if ($request->has('dni_student') && strlen($request->dni_student) === 9) {
             $query->where('dni_student', $request->dni_student);
         }
-    
+
         if ($request->has('dni_client') && strlen($request->dni_client) === 9) {
             $query->where('dni_client', $request->dni_client);
         }
-    
+
         // Cargar relaciones de usuario y cliente
         $query->with('student', 'client');
 
@@ -75,18 +73,18 @@ class AppointmentController extends Controller
         if ($request->has('searchtext')) {
             $searchText = $request->input('searchtext');
             $query->where(function ($q) use ($searchText) {
-                $q->where('treatment', 'like', '%' . $searchText . '%')
-                    ->orWhere('protocol', 'like', '%' . $searchText . '%')
-                    ->orWhere('consultancy', 'like', '%' . $searchText . '%')
-                    ->orWhere('tracking', 'like', '%' . $searchText . '%')
-                    ->orWhere('date', 'like', '%' . $searchText . '%')
-                    ->orWhere('survey', 'like', '%' . $searchText . '%')
+                $q->where('treatment', 'like', '%'.$searchText.'%')
+                    ->orWhere('protocol', 'like', '%'.$searchText.'%')
+                    ->orWhere('consultancy', 'like', '%'.$searchText.'%')
+                    ->orWhere('tracking', 'like', '%'.$searchText.'%')
+                    ->orWhere('date', 'like', '%'.$searchText.'%')
+                    ->orWhere('survey', 'like', '%'.$searchText.'%')
                     ->orWhereHas('student', function ($q) use ($searchText) {
-                        $q->where('name', 'like', '%' . $searchText . '%')
-                            ->orWhere('surname', 'like', '%' . $searchText . '%');
+                        $q->where('name', 'like', '%'.$searchText.'%')
+                            ->orWhere('surname', 'like', '%'.$searchText.'%');
                     })
                     ->orWhereHas('client', function ($q) use ($searchText) {
-                        $q->where('name', 'like', '%' . $searchText . '%');
+                        $q->where('name', 'like', '%'.$searchText.'%');
                     });
             });
         }
@@ -94,10 +92,9 @@ class AppointmentController extends Controller
         // Paginar los resultados
         $perPage = $request->input('perpage', 10);
         $appointments = $query->paginate($perPage, ['*'], 'page', $request->input('page', 1));
-    
+
         return response()->json($appointments);
     }
-
 
     /**
      * Find appointment by id.
@@ -129,8 +126,8 @@ class AppointmentController extends Controller
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND ID: ' . $id,
-                "data" => $appointment
+                'message' => 'FOUND ID: '.$id,
+                'data' => $appointment,
             ], 200);
         }
 
@@ -170,8 +167,8 @@ class AppointmentController extends Controller
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND CLIENT dni: ' . $dni,
-                "data" => $appointment
+                'message' => 'FOUND CLIENT dni: '.$dni,
+                'data' => $appointment,
             ], 200);
         }
 
@@ -211,8 +208,8 @@ class AppointmentController extends Controller
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'FOUND STUDENT dni: ' . $dni,
-                "data" => $appointment
+                'message' => 'FOUND STUDENT dni: '.$dni,
+                'data' => $appointment,
             ], 200);
         }
 
@@ -335,8 +332,8 @@ class AppointmentController extends Controller
         if ($appointment) {
             return response()->json([
                 'status' => 1,
-                'message' => 'REGISTRY WITH ID: ' . $id . ' DELETED',
-                "data" => $appointment
+                'message' => 'REGISTRY WITH ID: '.$id.' DELETED',
+                'data' => $appointment,
             ], 200);
         }
 
@@ -346,10 +343,9 @@ class AppointmentController extends Controller
         ], 404);
     }
 
-
     public function getPhotosUrl(Request $request)
     {
-        try{
+        try {
             $appointment = Appointment::findOrFail($request->id);
 
             $images = $appointment->photoUrls;
@@ -358,19 +354,19 @@ class AppointmentController extends Controller
         } catch (\Exception $e) {
             // Error al eliminar la imagen
             return response()->json(['error' => 'Error al traer imagenes'], 500);
-        }    
+        }
     }
 
     public function storePhotoUrl(Request $request)
     {
-        try{
+        try {
             // Validar la solicitud y asegurarse de que se haya enviado una imagen
             $appointment = Appointment::findOrFail($request->id);
 
             // Guardar la imagen en un almacenamiento, por ejemplo, utilizando el almacenamiento local de Laravel o servicios en la nube como AWS S3
 
             $photoUrl = new PhotoUrl([
-                'url' => $request->url
+                'url' => $request->url,
             ]);
 
             $appointment->photoUrls()->save($photoUrl);
@@ -387,30 +383,29 @@ class AppointmentController extends Controller
 
     public function deletePhotoUrl(Request $request)
     {
-        try{
+        try {
             $appointment = Appointment::findOrFail($request->id);
 
             try {
                 // Buscar la imagen en Cloudinary
-                $search = 'folder:iestablero public_id:' . $request->public_id;
+                $search = 'folder:iestablero public_id:'.$request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
-    
+
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
                     return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
                 }
-    
+
                 // Eliminar la imagen de Cloudinary
                 $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
                     'invalidate' => true,
-                    'folder' => 'iestablero'
+                    'folder' => 'iestablero',
                 ]);
-                
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
                 return response()->json(['error' => $e], 500);
             }
-            
+
             // Verificar que la imagen exista para el usuario
             $photoUrl = $appointment->photoUrls()->findOrFail($request->photo_id);
 
@@ -427,5 +422,4 @@ class AppointmentController extends Controller
             return response()->json(['error' => 'Error al eliminar imagen'], 500);
         }
     }
-
 }

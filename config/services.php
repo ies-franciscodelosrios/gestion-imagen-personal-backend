@@ -34,6 +34,5 @@ return [
         'api_key' => '269882361552326',
         'api_secret' => 'seHWgQJqGzNUu4ypLSgynXOrHE4',
     ],
-    
 
 ];

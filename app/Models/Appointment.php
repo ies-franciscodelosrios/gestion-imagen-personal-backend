@@ -29,7 +29,7 @@ class Appointment extends Model
     {
         return $this->belongsTo(Client::class, 'dni_client', 'dni');
     }
-    
+
     public function photoUrls()
     {
         return $this->morphMany(PhotoUrl::class, 'imageable');

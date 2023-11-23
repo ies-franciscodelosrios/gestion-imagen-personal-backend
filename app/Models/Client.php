@@ -23,7 +23,7 @@ class Client extends Model
         'asthetic_routine',
         'hairdressing_routine',
     ];
-    
+
     public function photoUrls()
     {
         return $this->morphMany(PhotoUrl::class, 'imageable');

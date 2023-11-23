@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'dni' => '31000000u',
                 'rol' => 1,
                 'course_year' => now(),
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '31000002u',
                 'rol' => 1,
                 'course_year' => now(),
@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '31000001u',
                 'rol' => 1,
                 'course_year' => now(),
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
 
                 'dni' => '31000003u',
                 'rol' => 1,
@@ -97,7 +97,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '31000004u',
                 'rol' => 1,
                 'course_year' => now(),
@@ -112,7 +112,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '32000000u',
                 'rol' => 2,
                 'course_year' => now(),
@@ -127,7 +127,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '32000001u',
                 'rol' => 2,
                 'course_year' => now(),
@@ -142,7 +142,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '32000002u',
                 'rol' => 2,
                 'course_year' => now(),
@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ],[
+            ], [
                 'dni' => '32000003u',
                 'rol' => 2,
                 'course_year' => now(),
@@ -172,7 +172,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-            ]
+            ],
         ]);
 
         /**
@@ -194,7 +194,7 @@ class DatabaseSeeder extends Seeder
                 'hairdressing_routine' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'dni' => '32000000c',
                 'name' => 'Fernando',
                 'surname' => 'Caravaca',
@@ -209,7 +209,7 @@ class DatabaseSeeder extends Seeder
                 'hairdressing_routine' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'dni' => '33000000c',
                 'name' => 'Gonzalo',
                 'surname' => 'Bretones',
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                 'hairdressing_routine' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'dni' => '34000000c',
                 'name' => 'Jose Luis',
                 'surname' => 'Carretero',
@@ -239,7 +239,7 @@ class DatabaseSeeder extends Seeder
                 'hairdressing_routine' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'dni' => '35000000c',
                 'name' => 'Jose Ángel',
                 'surname' => 'Marín',
@@ -254,9 +254,7 @@ class DatabaseSeeder extends Seeder
                 'hairdressing_routine' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
-
-
     }
 }
