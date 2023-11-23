@@ -8,7 +8,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of Users.
@@ -148,7 +148,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID '.$id,
+                'message' => 'GET USER BY ID ' . $id,
                 'data' => $users,
             ], 200);
         }
@@ -189,7 +189,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY dni '.$dni,
+                'message' => 'GET USER BY dni ' . $dni,
                 'data' => $users,
             ], 200);
         }
@@ -230,7 +230,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CORREO '.$email,
+                'message' => 'GET USER BY CORREO ' . $email,
                 'data' => $users,
             ], 200);
         }
@@ -271,7 +271,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY NAME '.$name,
+                'message' => 'GET USER BY NAME ' . $name,
                 'data' => $users,
             ], 200);
         }
@@ -312,7 +312,7 @@ class UsersController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR '.$course_year,
+                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
                 'data' => $users,
             ], 200);
         }
@@ -353,7 +353,7 @@ class UsersController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY cycle '.$cycle,
+                'message' => 'GET USER BY cycle ' . $cycle,
                 'data' => $users,
             ], 200);
         }
@@ -446,9 +446,7 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function addAllStudent()
-    {
-    }
+    public function addAllStudent() {}
 
     /**
      * Adds a all professor to the database from a json file.
@@ -467,9 +465,7 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor()
-    {
-    }
+    public function addAllProfessor() {}
 
     /**
      * Updates an user based on their id
@@ -548,7 +544,7 @@ class UsersController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS '.$id,
+                'message' => 'USER DELETE WHITH ID IS ' . $id,
             ], 200);
         }
 
@@ -615,7 +611,7 @@ class UsersController extends Controller
     {
         try {
             // Buscar la imagen en Cloudinary
-            $search = 'folder:iestablero public_id:'.$request->public_id;
+            $search = 'folder:iestablero public_id:' . $request->public_id;
             $images = Cloudinary::search()->expression($search)->execute();
 
             // Verificar si se encontró la imagen
@@ -624,7 +620,7 @@ class UsersController extends Controller
             }
 
             // Eliminar la imagen de Cloudinary
-            $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+            $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
                 'invalidate' => true,
                 'folder' => 'iestablero',
             ]);
@@ -710,7 +706,7 @@ class UsersController extends Controller
 
             try {
                 // Buscar la imagen en Cloudinary
-                $search = 'folder:iestablero public_id:'.$request->public_id;
+                $search = 'folder:iestablero public_id:' . $request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
 
                 // Verificar si se encontró la imagen
@@ -719,7 +715,7 @@ class UsersController extends Controller
                 }
 
                 // Eliminar la imagen de Cloudinary
-                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
                     'invalidate' => true,
                     'folder' => 'iestablero',
                 ]);
