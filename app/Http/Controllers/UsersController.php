@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-
     /**
      * Display a listing of Users.
      *
@@ -445,9 +444,7 @@ class UsersController extends Controller
      * )
      */
 
-    public function addAllStudent()
-    {
-    }
+    public function addAllStudent() {}
 
     /**
      * Adds a all professor to the database from a json file.
@@ -466,9 +463,7 @@ class UsersController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor()
-    {
-    }
+    public function addAllProfessor() {}
 
 
     /**
@@ -505,7 +500,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         if (strlen($request->password) > 8) {
             $user->password = Hash::make($request->password);
-        } else if (strlen($request->password) >= 1) {
+        } elseif (strlen($request->password) >= 1) {
             return response()->json([
                 'status' => -1,
                 'message' => 'La contraseña debe ser de 8 caracteres al menos.',
@@ -625,11 +620,11 @@ class UsersController extends Controller
             }
 
             // Eliminar la imagen de Cloudinary
-            $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+            $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
                 'invalidate' => true,
                 'folder' => 'iestablero'
             ]);
-            
+
             // Verificar si la eliminación fue exitosa
             if ($result['result'] === 'ok') {
                 return response()->json(['message' => 'La imagen se eliminó correctamente'], 200);
@@ -644,7 +639,7 @@ class UsersController extends Controller
 
     public function getAllImages()
     {
-        try{
+        try {
             // Obtener todas las imágenes de Cloudinary
             $images = Cloudinary::search()->expression('folder:iestablero')->execute();
 
@@ -668,7 +663,7 @@ class UsersController extends Controller
 
     public function getPhotosUrl(Request $request)
     {
-        try{
+        try {
             $user = User::findOrFail($request->id);
 
             $images = $user->photoUrls;
@@ -677,12 +672,12 @@ class UsersController extends Controller
         } catch (\Exception $e) {
             // Error al eliminar la imagen
             return response()->json(['error' => 'Error al traer imagenes'], 500);
-        }    
+        }
     }
 
     public function storePhotoUrl(Request $request)
     {
-        try{
+        try {
             // Validar la solicitud y asegurarse de que se haya enviado una imagen
             $user = User::findOrFail($request->id);
 
@@ -706,30 +701,30 @@ class UsersController extends Controller
 
     public function deletePhotoUrl(Request $request)
     {
-        try{
+        try {
             $user = User::findOrFail($request->id);
 
             try {
                 // Buscar la imagen en Cloudinary
                 $search = 'folder:iestablero public_id:' . $request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
-    
+
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
                     return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
                 }
-    
+
                 // Eliminar la imagen de Cloudinary
-                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
                     'invalidate' => true,
                     'folder' => 'iestablero'
                 ]);
-                
+
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
                 return response()->json(['error' => $e], 500);
             }
-            
+
             // Verificar que la imagen exista para el usuario
             $photoUrl = $user->photoUrls()->findOrFail($request->photo_id);
 
