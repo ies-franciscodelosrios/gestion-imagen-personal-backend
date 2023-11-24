@@ -14,14 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 /* Auth */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-
 Route::middleware('auth:sanctum')
     ->get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
@@ -81,13 +77,16 @@ Route::middleware('auth:sanctum')->delete('/client/delete-photo-url', [App\Http\
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
 /*  METODOS GET DE User */
-Route::middleware('auth:sanctum')->get('/users', [App\Http\Controllers\UserController::class, 'getAll']);
-Route::middleware('auth:sanctum')->get('/users/rol/2', [App\Http\Controllers\UserController::class, 'getAllStudents']);
-Route::middleware('auth:sanctum')->get('/users/rol/1', [App\Http\Controllers\UserController::class, 'getAllProfessor']);
+
+Route::middleware('auth:sanctum')->get('/user', [App\Http\Controllers\UserController::class, 'getUserLogged']);
+Route::middleware('auth:sanctum')->get('/user/id/{id}', [App\Http\Controllers\UserController::class, 'getUserByIdParam']);
 Route::middleware('auth:sanctum')->get('/user/id', [App\Http\Controllers\UserController::class, 'getUserByID']);
 Route::middleware('auth:sanctum')->get('/userbyemail', [App\Http\Controllers\UserController::class, 'getUserByCorreo']);
 Route::middleware('auth:sanctum')->get('/userbydni', [App\Http\Controllers\UserController::class, 'getUserBydni']);
 Route::middleware('auth:sanctum')->get('/user/student/name', [App\Http\Controllers\UserController::class, 'getUserByname']);
+Route::middleware('auth:sanctum')->get('/users', [App\Http\Controllers\UserController::class, 'getAll']);
+Route::middleware('auth:sanctum')->get('/users/rol/2', [App\Http\Controllers\UserController::class, 'getAllStudents']);
+Route::middleware('auth:sanctum')->get('/users/rol/1', [App\Http\Controllers\UserController::class, 'getAllProfessor']);
 Route::middleware('auth:sanctum')->get('/users/course', [App\Http\Controllers\UserController::class, 'getUserByCourse']);
 Route::middleware('auth:sanctum')->get('/users/cycle', [App\Http\Controllers\UserController::class, 'getUserBycycle']);
 Route::middleware('auth:sanctum')->get('/user/get-photos', [App\Http\Controllers\UserController::class, 'getPhotosUrl']);
@@ -108,7 +107,6 @@ Route::middleware('auth:sanctum')->delete('/user/delete/rol', [App\Http\Controll
 Route::middleware('auth:sanctum')->delete('/delete-cloudinary', [App\Http\Controllers\UserController::class, 'deleteImage']);
 Route::middleware('auth:sanctum')->delete('/user/delete-photo-url', [App\Http\Controllers\UserController::class, 'deletePhotoUrl']);
 Route::middleware('auth:sanctum')->get('/get-cloudinary', [App\Http\Controllers\UserController::class, 'getAllImages']);
+//Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
 
-/* Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
- */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */

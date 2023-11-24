@@ -7,42 +7,78 @@ use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of Users.
+     * Display logged user.
      *
      * @OA\Get(
-     *     path="/api/users",
+     *     path="/api/user",
      *     tags={"Users"},
-     *     summary="Shows all the users ",
-     *       @OA\Response(
-     *          response=200,
-     *         description="List all the users of the database"
+     *     summary="Shows logged user",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Display logged user."
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function getAll()
+    public function getUserLogged(Request $request)
     {
-        $users = User::all();
+        //Log::debug($request->user('api'));
+        return $request->user();
+    }
 
-        if ($users) {
+    /**
+     * Display all users.
+     *
+     * @OA\Get(
+     *     path="/api/users",
+     *     tags={"Users"},
+     *     summary="Display all users.",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List all users"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     */
+    public function getAll(Request $request)
+    {
+        if ($request->user('api')->rol == '0') {
+            $users = User::all();
+
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'ALL USERS',
+                    'data' => $users,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'ALL USERS',
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'NO USERS FOUND',
+            ], 400);
+
+        } else {
+
+            return response()->json([
+                'status' => -1,
+                'message' => 'Unauthorized',
+            ], 401);
+
         }
 
-        return response()->json([
-            'status' => -1,
-            'message' => 'VACIO',
-        ], 404);
+
     }
 
     /**
@@ -121,6 +157,48 @@ class UserController extends Controller
      * Display a user based on their id.
      *
      * @OA\Get(
+     *     path="/api/users/user/id/{id}",
+     *     tags={"Users"},
+     *     summary="Shows an user based on a id",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="Get User By Id ",
+     *         required=true,
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *         description="Shows all the information about of a user based that matches an id"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     */
+    public function getUserByID(Request $request)
+    {
+        $id = $request->id;
+        $users = User::where('id', $id)->first();
+
+        if ($users) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'GET USER BY ID ' . $id,
+                'data' => $users,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'EMPTY',
+        ], 404);
+    }
+
+    /**
+     * Display a user based on their id.
+     *
+     * @OA\Get(
      *     path="/api/users/user/{id}",
      *     tags={"Users"},
      *     summary="Shows an user based on a id",
@@ -140,7 +218,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserByID(Request $request)
+    public function getUserByIdParam(Request $request)
     {
         $id = $request->id;
         $users = User::where('id', $id)->first();
