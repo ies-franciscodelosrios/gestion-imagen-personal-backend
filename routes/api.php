@@ -52,12 +52,13 @@ Route::middleware('auth:sanctum')->delete('/appointment/delete-photo-url', [App\
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
 /*  METODOS GET DE Client */
-Route::middleware('auth:sanctum')->get('/clients/paged', [App\Http\Controllers\ClientController::class, 'getClientPaged']);
-Route::middleware('auth:sanctum')->get('/clients', [App\Http\Controllers\ClientController::class, 'getClientAll']);
-Route::middleware('auth:sanctum')->get('/client/data', [App\Http\Controllers\ClientController::class, 'searchClient']);
+
 Route::middleware('auth:sanctum')->get('/client/id', [App\Http\Controllers\ClientController::class, 'searchClientByid']);
+Route::middleware('auth:sanctum')->get('/client/data', [App\Http\Controllers\ClientController::class, 'searchClient']);
 Route::middleware('auth:sanctum')->get('/client/stats', [App\Http\Controllers\ClientController::class, 'getStats']);
 Route::middleware('auth:sanctum')->get('/client/get-photos', [App\Http\Controllers\ClientController::class, 'getPhotosUrl']);
+Route::middleware('auth:sanctum')->get('/clients', [App\Http\Controllers\ClientController::class, 'getClientAll']);
+Route::middleware('auth:sanctum')->get('/clients/paged', [App\Http\Controllers\ClientController::class, 'getClientPaged']);
 
 /*  METODOS POST DE Client */
 Route::middleware('auth:sanctum')->post('/client', [App\Http\Controllers\ClientController::class, 'addClient']);
