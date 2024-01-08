@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ciclo_Formativo extends Model
+class VocationalEducation extends Model
 {
     use HasFactory;
 
@@ -25,6 +25,4 @@ class Ciclo_Formativo extends Model
     {
         return $this->hasMany(User::class);
     }
-
-
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ciclo__formativos', function (Blueprint $table) {
+        Schema::create('vocational_education', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('short_name');
             $table->string('long_name');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ciclo__formativos');
+        Schema::dropIfExists('vocational_education');
     }
 };
