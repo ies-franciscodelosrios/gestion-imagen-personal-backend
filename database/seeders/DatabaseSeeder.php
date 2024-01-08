@@ -20,6 +20,46 @@ class DatabaseSeeder extends Seeder
         /**
          * Database users seeders
          */
+
+         DB::table('ciclo__formativos')->insert([
+            [
+                'short_name' => 'FPB',
+                'long_name' => 'FPB Peluquería y estética',
+                'description' => 'Formación Profesional Básica de Peluquería y estética',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'short_name' => 'GM',
+                'long_name' => 'GM Peluquería y cosmética capilar',
+                'description' => 'Grado Medio de Peluquería y cosmética capilar',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'short_name' => 'GM',
+                'long_name' => 'GM Estética y belleza',
+                'description' => 'Grado Medio de Estética y belleza',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'short_name' => 'GS',
+                'long_name' => 'GS Estética integral y bienestar',
+                'description' => 'Grado Superior de Estética integral y bienestar',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'short_name' => 'GS',
+                'long_name' => 'GS estilismo y dirección de peluquería',
+                'description' => 'Grado Superior de estilismo y dirección de peluquería',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+         ]);
+
         DB::table('users')->insert([
             [
 
