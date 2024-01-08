@@ -16,7 +16,7 @@ class AlterUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('dni')->unique()->nullable();
             $table->integer('rol');
-            $table->date('course_year');
+            $table->string('course_year');
             $table->string('cycle');
             $table->string('surname');
             $table->string('others')->nullable();
