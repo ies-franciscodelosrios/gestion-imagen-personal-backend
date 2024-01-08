@@ -6,6 +6,8 @@
 /public/storage
 /storage/*.key
 /vendor
+.env
+.env.local
 .env.testing
 .phpunit.result.cache
 docker-compose.override.yml
