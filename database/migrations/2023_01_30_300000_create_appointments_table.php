@@ -16,15 +16,15 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->date('date')->nullable();
-            $table->string('dni_client')->nullable();
-            $table->foreign('dni_client')
-                ->references('dni')
+            $table->string('id_client')->nullable();
+            $table->foreign('id_client')
+                ->references('id')
                 ->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->string('dni_student')->nullable();
-            $table->foreign('dni_student')
-                ->references('dni')
+            $table->string('id_student')->nullable();
+            $table->foreign('id_student')
+                ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
