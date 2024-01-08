@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthenticated',
+            'message' => 'Error at LogIn',
         ], 401);
     }
 

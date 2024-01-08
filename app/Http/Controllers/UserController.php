@@ -59,14 +59,14 @@ class UserController extends Controller
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'ALL USERS',
+                    'message' => 'All Users',
                     'data' => $users,
                 ], 200);
             }
 
             return response()->json([
                 'status' => -1,
-                'message' => 'NO USERS FOUND',
+                'message' => 'No Users Found',
             ], 400);
 
         } else {
@@ -105,7 +105,7 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
+                'message' => 'All Students',
                 'count' => $count,
                 'data' => $users,
             ], 200);
@@ -113,8 +113,8 @@ class UserController extends Controller
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No Students Found',
+        ], 400);
     }
 
     /**
@@ -141,7 +141,7 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL PROFESSORS',
+                'message' => 'All Teachers',
                 'count' => $count,
                 'data' => $users,
             ], 200);
@@ -149,8 +149,8 @@ class UserController extends Controller
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No Teachers Found',
+        ], 400);
     }
 
     /**
@@ -184,15 +184,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
+                'message' => 'Get user by ID ' . $id,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -226,15 +226,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
+                'message' => 'Get user by ID ' . $id,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -267,15 +267,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY dni ' . $dni,
+                'message' => 'Get user bu DNI ' . $dni,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -308,15 +308,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY CORREO ' . $email,
+                'message' => 'Get user by email ' . $email,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -349,15 +349,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY NAME ' . $name,
+                'message' => 'Get user by name ' . $name,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -390,15 +390,15 @@ class UserController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
+                'message' => 'Get user by course year ' . $course_year,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => 1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -431,15 +431,15 @@ class UserController extends Controller
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY cycle ' . $cycle,
+                'message' => 'Get user by cycle ' . $cycle,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -524,7 +524,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllStudent() {}
+    public function addAllStudent()
+    {
+    }
 
     /**
      * Adds a all professor to the database from a json file.
@@ -543,7 +545,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor() {}
+    public function addAllProfessor()
+    {
+    }
 
     /**
      * Updates an user based on their id
@@ -579,11 +583,15 @@ class UserController extends Controller
         $user->email = $request->email;
         if (strlen($request->password) > 8) {
             $user->password = Hash::make($request->password);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Password accepted.',
+            ], 200);
         } elseif (strlen($request->password) >= 1) {
             return response()->json([
                 'status' => -1,
-                'message' => 'La contraseña debe ser de 8 caracteres al menos.',
-            ], 404);
+                'message' => 'Password must have at least 8 characters.',
+            ], 400);
         }
         $user->others = $request->others;
 
@@ -622,14 +630,14 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS ' . $id,
+                'message' => 'Delete user by ID ' . $id,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -663,14 +671,14 @@ class UserController extends Controller
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'USER DELETE WHITH rol IS ' + $rol,
+                    'message' => 'Delete user by rol ' + $rol,
                 ], 200);
             }
 
             return response()->json([
                 'status' => -1,
-                'message' => 'EMPTY',
-            ], 404);
+                'message' => 'No User Found',
+            ], 400);
         }
     }
 
@@ -694,7 +702,7 @@ class UserController extends Controller
 
             // Verificar si se encontró la imagen
             if (!$images['resources']) {
-                return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                return response()->json(['message' => 'Image not found in Cloudinary'], 400);
             }
 
             // Eliminar la imagen de Cloudinary
@@ -705,13 +713,13 @@ class UserController extends Controller
 
             // Verificar si la eliminación fue exitosa
             if ($result['result'] === 'ok') {
-                return response()->json(['message' => 'La imagen se eliminó correctamente'], 200);
+                return response()->json(['message' => 'Image deleted succesfully'], 200);
             } else {
-                return response()->json(['message' => $result], 500);
+                return response()->json(['message' => $result], 400);
             }
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => $e], 500);
+            return response()->json(['error' => $e], 400);
         }
     }
 
@@ -723,7 +731,7 @@ class UserController extends Controller
 
             // Verificar si se obtuvieron imágenes
             if (!$images) {
-                return response()->json(['message' => 'No se encontraron imágenes en Cloudinary'], 404);
+                return response()->json(['message' => 'Images not found in Cloudinary'], 400);
             }
 
             // Recorrer las imágenes y obtener las URLs
@@ -735,7 +743,7 @@ class UserController extends Controller
             return response()->json(['images' => $imageUrls], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -749,7 +757,7 @@ class UserController extends Controller
             return response()->json(['images' => $images], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -769,11 +777,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto guardada',
+                'message' => 'Photo saved',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+            return response()->json(['error' => 'Error saving images'], 400);
         }
     }
 
@@ -789,7 +797,7 @@ class UserController extends Controller
 
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
-                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                    return response()->json(['message' => 'Image not found in Cloudinary'], 400);
                 }
 
                 // Eliminar la imagen de Cloudinary
@@ -799,7 +807,7 @@ class UserController extends Controller
                 ]);
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
-                return response()->json(['error' => $e], 500);
+                return response()->json(['error' => $e], 400);
             }
 
             // Verificar que la imagen exista para el usuario
@@ -811,11 +819,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto eliminada',
+                'message' => 'Photo deleted',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+            return response()->json(['error' => 'Error deleting image'], 400);
         }
     }
 }
