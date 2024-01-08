@@ -14,8 +14,6 @@ class Ciclo_Formativo extends Model
         'short_name',
         'long_name',
         'descripcion',
-        'created_at',
-        'updated_at',
     ];
 
     public function photoUrls()

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
          * Database users seeders
          */
 
-         DB::table('users')->insert([
+         DB::table('ciclo__formativos')->insert([
             [
                 'short_name' => 'FPB',
                 'long_name' => 'FPB Peluquería y estética',
