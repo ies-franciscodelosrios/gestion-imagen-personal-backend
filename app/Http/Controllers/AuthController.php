@@ -47,8 +47,8 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthenticated',
-        ], 401);
+            'message' => 'Error at LogIn',
+        ], 400);
     }
 
     public function validateLogin(Request $request)
@@ -95,6 +95,6 @@ class AuthController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'Logout error',
-        ], 401);
+        ], 400);
     }
 }

@@ -53,20 +53,20 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        if ($request->user('api')->rol == '0') {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
             $users = User::all();
 
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'ALL USERS',
+                    'message' => 'All Users',
                     'data' => $users,
                 ], 200);
             }
 
             return response()->json([
                 'status' => -1,
-                'message' => 'NO USERS FOUND',
+                'message' => 'No Users Found',
             ], 400);
 
         } else {
@@ -77,80 +77,37 @@ class UserController extends Controller
             ], 401);
 
         }
-
-
     }
 
-    /**
-     * Display a listing of students.
-     *
-     * @OA\Get(
-     *     path="/api/users/rol/2",
-     *     tags={"Users"},
-     *     summary="Shows all the students ",
-     * @OA\Response(
-     *         response=200,
-     *         description="List all the students of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getAllStudents()
+    public function getUsersBySearch(Request $request)
     {
-        $users = User::where('rol', 2)->get();
-        $count = count($users);
-        if ($users) {
+
+        $search = $request->search;
+        $users = User::where('name', 'LIKE', "%{$search}%")
+            ->orWhere('surname', 'LIKE', "%{$search}%")
+            ->orWhere('course_year', 'LIKE', "%{$search}%")
+            ->orWhere('cycle', 'LIKE', "%{$search}%")
+            ->orWhere('rol', 'LIKE', "%{$search}%")
+            ->get();
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Users found by ' . $search,
+                    'data' => $users,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'ALL STUDENTS',
-                'count' => $count,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No Users Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
-    }
-
-    /**
-     * Display a listing of Professors.
-     *
-     * @OA\Get(
-     *     path="/api/users/rol/1",
-     *     tags={"Users"},
-     *     summary="Shows all the professors ",
-     * @OA\Response(
-     *          response=200,
-     *         description="List all the professors of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getAllProfessor()
-    {
-        $users = User::where('rol', 1)->get();
-        $count = count($users);
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'ALL PROFESSORS',
-                'count' => $count,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -180,19 +137,25 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::where('id', $id)->first();
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Get user by ID ' . $id,
+                    'data' => $users,
+                ], 200);
+            }
 
-        if ($users) {
             return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -226,15 +189,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
+                'message' => 'Get user by ID ' . $id,
                 'data' => $users,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -260,22 +223,29 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserBydni(Request $request)
+    public function getUserByDni(Request $request)
     {
         $dni = $request->dni;
         $users = User::where('dni', $dni)->first();
-        if ($users) {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Get user bu DNI ' . $dni,
+                    'data' => $users,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY dni ' . $dni,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -301,63 +271,29 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserByCorreo(Request $request)
+    public function getUserByEmail(Request $request)
     {
         $email = $request->email;
         $users = User::where('email', $email)->first();
-        if ($users) {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Get user by email ' . $email,
+                    'data' => $users,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY CORREO ' . $email,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
-    }
-
-    /**
-     * Display a user based on their name.
-     *
-     * @OA\Get(
-     *     path="/api/user/Student/{name}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a name",
-     * @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="Get User By name ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an name"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByName(Request $request)
-    {
-        $name = $request->name;
-        $users = User::where('name', $name)->get();
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY NAME ' . $name,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -383,22 +319,102 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserByCourse(Request $request)
+
+    /**
+     * Display a listing of students or professors depending by the rol.
+     *
+     * @OA\Get(
+     *     path="/api/users/rol/1",
+     *     tags={"Users"},
+     *     summary="Shows all the professors ",
+     * @OA\Response(
+     *         response=200,
+     *         description="List all the students of the database"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     * @OA\Get(
+     *     path="/api/users/rol/2",
+     *     tags={"Users"},
+     *     summary="Shows all the students ",
+     * @OA\Response(
+     *         response=200,
+     *         description="List all the students of the database"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     */
+    public function getUsersByRol(Request $request)
     {
-        $course_year = $request->course_year;
-        $users = User::where('course_year', $course_year)->get();
-        if (count($users) !== 0) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
-                'data' => $users,
-            ], 200);
+        $rol = $request->rol;
+        $users = User::where('rol', $rol)->get();
+        $count = count($users);
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($request->rol == '1') {
+                if ($users) {
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'All professors',
+                        'count' => $count,
+                        'data' => $users,
+                    ], 200);
+                }
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'No professors Found',
+                ], 400);
+
+            } else if ($request->rol == '2') {
+                if ($users) {
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'All Students',
+                        'count' => $count,
+                        'data' => $users,
+                    ], 200);
+                }
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'No Students Found',
+                ], 400);
+            }
         }
 
         return response()->json([
-            'status' => 1,
-            'message' => 'EMPTY',
-        ], 404);
+            'status' => -1,
+            'message' => 'Unauthorized',
+        ], 401);
+    }
+
+    public function getUsersByCourse(Request $request)
+    {
+        $course_year = $request->course_year;
+        $users = User::where('course_year', $course_year)->get();
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if (count($users) !== 0) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Get user by course year ' . $course_year,
+                    'data' => $users,
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'No User Found',
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -424,22 +440,29 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserBycycle(Request $request)
+    public function getUsersByCycle(Request $request)
     {
         $cycle = $request->cycle;
         $users = User::where('cycle', $cycle)->get();
-        if (count($users) !== 0) {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if (count($users) !== 0) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Get user by cycle ' . $cycle,
+                    'data' => $users,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY cycle ' . $cycle,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
@@ -524,7 +547,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllStudent() {}
+    public function addAllStudent()
+    {
+    }
 
     /**
      * Adds a all professor to the database from a json file.
@@ -543,7 +568,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor() {}
+    public function addAllProfessor()
+    {
+    }
 
     /**
      * Updates an user based on their id
@@ -579,11 +606,15 @@ class UserController extends Controller
         $user->email = $request->email;
         if (strlen($request->password) > 8) {
             $user->password = Hash::make($request->password);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Password accepted.',
+            ], 200);
         } elseif (strlen($request->password) >= 1) {
             return response()->json([
                 'status' => -1,
-                'message' => 'La contraseña debe ser de 8 caracteres al menos.',
-            ], 404);
+                'message' => 'Password must have at least 8 characters.',
+            ], 400);
         }
         $user->others = $request->others;
 
@@ -591,6 +622,38 @@ class UserController extends Controller
 
         return $user;
     }
+
+    public function editStudent(Request $request)
+    {
+
+        $user = User::find($request->id);
+        $user->dni = $request->dni;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Password accepted.',
+            ], 200);
+        } elseif (strlen($request->password) >= 1) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'Password must have at least 8 characters.',
+            ], 400);
+        }
+        $user->others = $request->others;
+
+        $user->save();
+
+        return $user;
+
+    }
+
+
 
     /**
      * Remove an user based on their id
@@ -622,14 +685,14 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS ' . $id,
+                'message' => 'Delete user by ID ' . $id,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -663,14 +726,14 @@ class UserController extends Controller
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'USER DELETE WHITH rol IS ' + $rol,
+                    'message' => 'Delete user by rol ' + $rol,
                 ], 200);
             }
 
             return response()->json([
                 'status' => -1,
-                'message' => 'EMPTY',
-            ], 404);
+                'message' => 'No User Found',
+            ], 400);
         }
     }
 
@@ -694,7 +757,7 @@ class UserController extends Controller
 
             // Verificar si se encontró la imagen
             if (!$images['resources']) {
-                return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                return response()->json(['message' => 'Image not found in Cloudinary'], 400);
             }
 
             // Eliminar la imagen de Cloudinary
@@ -705,13 +768,13 @@ class UserController extends Controller
 
             // Verificar si la eliminación fue exitosa
             if ($result['result'] === 'ok') {
-                return response()->json(['message' => 'La imagen se eliminó correctamente'], 200);
+                return response()->json(['message' => 'Image deleted succesfully'], 200);
             } else {
-                return response()->json(['message' => $result], 500);
+                return response()->json(['message' => $result], 400);
             }
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => $e], 500);
+            return response()->json(['error' => $e], 400);
         }
     }
 
@@ -723,7 +786,7 @@ class UserController extends Controller
 
             // Verificar si se obtuvieron imágenes
             if (!$images) {
-                return response()->json(['message' => 'No se encontraron imágenes en Cloudinary'], 404);
+                return response()->json(['message' => 'Images not found in Cloudinary'], 400);
             }
 
             // Recorrer las imágenes y obtener las URLs
@@ -735,7 +798,7 @@ class UserController extends Controller
             return response()->json(['images' => $imageUrls], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -749,7 +812,7 @@ class UserController extends Controller
             return response()->json(['images' => $images], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -769,11 +832,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto guardada',
+                'message' => 'Photo saved',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+            return response()->json(['error' => 'Error saving images'], 400);
         }
     }
 
@@ -789,7 +852,7 @@ class UserController extends Controller
 
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
-                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                    return response()->json(['message' => 'Image not found in Cloudinary'], 400);
                 }
 
                 // Eliminar la imagen de Cloudinary
@@ -799,7 +862,7 @@ class UserController extends Controller
                 ]);
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
-                return response()->json(['error' => $e], 500);
+                return response()->json(['error' => $e], 400);
             }
 
             // Verificar que la imagen exista para el usuario
@@ -811,11 +874,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto eliminada',
+                'message' => 'Photo deleted',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+            return response()->json(['error' => 'Error deleting image'], 400);
         }
     }
 }
