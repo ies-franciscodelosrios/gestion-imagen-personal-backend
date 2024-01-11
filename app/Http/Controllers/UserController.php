@@ -176,7 +176,7 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an id"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -218,7 +218,7 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an dni"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -266,7 +266,7 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an mail"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -314,7 +314,7 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an course_year"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -332,7 +332,7 @@ class UserController extends Controller
      *         description="List all the students of the database"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -345,7 +345,7 @@ class UserController extends Controller
      *         description="List all the students of the database"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -435,7 +435,7 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an cycle"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -477,7 +477,7 @@ class UserController extends Controller
      *         description="Adds a new student to the database"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -509,7 +509,7 @@ class UserController extends Controller
      *         description="Adds a new professor to the database"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -542,7 +542,7 @@ class UserController extends Controller
      *         description="Adds all students to the database from a json file"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -563,7 +563,7 @@ class UserController extends Controller
      *         description="Adds all professor to the database from a json file"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -590,7 +590,7 @@ class UserController extends Controller
      *         description="Update an user using their id as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -673,7 +673,7 @@ class UserController extends Controller
      *         description="Remove an user using their id as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -713,7 +713,7 @@ class UserController extends Controller
      *         description="Remove an user using their rol as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
