@@ -29,7 +29,7 @@ class AppointmentController extends Controller
      *         description="ALL APPOINTMENTS"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -51,7 +51,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'EMPTY REGISTRY',
-        ], 404);
+        ], 400);
     }
 
     public function getAppointmentsByDniStudent(Request $request)
@@ -114,7 +114,7 @@ class AppointmentController extends Controller
      *         description="Get Appointment By Id"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -134,7 +134,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'EMPTY REGISTRY',
-        ], 404);
+        ], 400);
     }
 
     /**
@@ -155,7 +155,7 @@ class AppointmentController extends Controller
      *         description="Get Appointment By dni_client"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -175,7 +175,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'CLIENT dni NOT FOUND',
-        ], 404);
+        ], 400);
     }
 
     /**
@@ -196,7 +196,7 @@ class AppointmentController extends Controller
      *         description="Get Appointment By dni_student"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -216,7 +216,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'STUDENT dni NOT FOUND',
-        ], 404);
+        ], 400);
     }
     /*___________________________________________________________________________________________________________________ */
 
@@ -234,7 +234,7 @@ class AppointmentController extends Controller
      *         description="Quote added"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -277,7 +277,7 @@ class AppointmentController extends Controller
      *         description="Edited quote"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -320,7 +320,7 @@ class AppointmentController extends Controller
      *         description="Deleted date"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -340,7 +340,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'REGISTRY NOT FOUND',
-        ], 404);
+        ], 400);
     }
 
     public function getPhotosUrl(Request $request)
@@ -353,7 +353,7 @@ class AppointmentController extends Controller
             return response()->json(['images' => $images], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error al traer imagenes'], 400);
         }
     }
 
@@ -393,7 +393,7 @@ class AppointmentController extends Controller
 
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
-                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 400);
                 }
 
                 // Eliminar la imagen de Cloudinary

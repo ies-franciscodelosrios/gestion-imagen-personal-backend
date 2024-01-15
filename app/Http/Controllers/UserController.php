@@ -538,7 +538,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function editUser(UserAuthRequest $request)
+    public function editUser(UserAuth1Request $request)
     {
         $user = User::findOrFail($request->id);
         $user->dni = $request->dni;
