@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserAuth1Request;
+use App\Http\Requests\UserAuthRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\PhotoUrl;
 use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -68,17 +71,13 @@ class UserController extends Controller
                 'status' => -1,
                 'message' => 'NO USERS FOUND',
             ], 400);
-
         } else {
 
             return response()->json([
                 'status' => -1,
                 'message' => 'Unauthorized',
             ], 401);
-
         }
-
-
     }
 
     /**
@@ -443,38 +442,6 @@ class UserController extends Controller
     }
 
     /**
-     * Adds a new student to the database.
-     *
-     * @OA\post(
-     *     path="/api/user/addstudent",
-     *     tags={"Users"},
-     *     summary="Adds a new student ",
-     * @OA\Response(
-     *          response=200,
-     *         description="Adds a new student to the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function addStudent(Request $request)
-    {
-        $user = new User();
-        $user->dni = $request->dni;
-        $user->rol = 2;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        $user->password = Hash::make('root');
-        $user->others = $request->others;
-        $user->save();
-    }
-
-    /**
      * Adds a new professor to the database.
      *
      * @OA\post(
@@ -491,7 +458,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addProfessor(Request $request)
+    public function addUser(UserAuth1Request $request)
     {
         $user = new User();
         $user->dni = $request->dni;
@@ -501,9 +468,8 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make('root');
+        $user->password = Hash::make($request->password);
         $user->others = $request->others;
-
         $user->save();
     }
 
@@ -524,7 +490,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllStudent() {}
+    public function addAllStudent()
+    {
+    }
 
     /**
      * Adds a all professor to the database from a json file.
@@ -543,7 +511,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function addAllProfessor() {}
+    public function addAllProfessor()
+    {
+    }
 
     /**
      * Updates an user based on their id
@@ -568,7 +538,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function editUser(Request $request)
+    public function editUser(UserAuthRequest $request)
     {
         $user = User::findOrFail($request->id);
         $user->dni = $request->dni;
@@ -577,6 +547,9 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
+        /* 
+        Esto queda comentado ya que las reglas para la contraseña ya estan definidas en UserAuthRequest
+        
         if (strlen($request->password) > 8) {
             $user->password = Hash::make($request->password);
         } elseif (strlen($request->password) >= 1) {
@@ -585,6 +558,8 @@ class UserController extends Controller
                 'message' => 'La contraseña debe ser de 8 caracteres al menos.',
             ], 404);
         }
+        */
+        $user->password = Hash::make($request->password);
         $user->others = $request->others;
 
         $user->save();
