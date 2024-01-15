@@ -26,7 +26,7 @@ class AuthController extends Controller
      *         description="Login successful and token generated."
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -78,7 +78,7 @@ class AuthController extends Controller
      *         description="Logout successful."
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
