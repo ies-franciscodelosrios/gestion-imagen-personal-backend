@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserAuth1Request;
 use App\Models\PhotoUrl;
 use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -327,9 +328,8 @@ class UserController extends Controller
         ], 401);
     }
 
-    public function addUser(Request $request)
+    public function addUser(UserAuth1Request $request)
     {
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
             $user = new User();
             $user->dni = $request->dni;
             if ($request->type == 'professor') {
@@ -340,7 +340,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => -1,
                     'message' => 'No type found',
-                ], 400);
+                ], 404);
             }
             $user->course_year = $request->course_year;
             $user->cycle = $request->cycle;
@@ -361,77 +361,6 @@ class UserController extends Controller
                     'message' => 'User not added',
                 ], 400);
             }
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
-    /**
-     * Adds a new student to the database.
-     *
-     * @OA\post(
-     *     path="/api/user/addstudent",
-     *     tags={"Users"},
-     *     summary="Adds a new student ",
-     * @OA\Response(
-     *          response=200,
-     *         description="Adds a new student to the database"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function addStudent(Request $request)
-    {
-        $user = new User();
-        $user->dni = $request->dni;
-        $user->rol = 2;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        $user->password = Hash::make('root');
-        $user->others = $request->others;
-        $user->save();
-    }
-
-    /**
-     * Adds a new professor to the database.
-     *
-     * @OA\post(
-     *     path="/ap/user/addprofessor",
-     *     tags={"Users"},
-     *     summary="Adds a new professor ",
-     * @OA\Response(
-     *          response=200,
-     *         description="Adds a new professor to the database"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function addProfessor(Request $request)
-    {
-        $user = new User();
-        $user->dni = $request->dni;
-        $user->rol = 1;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        $user->password = Hash::make('root');
-        $user->others = $request->others;
-
-        $user->save();
     }
 
     /**
