@@ -20,7 +20,7 @@ class UserRulesRequest extends FormRequest
                     'surname' => 'required|min:3|max:50|regex:/^[A-Z]/',
                     'email' => 'required|email|max:50',
                     'password' => 'required|min:8|max:50',
-                    'course_year' => 'required|min:1|max:4',
+                    'course_year' => 'required|min:1|max:5',
                     'cycle' => 'required|integer'
                 ];
             
