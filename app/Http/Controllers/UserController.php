@@ -485,7 +485,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->surname = $request->surname;
             $user->email = $request->email;
-            $user->password = Hash::make('root');
+            $user->password = Hash::make($user->password);
             $user->others = $request->others;
 
             if ($user->save()) {
@@ -566,9 +566,8 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function editUser(Request $request)
+    public function editUser(UserAuth1Request $request)
     {
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
             $user = User::findOrFail($request->id);
             $user->dni = $request->dni;
             $user->course_year = $request->course_year;
@@ -576,29 +575,12 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->surname = $request->surname;
             $user->email = $request->email;
-            if (strlen($request->password) > 8) {
-                $user->password = Hash::make($request->password);
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Password accepted.',
-                ], 200);
-            } elseif (strlen($request->password) >= 1) {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'Password must have at least 8 characters.',
-                ], 400);
-            }
+            $user->password = Hash::make($request->password);
             $user->others = $request->others;
 
             $user->save();
 
             return $user;
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
     }
 
     /**
@@ -624,11 +606,10 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function deleteUser(Request $request)
+    public function deleteUser(UserAuth1Request $request)
     {
         $id = $request->id;
         $users = User::destroy($id);
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
             if ($users) {
                 return response()->json([
                     'status' => 1,
@@ -640,12 +621,7 @@ class UserController extends Controller
                 'status' => -1,
                 'message' => 'No User Found',
             ], 400);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+        
     }
 
     /**
