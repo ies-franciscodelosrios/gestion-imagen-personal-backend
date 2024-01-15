@@ -54,30 +54,18 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            $users = User::all();
-
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'All Users',
-                    'data' => $users,
-                ], 200);
-            }
-
+        $users = User::all();
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No Users Found',
-            ], 400);
-
-        } else {
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'Unauthorized',
-            ], 401);
-
+                'status' => 1,
+                'message' => 'All Users',
+                'data' => $users,
+            ], 200);
         }
+        return response()->json([
+            'status' => -1,
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -107,25 +95,17 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::where('id', $id)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by ID ' . $id,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Get user by ID ' . $id,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -164,46 +144,37 @@ class UserController extends Controller
         $rol = $request->rol;
         $users = User::where('rol', $rol)->get();
         $count = count($users);
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($request->rol == '1') {
-                if ($users) {
-                    return response()->json([
-                        'status' => 1,
-                        'message' => 'All professors',
-                        'count' => $count,
-                        'data' => $users,
-                    ], 200);
-                }
+        if ($request->rol == '1') {
+            if ($users) {
                 return response()->json([
-                    'status' => -1,
-                    'message' => 'No professors Found',
-                ], 400);
-
-            } else if ($request->rol == '2') {
-                if ($users) {
-                    return response()->json([
-                        'status' => 1,
-                        'message' => 'All Students',
-                        'count' => $count,
-                        'data' => $users,
-                    ], 200);
-                }
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'No Students Found',
-                ], 400);
+                    'status' => 1,
+                    'message' => 'All professors',
+                    'count' => $count,
+                    'data' => $users,
+                ], 200);
             }
+            return response()->json([
+                'status' => -1,
+                'message' => 'No professors Found',
+            ], 400);
+        } else if ($request->rol == '2') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'All Students',
+                    'count' => $count,
+                    'data' => $users,
+                ], 200);
+            }
+            return response()->json([
+                'status' => -1,
+                'message' => 'No Students Found',
+            ], 400);
         }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
     }
 
     public function getUsersBySearch(Request $request)
     {
-
         $search = $request->search;
         $users = User::where('name', 'LIKE', "%{$search}%")
             ->orWhere('surname', 'LIKE', "%{$search}%")
@@ -211,25 +182,17 @@ class UserController extends Controller
             ->orWhere('cycle', 'LIKE', "%{$search}%")
             ->orWhere('rol', 'LIKE', "%{$search}%")
             ->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Users found by ' . $search,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No Users Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Users found by ' . $search,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -259,25 +222,17 @@ class UserController extends Controller
     {
         $course_year = $request->course_year;
         $users = User::where('course_year', $course_year)->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if (count($users) !== 0) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by course year ' . $course_year,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'No User Found',
-            ], 400);
+                'message' => 'Get user by course year ' . $course_year,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'status' => 1,
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -307,60 +262,53 @@ class UserController extends Controller
     {
         $cycle = $request->cycle;
         $users = User::where('cycle', $cycle)->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if (count($users) !== 0) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by cycle ' . $cycle,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if (count($users) !== 0) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Get user by cycle ' . $cycle,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     public function addUser(UserAuth1Request $request)
     {
-            $user = new User();
-            $user->dni = $request->dni;
-            if ($request->type == 'professor') {
-                $user->rol = 1;
-            } else if ($request->type == 'student') {
-                $user->rol = 2;
-            } else {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'No type found',
-                ], 404);
-            }
-            $user->course_year = $request->course_year;
-            $user->cycle = $request->cycle;
-            $user->name = $request->name;
-            $user->surname = $request->surname;
-            $user->email = $request->email;
-            $user->password = Hash::make('root');
-            $user->others = $request->others;
+        $user = new User();
+        $user->dni = $request->dni;
+        if ($request->type == 'professor') {
+            $user->rol = 1;
+        } else if ($request->type == 'student') {
+            $user->rol = 2;
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'No type found',
+            ], 400);
+        }
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->password = Hash::make($user->password);
+        $user->others = $request->others;
 
-            if ($user->save()) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'User added',
-                ], 200);
-            } else if (!$user->save()) {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'User not added',
-                ], 400);
-            }
+        if ($user->save()) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'User added',
+                'id' => $user->id,
+            ], 200);
+        } else if (!$user->save()) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User not added',
+            ], 400);
+        }
     }
 
     /**
@@ -430,37 +378,39 @@ class UserController extends Controller
      */
     public function editUser(Request $request)
     {
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            $user = User::findOrFail($request->id);
-            $user->dni = $request->dni;
-            $user->course_year = $request->course_year;
-            $user->cycle = $request->cycle;
-            $user->name = $request->name;
-            $user->surname = $request->surname;
-            $user->email = $request->email;
-            if (strlen($request->password) > 8) {
-                $user->password = Hash::make($request->password);
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Password accepted.',
-                ], 200);
-            } elseif (strlen($request->password) >= 1) {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'Password must have at least 8 characters.',
-                ], 400);
-            }
-            $user->others = $request->others;
-
-            $user->save();
-
-            return $user;
+        $user = User::findOrFail($request->id);
+        $user->dni = $request->dni;
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        if (strlen($request->password) > 8) {
+            $user->password = Hash::make($request->password);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Password accepted.',
+            ], 200);
+        } elseif (strlen($request->password) >= 1) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'Password must have at least 8 characters.',
+            ], 400);
         }
+        $user->others = $request->others;
 
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+        if ($user->save()) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'User added',
+                'id' => $user->id,
+            ], 200);
+        } else if (!$user->save()) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User not added',
+            ], 400);
+        }
     }
 
     /**
@@ -490,24 +440,16 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::destroy($id);
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Delete user by ID ' . $id,
-                ], 200);
-            }
-
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Delete user by ID ' . $id,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -544,7 +486,6 @@ class UserController extends Controller
                     'message' => 'Delete user by rol ' + $rol,
                 ], 200);
             }
-
             return response()->json([
                 'status' => -1,
                 'message' => 'No User Found',

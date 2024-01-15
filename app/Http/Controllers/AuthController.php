@@ -42,6 +42,7 @@ class AuthController extends Controller
                 'token' => $request->user()->createToken($request->device)->plainTextToken,
                 'status' => 1,
                 'message' => 'Login success',
+                'id' => $request->user()->id,
             ], 200);
         }
 
@@ -89,6 +90,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'Logout success',
+                'id' => $request->user()->id,
             ], 200);
         }
 
