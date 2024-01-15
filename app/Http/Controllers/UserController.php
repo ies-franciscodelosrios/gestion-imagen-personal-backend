@@ -465,6 +465,48 @@ class UserController extends Controller
         ], 401);
     }
 
+    public function addUser(Request $request)
+    {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            $user = new User();
+            $user->dni = $request->dni;
+            if ($request->type == 'professor') {
+                $user->rol = 1;
+            } else if ($request->type == 'student') {
+                $user->rol = 2;
+            } else {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'No type found',
+                ], 400);
+            }
+            $user->course_year = $request->course_year;
+            $user->cycle = $request->cycle;
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            $user->password = Hash::make('root');
+            $user->others = $request->others;
+
+            if ($user->save()) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'User added',
+                ], 200);
+            } else if (!$user->save()) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'User not added',
+                ], 400);
+            }
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'Unauthorized',
+        ], 401);
+    }
+
     /**
      * Adds a new student to the database.
      *
@@ -597,63 +639,38 @@ class UserController extends Controller
      */
     public function editUser(Request $request)
     {
-        $user = User::findOrFail($request->id);
-        $user->dni = $request->dni;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        if (strlen($request->password) > 8) {
-            $user->password = Hash::make($request->password);
-            return response()->json([
-                'status' => 1,
-                'message' => 'Password accepted.',
-            ], 200);
-        } elseif (strlen($request->password) >= 1) {
-            return response()->json([
-                'status' => -1,
-                'message' => 'Password must have at least 8 characters.',
-            ], 400);
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            $user = User::findOrFail($request->id);
+            $user->dni = $request->dni;
+            $user->course_year = $request->course_year;
+            $user->cycle = $request->cycle;
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            if (strlen($request->password) > 8) {
+                $user->password = Hash::make($request->password);
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Password accepted.',
+                ], 200);
+            } elseif (strlen($request->password) >= 1) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'Password must have at least 8 characters.',
+                ], 400);
+            }
+            $user->others = $request->others;
+
+            $user->save();
+
+            return $user;
         }
-        $user->others = $request->others;
 
-        $user->save();
-
-        return $user;
+        return response()->json([
+            'status' => -1,
+            'message' => 'Unauthorized',
+        ], 401);
     }
-
-    public function editStudent(Request $request)
-    {
-
-        $user = User::find($request->id);
-        $user->dni = $request->dni;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        if (strlen($request->password) > 8) {
-            $user->password = Hash::make($request->password);
-            return response()->json([
-                'status' => 1,
-                'message' => 'Password accepted.',
-            ], 200);
-        } elseif (strlen($request->password) >= 1) {
-            return response()->json([
-                'status' => -1,
-                'message' => 'Password must have at least 8 characters.',
-            ], 400);
-        }
-        $user->others = $request->others;
-
-        $user->save();
-
-        return $user;
-
-    }
-
-
 
     /**
      * Remove an user based on their id
@@ -680,19 +697,26 @@ class UserController extends Controller
      */
     public function deleteUser(Request $request)
     {
-        $id = $request->id;
-        $users = User::destroy($id);
-        if ($users) {
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            $id = $request->id;
+            $users = User::destroy($id);
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Delete user by ID ' . $id,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'Delete user by ID ' . $id,
-            ], 200);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'No User Found',
-        ], 400);
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
     /**
