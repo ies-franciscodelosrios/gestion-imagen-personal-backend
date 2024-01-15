@@ -65,13 +65,8 @@ class DatabaseSeeder extends Seeder
 
                 'dni' => '30000001u',
                 'rol' => 0,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 3,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Peluquería',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Administrador',
                 'surname' => 'root',
                 'email' => 'admin@ieseltablero.es',
@@ -84,13 +79,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '31000000u',
                 'rol' => 1,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 4,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Estética',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Manuela',
                 'surname' => 'Escobar',
                 'email' => 'manuela@ieseltablero.es',
@@ -104,13 +94,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '31000002u',
                 'rol' => 1,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 3,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Peluquería',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Jose Maria',
                 'surname' => 'Alcantara',
                 'email' => 'josemaria@ieseltablero.es',
@@ -124,13 +109,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '31000001u',
                 'rol' => 1,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 2,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Estética',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Josefina',
                 'surname' => 'Guitierrez',
                 'email' => 'josefin@ieseltablero.es',
@@ -145,13 +125,8 @@ class DatabaseSeeder extends Seeder
 
                 'dni' => '31000003u',
                 'rol' => 1,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 1,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Peluquería',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Sanfran',
                 'surname' => 'Torreado',
                 'email' => 'sanfran@ieseltablero.es',
@@ -165,13 +140,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '31000004u',
                 'rol' => 1,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 0,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Estética',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Pedro',
                 'surname' => 'Sanchez',
                 'email' => 'pedro@ieseltablero.es',
@@ -185,13 +155,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '32000000u',
                 'rol' => 2,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 2,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Masaje Relajante',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Pedro',
                 'surname' => 'Garcia',
                 'email' => 'pedor@ieseltablero.es',
@@ -220,13 +185,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '32000002u',
                 'rol' => 2,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 4,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'Masaje Relajante',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Alca',
                 'surname' => 'Montes',
                 'email' => 'alca@ieseltablero.es',
@@ -240,13 +200,8 @@ class DatabaseSeeder extends Seeder
             ], [
                 'dni' => '32000003u',
                 'rol' => 2,
-<<<<<<< HEAD
-                'course_year' => '23/24',
-                'cycle' => 3,
-=======
                 'course_year' => '23-24',
                 'cycle' => 'ninguno',
->>>>>>> b68f69631494b49ff264b90e3fc672676d479a07
                 'name' => 'Miguel',
                 'surname' => 'Carmona',
                 'email' => 'miqui@ieseltablero.es',
