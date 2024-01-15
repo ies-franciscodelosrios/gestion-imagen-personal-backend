@@ -79,37 +79,6 @@ class UserController extends Controller
         }
     }
 
-    public function getUsersBySearch(Request $request)
-    {
-
-        $search = $request->search;
-        $users = User::where('name', 'LIKE', "%{$search}%")
-            ->orWhere('surname', 'LIKE', "%{$search}%")
-            ->orWhere('course_year', 'LIKE', "%{$search}%")
-            ->orWhere('cycle', 'LIKE', "%{$search}%")
-            ->orWhere('rol', 'LIKE', "%{$search}%")
-            ->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Users found by ' . $search,
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'No Users Found',
-            ], 400);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
     /**
      * Display a user based on their id.
      *
@@ -159,168 +128,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display a user based on their id.
-     *
-     * @OA\Get(
-     *     path="/api/users/user/{id}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a id",
-     * @OA\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="Get User By Id ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an id"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByIdParam(Request $request)
-    {
-        $id = $request->id;
-        $users = User::where('id', $id)->first();
-
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'Get user by ID ' . $id,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'No User Found',
-        ], 400);
-    }
-
-    /**
-     * Display a user based on their dni.
-     *
-     * @OA\Get(
-     *     path="/api/userBydni/{dni}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a dni",
-     * @OA\Parameter(
-     *         name="dni",
-     *         in="query",
-     *         description="Get User By dni ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an dni"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByDni(Request $request)
-    {
-        $dni = $request->dni;
-        $users = User::where('dni', $dni)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user bu DNI ' . $dni,
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
-    /**
-     * Display a user based on their mail.
-     *
-     * @OA\Get(
-     *     path="/api/userByCorreo/{correo}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a mail",
-     * @OA\Parameter(
-     *         name="mail",
-     *         in="query",
-     *         description="Get User By mail ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an mail"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByEmail(Request $request)
-    {
-        $email = $request->email;
-        $users = User::where('email', $email)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by email ' . $email,
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
-    /**
-     * Display a user based on their course_year.
-     *
-     * @OA\Get(
-     *     path="/api/users/course/{course_year}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a course_year",
-     * @OA\Parameter(
-     *         name="course_year",
-     *         in="query",
-     *         description="Get User By course_year ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an course_year"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-
-    /**
      * Display a listing of students or professors depending by the rol.
      *
      * @OA\Get(
@@ -336,6 +143,7 @@ class UserController extends Controller
      *         description="An error has ocurred."
      *     )
      * )
+     * 
      * @OA\Get(
      *     path="/api/users/rol/2",
      *     tags={"Users"},
@@ -392,6 +200,60 @@ class UserController extends Controller
         ], 401);
     }
 
+    public function getUsersBySearch(Request $request)
+    {
+
+        $search = $request->search;
+        $users = User::where('name', 'LIKE', "%{$search}%")
+            ->orWhere('surname', 'LIKE', "%{$search}%")
+            ->orWhere('course_year', 'LIKE', "%{$search}%")
+            ->orWhere('cycle', 'LIKE', "%{$search}%")
+            ->orWhere('rol', 'LIKE', "%{$search}%")
+            ->get();
+        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Users found by ' . $search,
+                    'data' => $users,
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => -1,
+                'message' => 'No Users Found',
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'Unauthorized',
+        ], 401);
+    }
+
+    /**
+     * Display a user based on their course_year.
+     *
+     * @OA\Get(
+     *     path="/api/users/course/{course_year}",
+     *     tags={"Users"},
+     *     summary="Shows an user based on a course_year",
+     * @OA\Parameter(
+     *         name="course_year",
+     *         in="query",
+     *         description="Get User By course_year ",
+     *         required=true,
+     *      ),
+     * @OA\Response(
+     *          response=200,
+     *         description="Shows all the information about of a user based that matches an course_year"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     */
     public function getUsersByCourse(Request $request)
     {
         $course_year = $request->course_year;
@@ -697,9 +559,9 @@ class UserController extends Controller
      */
     public function deleteUser(Request $request)
     {
+        $id = $request->id;
+        $users = User::destroy($id);
         if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            $id = $request->id;
-            $users = User::destroy($id);
             if ($users) {
                 return response()->json([
                     'status' => 1,
