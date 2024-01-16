@@ -277,25 +277,25 @@ class UserController extends Controller
 
     public function addUser(UserAuth1Request $request)
     {
-        $user = new User();
-        $user->dni = $request->dni;
-        if ($request->type == 'professor') {
-            $user->rol = 1;
-        } else if ($request->type == 'student') {
-            $user->rol = 2;
-        } else {
-            return response()->json([
-                'status' => -1,
-                'message' => 'No type found',
-            ], 400);
-        }
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        $user->password = Hash::make($user->password);
-        $user->others = $request->others;
+            $user = new User();
+            $user->dni = $request->dni;
+            if ($request->type == 'professor') {
+                $user->rol = 1;
+            } else if ($request->type == 'student') {
+                $user->rol = 2;
+            } else {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'No type found',
+                ], 404);
+            }
+            $user->course_year = $request->course_year;
+            $user->cycle = $request->cycle;
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            $user->password = Hash::make($user->password);
+            $user->others = $request->others;
 
         if ($user->save()) {
             return response()->json([
@@ -376,28 +376,17 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function editUser(Request $request)
+    public function editUser(UserAuth1Request $request)
     {
-        $user = User::findOrFail($request->id);
-        $user->dni = $request->dni;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        if (strlen($request->password) > 8) {
+            $user = User::findOrFail($request->id);
+            $user->dni = $request->dni;
+            $user->course_year = $request->course_year;
+            $user->cycle = $request->cycle;
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            return response()->json([
-                'status' => 1,
-                'message' => 'Password accepted.',
-            ], 200);
-        } elseif (strlen($request->password) >= 1) {
-            return response()->json([
-                'status' => -1,
-                'message' => 'Password must have at least 8 characters.',
-            ], 400);
-        }
-        $user->others = $request->others;
+            $user->others = $request->others;
 
         if ($user->save()) {
             return response()->json([
@@ -411,6 +400,7 @@ class UserController extends Controller
                 'message' => 'User not added',
             ], 400);
         }
+        return $user;
     }
 
     /**
@@ -436,20 +426,22 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function deleteUser(Request $request)
+    public function deleteUser(UserAuth1Request $request)
     {
         $id = $request->id;
         $users = User::destroy($id);
-        if ($users) {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Delete user by ID ' . $id,
+                ], 200);
+            }
+
             return response()->json([
-                'status' => 1,
-                'message' => 'Delete user by ID ' . $id,
-            ], 200);
-        }
-        return response()->json([
-            'status' => -1,
-            'message' => 'No User Found',
-        ], 400);
+                'status' => -1,
+                'message' => 'No User Found',
+            ], 400);
+        
     }
 
     /**
