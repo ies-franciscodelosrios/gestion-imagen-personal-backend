@@ -468,37 +468,45 @@ class UserController extends Controller
 
     public function addUser(UserAuth1Request $request)
     {
-            $user = new User();
-            $user->dni = $request->dni;
-            if ($request->type == 'professor') {
-                $user->rol = 1;
-            } else if ($request->type == 'student') {
-                $user->rol = 2;
-            } else {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'No type found',
-                ], 404);
-            }
-            $user->course_year = $request->course_year;
-            $user->cycle = $request->cycle;
-            $user->name = $request->name;
-            $user->surname = $request->surname;
-            $user->email = $request->email;
-            $user->password = Hash::make($user->password);
-            $user->others = $request->others;
+        $existingUser = User::where('dni', $request->dni)->orWhere('email', $request->email)->first();
+        if ($existingUser) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User already exists',
+            ], 400);
+        }
 
-            if ($user->save()) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'User added',
-                ], 200);
-            } else if (!$user->save()) {
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'User not added',
-                ], 400);
-            }
+        $user = new User();
+        $user->dni = $request->dni;
+        if ($request->type == 'professor') {
+            $user->rol = 1;
+        } else if ($request->type == 'student') {
+            $user->rol = 2;
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'No type found',
+            ], 404);
+        }
+        $user->course_year = $request->course_year;
+        $user->cycle = $request->cycle;
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->password = Hash::make($user->password);
+        $user->others = $request->others;
+
+        if ($user->save()) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'User added',
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User not added',
+            ], 400);
+        }
     }
 
     /**
@@ -568,6 +576,7 @@ class UserController extends Controller
      */
     public function editUser(UserAuth1Request $request)
     {
+        try {
             $user = User::findOrFail($request->id);
             $user->dni = $request->dni;
             $user->course_year = $request->course_year;
@@ -581,6 +590,20 @@ class UserController extends Controller
             $user->save();
 
             return $user;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $errorCode = $exception->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'DNI or email already exists in the database',
+                ], 400);
+            } else {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'An error has occurred',
+                ], 500);
+            }
+        }
     }
 
     /**
@@ -606,7 +629,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function deleteUser(UserAuth1Request $request)
+    public function deleteUser(Request $request)
     {
         $id = $request->id;
         $users = User::destroy($id);
