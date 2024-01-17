@@ -397,21 +397,18 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->others = $request->others;
 
-        if ($user->save()) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'User added',
-                'id' => $user->id,
-            ], 200);
-        } else if (!$user->save()) {
-            return response()->json([
-                'status' => -1,
-                'message' => 'User not added',
-            ], 400);
-        }
-        return $user;
-            $user->save();
-
+            if ($user->save()) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'User added',
+                    'id' => $user->id,
+                ], 200);
+            } else if (!$user->save()) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'User not added',
+                ], 400);
+            }
             return $user;
         } catch (\Illuminate\Database\QueryException $exception) {
             $errorCode = $exception->errorInfo[1];
@@ -456,18 +453,18 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::destroy($id);
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Delete user by ID ' . $id,
-                ], 200);
-            }
-
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
-        
+                'status' => 1,
+                'message' => 'Delete user by ID ' . $id,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => -1,
+            'message' => 'No User Found',
+        ], 400);
+
     }
 
     /**
