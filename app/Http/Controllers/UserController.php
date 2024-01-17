@@ -54,61 +54,18 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            $users = User::all();
-
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'All Users',
-                    'data' => $users,
-                ], 200);
-            }
-
+        $users = User::all();
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No Users Found',
-            ], 400);
-
-        } else {
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'Unauthorized',
-            ], 401);
-
+                'status' => 1,
+                'message' => 'All Users',
+                'data' => $users,
+            ], 200);
         }
-    }
-
-    public function getUsersBySearch(Request $request)
-    {
-
-        $search = $request->search;
-        $users = User::where('name', 'LIKE', "%{$search}%")
-            ->orWhere('surname', 'LIKE', "%{$search}%")
-            ->orWhere('course_year', 'LIKE', "%{$search}%")
-            ->orWhere('cycle', 'LIKE', "%{$search}%")
-            ->orWhere('rol', 'LIKE', "%{$search}%")
-            ->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Users found by ' . $search,
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'No Users Found',
-            ], 400);
-        }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -138,55 +95,6 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::where('id', $id)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by ID ' . $id,
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
-    /**
-     * Display a user based on their id.
-     *
-     * @OA\Get(
-     *     path="/api/users/user/{id}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a id",
-     * @OA\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="Get User By Id ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an id"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByIdParam(Request $request)
-    {
-        $id = $request->id;
-        $users = User::where('id', $id)->first();
-
         if ($users) {
             return response()->json([
                 'status' => 1,
@@ -194,7 +102,6 @@ class UserController extends Controller
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => -1,
             'message' => 'No User Found',
@@ -202,21 +109,29 @@ class UserController extends Controller
     }
 
     /**
-     * Display a user based on their dni.
+     * Display a listing of students or professors depending by the rol.
      *
      * @OA\Get(
-     *     path="/api/userBydni/{dni}",
+     *     path="/api/users/rol/1",
      *     tags={"Users"},
-     *     summary="Shows an user based on a dni",
-     * @OA\Parameter(
-     *         name="dni",
-     *         in="query",
-     *         description="Get User By dni ",
-     *         required=true,
-     *      ),
+     *     summary="Shows all the professors ",
      * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an dni"
+     *         response=200,
+     *         description="List all the students of the database"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     * 
+     * @OA\Get(
+     *     path="/api/users/rol/2",
+     *     tags={"Users"},
+     *     summary="Shows all the students ",
+     * @OA\Response(
+     *         response=200,
+     *         description="List all the students of the database"
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -224,77 +139,60 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function getUserByDni(Request $request)
+    public function getUsersByRol(Request $request)
     {
-        $dni = $request->dni;
-        $users = User::where('dni', $dni)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
+        $rol = $request->rol;
+        $users = User::where('rol', $rol)->get();
+        $count = count($users);
+        if ($request->rol == '1') {
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'Get user bu DNI ' . $dni,
+                    'message' => 'All professors',
+                    'count' => $count,
                     'data' => $users,
                 ], 200);
             }
-
             return response()->json([
                 'status' => -1,
-                'message' => 'No User Found',
+                'message' => 'No professors Found',
+            ], 400);
+        } else if ($request->rol == '2') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'All Students',
+                    'count' => $count,
+                    'data' => $users,
+                ], 200);
+            }
+            return response()->json([
+                'status' => -1,
+                'message' => 'No Students Found',
             ], 400);
         }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
     }
 
-    /**
-     * Display a user based on their mail.
-     *
-     * @OA\Get(
-     *     path="/api/userByCorreo/{correo}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a mail",
-     * @OA\Parameter(
-     *         name="mail",
-     *         in="query",
-     *         description="Get User By mail ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an mail"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByEmail(Request $request)
+    public function getUsersBySearch(Request $request)
     {
-        $email = $request->email;
-        $users = User::where('email', $email)->first();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by email ' . $email,
-                    'data' => $users,
-                ], 200);
-            }
-
+        $search = $request->search;
+        $users = User::where('name', 'LIKE', "%{$search}%")
+            ->orWhere('surname', 'LIKE', "%{$search}%")
+            ->orWhere('course_year', 'LIKE', "%{$search}%")
+            ->orWhere('cycle', 'LIKE', "%{$search}%")
+            ->orWhere('rol', 'LIKE', "%{$search}%")
+            ->get();
+        if ($users) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Users found by ' . $search,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -320,102 +218,21 @@ class UserController extends Controller
      *     )
      * )
      */
-
-    /**
-     * Display a listing of students or professors depending by the rol.
-     *
-     * @OA\Get(
-     *     path="/api/users/rol/1",
-     *     tags={"Users"},
-     *     summary="Shows all the professors ",
-     * @OA\Response(
-     *         response=200,
-     *         description="List all the students of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     * @OA\Get(
-     *     path="/api/users/rol/2",
-     *     tags={"Users"},
-     *     summary="Shows all the students ",
-     * @OA\Response(
-     *         response=200,
-     *         description="List all the students of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUsersByRol(Request $request)
-    {
-        $rol = $request->rol;
-        $users = User::where('rol', $rol)->get();
-        $count = count($users);
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if ($request->rol == '1') {
-                if ($users) {
-                    return response()->json([
-                        'status' => 1,
-                        'message' => 'All professors',
-                        'count' => $count,
-                        'data' => $users,
-                    ], 200);
-                }
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'No professors Found',
-                ], 400);
-
-            } else if ($request->rol == '2') {
-                if ($users) {
-                    return response()->json([
-                        'status' => 1,
-                        'message' => 'All Students',
-                        'count' => $count,
-                        'data' => $users,
-                    ], 200);
-                }
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'No Students Found',
-                ], 400);
-            }
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
-    }
-
     public function getUsersByCourse(Request $request)
     {
         $course_year = $request->course_year;
         $users = User::where('course_year', $course_year)->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if (count($users) !== 0) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by course year ' . $course_year,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'No User Found',
-            ], 400);
+                'message' => 'Get user by course year ' . $course_year,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
-            'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'status' => 1,
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -445,25 +262,17 @@ class UserController extends Controller
     {
         $cycle = $request->cycle;
         $users = User::where('cycle', $cycle)->get();
-        if ($request->user('api')->rol == '0' || $request->user('api')->rol == '1') {
-            if (count($users) !== 0) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Get user by cycle ' . $cycle,
-                    'data' => $users,
-                ], 200);
-            }
-
+        if (count($users) !== 0) {
             return response()->json([
-                'status' => -1,
-                'message' => 'No User Found',
-            ], 400);
+                'status' => 1,
+                'message' => 'Get user by cycle ' . $cycle,
+                'data' => $users,
+            ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     public function addUser(UserAuth1Request $request)
@@ -500,8 +309,9 @@ class UserController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'User added',
+                'id' => $user->id,
             ], 200);
-        } else {
+        } else if (!$user->save()) {
             return response()->json([
                 'status' => -1,
                 'message' => 'User not added',
@@ -587,6 +397,19 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->others = $request->others;
 
+        if ($user->save()) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'User added',
+                'id' => $user->id,
+            ], 200);
+        } else if (!$user->save()) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User not added',
+            ], 400);
+        }
+        return $user;
             $user->save();
 
             return $user;
@@ -681,7 +504,6 @@ class UserController extends Controller
                     'message' => 'Delete user by rol ' + $rol,
                 ], 200);
             }
-
             return response()->json([
                 'status' => -1,
                 'message' => 'No User Found',
