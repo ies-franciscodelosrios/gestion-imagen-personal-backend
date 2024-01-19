@@ -63,6 +63,7 @@
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
+
             "version": "2.1.0",
             "source": {
                 "type": "git",
@@ -112,7 +113,8 @@
             ],
             "support": {
                 "issues": "https://github.com/CarbonPHP/carbon-doctrine-types/issues",
-                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/2.1.0"
+
+                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/2.1.0
             },
             "funding": [
                 {
@@ -128,6 +130,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-11T17:09:12+00:00"
         },
         {
@@ -1399,6 +1402,7 @@
         },
         {
             "name": "laravel/framework",
+
             "version": "v10.39.0",
             "source": {
                 "type": "git",
@@ -1600,7 +1604,9 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+
             "time": "2023-12-27T14:26:28+00:00"
+
         },
         {
             "name": "laravel/pint",
@@ -3715,6 +3721,7 @@
         },
         {
             "name": "symfony/console",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -3789,6 +3796,7 @@
                 "terminal"
             ],
             "support": {
+
                 "source": "https://github.com/symfony/console/tree/v6.4.2"
             },
             "funding": [
@@ -3805,6 +3813,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-10T16:15:48+00:00"
         },
         {
@@ -3822,7 +3831,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1"
+                "php": ">=8.2"
             },
             "type": "library",
             "autoload": {
@@ -3854,6 +3863,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/css-selector/tree/v6.4.0"
             },
             "funding": [
@@ -3870,6 +3880,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-10-31T08:40:20+00:00"
         },
         {
@@ -4016,6 +4027,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -4029,11 +4041,11 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "symfony/event-dispatcher-contracts": "^2.5|^3"
             },
             "conflict": {
-                "symfony/dependency-injection": "<5.4",
+                "symfony/dependency-injection": "<6.4",
                 "symfony/service-contracts": "<2.5"
             },
             "provide": {
@@ -4042,6 +4054,7 @@
             },
             "require-dev": {
                 "psr/log": "^1|^2|^3",
+
                 "symfony/config": "^5.4|^6.0|^7.0",
                 "symfony/dependency-injection": "^5.4|^6.0|^7.0",
                 "symfony/error-handler": "^5.4|^6.0|^7.0",
@@ -4076,6 +4089,7 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/event-dispatcher/tree/v6.4.2"
             },
             "funding": [
@@ -4092,6 +4106,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-27T22:16:42+00:00"
         },
         {
@@ -4236,6 +4251,7 @@
         },
         {
             "name": "symfony/http-foundation",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -4293,6 +4309,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/http-foundation/tree/v6.4.2"
             },
             "funding": [
@@ -4309,6 +4326,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-27T22:16:42+00:00"
         },
         {
@@ -4406,6 +4424,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/http-kernel/tree/v6.4.2"
             },
             "funding": [
@@ -4422,6 +4441,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-30T15:31:44+00:00"
         },
         {
@@ -4486,6 +4506,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/mailer/tree/v6.4.2"
             },
             "funding": [
@@ -4502,6 +4523,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-19T09:12:31+00:00"
         },
         {
@@ -5328,6 +5350,7 @@
         },
         {
             "name": "symfony/process",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -5369,6 +5392,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/process/tree/v6.4.2"
             },
             "funding": [
@@ -5385,6 +5409,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-22T16:42:54+00:00"
         },
         {
@@ -5452,6 +5477,7 @@
                 "url"
             ],
             "support": {
+
                 "source": "https://github.com/symfony/routing/tree/v6.4.2"
             },
             "funding": [
@@ -5468,6 +5494,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-29T15:34:34+00:00"
         },
         {
@@ -5554,6 +5581,7 @@
         },
         {
             "name": "symfony/string",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -5567,7 +5595,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-intl-grapheme": "~1.0",
                 "symfony/polyfill-intl-normalizer": "~1.0",
@@ -5577,6 +5605,7 @@
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
+
                 "symfony/error-handler": "^5.4|^6.0|^7.0",
                 "symfony/http-client": "^5.4|^6.0|^7.0",
                 "symfony/intl": "^6.2|^7.0",
@@ -5620,6 +5649,7 @@
                 "utf8"
             ],
             "support": {
+
                 "source": "https://github.com/symfony/string/tree/v6.4.2"
             },
             "funding": [
@@ -5636,6 +5666,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-10T16:15:48+00:00"
         },
         {
@@ -5715,6 +5746,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/translation/tree/v6.4.2"
             },
             "funding": [
@@ -5731,6 +5763,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-18T09:25:29+00:00"
         },
         {
@@ -5887,6 +5920,7 @@
         },
         {
             "name": "symfony/var-dumper",
+
             "version": "v6.4.2",
             "source": {
                 "type": "git",
@@ -5952,6 +5986,7 @@
                 "dump"
             ],
             "support": {
+
                 "source": "https://github.com/symfony/var-dumper/tree/v6.4.2"
             },
             "funding": [
@@ -5968,6 +6003,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-28T19:16:56+00:00"
         },
         {
@@ -5985,14 +6021,14 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
-                "symfony/deprecation-contracts": "^2.5|^3",
+                "php": ">=8.2",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "symfony/console": "<5.4"
+                "symfony/console": "<6.4"
             },
             "require-dev": {
+
                 "symfony/console": "^5.4|^6.0|^7.0"
             },
             "bin": [
@@ -6024,6 +6060,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
+
                 "source": "https://github.com/symfony/yaml/tree/v6.4.0"
             },
             "funding": [
@@ -6040,6 +6077,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-11-06T11:00:25+00:00"
         },
         {
@@ -6313,6 +6351,7 @@
         },
         {
             "name": "zircote/swagger-php",
+
             "version": "4.8.3",
             "source": {
                 "type": "git",
@@ -6388,6 +6427,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
+
                 "source": "https://github.com/zircote/swagger-php/tree/4.8.3"
             },
             "time": "2024-01-07T22:33:09+00:00"
@@ -6995,6 +7035,7 @@
         },
         {
             "name": "phpunit/php-code-coverage",
+
             "version": "10.1.11",
             "source": {
                 "type": "git",
@@ -7061,6 +7102,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
+
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/10.1.11"
             },
             "funding": [
@@ -7069,6 +7111,7 @@
                     "type": "github"
                 }
             ],
+
             "time": "2023-12-21T15:38:30+00:00"
         },
         {
@@ -7316,6 +7359,7 @@
         },
         {
             "name": "phpunit/phpunit",
+
             "version": "10.5.5",
             "source": {
                 "type": "git",
@@ -7397,6 +7441,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
+
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.5"
             },
             "funding": [
@@ -7413,6 +7458,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-12-27T15:13:52+00:00"
         },
         {
@@ -8547,6 +8593,7 @@
         },
         {
             "name": "spatie/laravel-ignition",
+
             "version": "2.4.0",
             "source": {
                 "type": "git",
@@ -8635,6 +8682,7 @@
                     "type": "github"
                 }
             ],
+
             "time": "2024-01-04T14:51:24+00:00"
         },
         {
