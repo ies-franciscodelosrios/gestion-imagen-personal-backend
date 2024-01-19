@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserAuth1Request;
 use App\Models\PhotoUrl;
 use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -53,104 +54,18 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        if ($request->user('api')->rol == '0') {
-            $users = User::all();
-
-            if ($users) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'ALL USERS',
-                    'data' => $users,
-                ], 200);
-            }
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'NO USERS FOUND',
-            ], 400);
-
-        } else {
-
-            return response()->json([
-                'status' => -1,
-                'message' => 'Unauthorized',
-            ], 401);
-
-        }
-
-
-    }
-
-    /**
-     * Display a listing of students.
-     *
-     * @OA\Get(
-     *     path="/api/users/rol/2",
-     *     tags={"Users"},
-     *     summary="Shows all the students ",
-     * @OA\Response(
-     *         response=200,
-     *         description="List all the students of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getAllStudents()
-    {
-        $users = User::where('rol', 2)->get();
-        $count = count($users);
+        $users = User::all();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'ALL STUDENTS',
-                'count' => $count,
+                'message' => 'All Users',
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
-    }
-
-    /**
-     * Display a listing of Professors.
-     *
-     * @OA\Get(
-     *     path="/api/users/rol/1",
-     *     tags={"Users"},
-     *     summary="Shows all the professors ",
-     * @OA\Response(
-     *          response=200,
-     *         description="List all the professors of the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getAllProfessor()
-    {
-        $users = User::where('rol', 1)->get();
-        $count = count($users);
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'ALL PROFESSORS',
-                'count' => $count,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -180,184 +95,104 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::where('id', $id)->first();
-
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
+                'message' => 'Get user by ID ' . $id,
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
-     * Display a user based on their id.
+     * Display a listing of students or professors depending by the rol.
      *
      * @OA\Get(
-     *     path="/api/users/user/{id}",
+     *     path="/api/users/rol/1",
      *     tags={"Users"},
-     *     summary="Shows an user based on a id",
-     * @OA\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="Get User By Id ",
-     *         required=true,
-     *      ),
+     *     summary="Shows all the professors ",
      * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an id"
+     *         response=200,
+     *         description="List all the students of the database"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
+     *         description="An error has ocurred."
+     *     )
+     * )
+     * 
+     * @OA\Get(
+     *     path="/api/users/rol/2",
+     *     tags={"Users"},
+     *     summary="Shows all the students ",
+     * @OA\Response(
+     *         response=200,
+     *         description="List all the students of the database"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function getUserByIdParam(Request $request)
+    public function getUsersByRol(Request $request)
     {
-        $id = $request->id;
-        $users = User::where('id', $id)->first();
-
-        if ($users) {
+        $rol = $request->rol;
+        $users = User::where('rol', $rol)->get();
+        $count = count($users);
+        if ($request->rol == '1') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'All professors',
+                    'count' => $count,
+                    'data' => $users,
+                ], 200);
+            }
             return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY ID ' . $id,
-                'data' => $users,
-            ], 200);
+                'status' => -1,
+                'message' => 'No professors Found',
+            ], 400);
+        } else if ($request->rol == '2') {
+            if ($users) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'All Students',
+                    'count' => $count,
+                    'data' => $users,
+                ], 200);
+            }
+            return response()->json([
+                'status' => -1,
+                'message' => 'No Students Found',
+            ], 400);
         }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
     }
 
-    /**
-     * Display a user based on their dni.
-     *
-     * @OA\Get(
-     *     path="/api/userBydni/{dni}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a dni",
-     * @OA\Parameter(
-     *         name="dni",
-     *         in="query",
-     *         description="Get User By dni ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an dni"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserBydni(Request $request)
+    public function getUsersBySearch(Request $request)
     {
-        $dni = $request->dni;
-        $users = User::where('dni', $dni)->first();
+        $search = $request->search;
+        $users = User::where('name', 'LIKE', "%{$search}%")
+            ->orWhere('surname', 'LIKE', "%{$search}%")
+            ->orWhere('course_year', 'LIKE', "%{$search}%")
+            ->orWhere('cycle', 'LIKE', "%{$search}%")
+            ->orWhere('rol', 'LIKE', "%{$search}%")
+            ->get();
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY dni ' . $dni,
+                'message' => 'Users found by ' . $search,
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
-    }
-
-    /**
-     * Display a user based on their mail.
-     *
-     * @OA\Get(
-     *     path="/api/userByCorreo/{correo}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a mail",
-     * @OA\Parameter(
-     *         name="mail",
-     *         in="query",
-     *         description="Get User By mail ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an mail"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByCorreo(Request $request)
-    {
-        $email = $request->email;
-        $users = User::where('email', $email)->first();
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY CORREO ' . $email,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
-    }
-
-    /**
-     * Display a user based on their name.
-     *
-     * @OA\Get(
-     *     path="/api/user/Student/{name}",
-     *     tags={"Users"},
-     *     summary="Shows an user based on a name",
-     * @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="Get User By name ",
-     *         required=true,
-     *      ),
-     * @OA\Response(
-     *          response=200,
-     *         description="Shows all the information about of a user based that matches an name"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function getUserByName(Request $request)
-    {
-        $name = $request->name;
-        $users = User::where('name', $name)->get();
-        if ($users) {
-            return response()->json([
-                'status' => 1,
-                'message' => 'GET USER BY NAME ' . $name,
-                'data' => $users,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No Users Found',
+        ], 400);
     }
 
     /**
@@ -378,27 +213,26 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an course_year"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function getUserByCourse(Request $request)
+    public function getUsersByCourse(Request $request)
     {
         $course_year = $request->course_year;
         $users = User::where('course_year', $course_year)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY COURSE YEAR ' . $course_year,
+                'message' => 'Get user by course year ' . $course_year,
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => 1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
     /**
@@ -419,92 +253,70 @@ class UserController extends Controller
      *         description="Shows all the information about of a user based that matches an cycle"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function getUserBycycle(Request $request)
+    public function getUsersByCycle(Request $request)
     {
         $cycle = $request->cycle;
         $users = User::where('cycle', $cycle)->get();
         if (count($users) !== 0) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY cycle ' . $cycle,
+                'message' => 'Get user by cycle ' . $cycle,
                 'data' => $users,
             ], 200);
         }
-
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
     }
 
-    /**
-     * Adds a new student to the database.
-     *
-     * @OA\post(
-     *     path="/api/user/addstudent",
-     *     tags={"Users"},
-     *     summary="Adds a new student ",
-     * @OA\Response(
-     *          response=200,
-     *         description="Adds a new student to the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function addStudent(Request $request)
+    public function addUser(UserAuth1Request $request)
     {
+        $existingUser = User::where('dni', $request->dni)->orWhere('email', $request->email)->first();
+        if ($existingUser) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User already exists',
+            ], 400);
+        }
+
         $user = new User();
         $user->dni = $request->dni;
-        $user->rol = 2;
+        if ($request->type == 'professor') {
+            $user->rol = 1;
+        } else if ($request->type == 'student') {
+            $user->rol = 2;
+        } else {
+            return response()->json([
+                'status' => -1,
+                'message' => 'No type found',
+            ], 404);
+        }
         $user->course_year = $request->course_year;
         $user->cycle = $request->cycle;
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make('root');
-        $user->others = $request->others;
-        $user->save();
-    }
-
-    /**
-     * Adds a new professor to the database.
-     *
-     * @OA\post(
-     *     path="/ap/user/addprofessor",
-     *     tags={"Users"},
-     *     summary="Adds a new professor ",
-     * @OA\Response(
-     *          response=200,
-     *         description="Adds a new professor to the database"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="An error has ocurred."
-     *     )
-     * )
-     */
-    public function addProfessor(Request $request)
-    {
-        $user = new User();
-        $user->dni = $request->dni;
-        $user->rol = 1;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        $user->password = Hash::make('root');
+        $user->password = Hash::make($user->password);
         $user->others = $request->others;
 
-        $user->save();
+        if ($user->save()) {
+            return response()->json([
+                'status' => 1,
+                'message' => 'User added',
+                'id' => $user->id,
+            ], 200);
+        } else if (!$user->save()) {
+            return response()->json([
+                'status' => -1,
+                'message' => 'User not added',
+            ], 400);
+        }
     }
 
     /**
@@ -519,12 +331,14 @@ class UserController extends Controller
      *         description="Adds all students to the database from a json file"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function addAllStudent() {}
+    public function addAllStudent()
+    {
+    }
 
     /**
      * Adds a all professor to the database from a json file.
@@ -538,12 +352,14 @@ class UserController extends Controller
      *         description="Adds all professor to the database from a json file"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function addAllProfessor() {}
+    public function addAllProfessor()
+    {
+    }
 
     /**
      * Updates an user based on their id
@@ -563,33 +379,51 @@ class UserController extends Controller
      *         description="Update an user using their id as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
      */
-    public function editUser(Request $request)
+    public function editUser(UserAuth1Request $request)
     {
-        $user = User::findOrFail($request->id);
-        $user->dni = $request->dni;
-        $user->course_year = $request->course_year;
-        $user->cycle = $request->cycle;
-        $user->name = $request->name;
-        $user->surname = $request->surname;
-        $user->email = $request->email;
-        if (strlen($request->password) > 8) {
+        try {
+            $user = User::findOrFail($request->id);
+            $user->dni = $request->dni;
+            $user->course_year = $request->course_year;
+            $user->cycle = $request->cycle;
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
             $user->password = Hash::make($request->password);
-        } elseif (strlen($request->password) >= 1) {
-            return response()->json([
-                'status' => -1,
-                'message' => 'La contraseña debe ser de 8 caracteres al menos.',
-            ], 404);
+            $user->others = $request->others;
+
+            if ($user->save()) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'User added',
+                    'id' => $user->id,
+                ], 200);
+            } else if (!$user->save()) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'User not added',
+                ], 400);
+            }
+            return $user;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $errorCode = $exception->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'DNI or email already exists in the database',
+                ], 400);
+            } else {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'An error has occurred',
+                ], 500);
+            }
         }
-        $user->others = $request->others;
-
-        $user->save();
-
-        return $user;
     }
 
     /**
@@ -610,7 +444,7 @@ class UserController extends Controller
      *         description="Remove an user using their id as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -622,14 +456,15 @@ class UserController extends Controller
         if ($users) {
             return response()->json([
                 'status' => 1,
-                'message' => 'USER DELETE WHITH ID IS ' . $id,
+                'message' => 'Delete user by ID ' . $id,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'EMPTY',
-        ], 404);
+            'message' => 'No User Found',
+        ], 400);
+
     }
 
     /**
@@ -650,7 +485,7 @@ class UserController extends Controller
      *         description="Remove an user using their rol as reference"
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="An error has ocurred."
      *     )
      * )
@@ -663,14 +498,13 @@ class UserController extends Controller
             if ($users) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'USER DELETE WHITH rol IS ' + $rol,
+                    'message' => 'Delete user by rol ' + $rol,
                 ], 200);
             }
-
             return response()->json([
                 'status' => -1,
-                'message' => 'EMPTY',
-            ], 404);
+                'message' => 'No User Found',
+            ], 400);
         }
     }
 
@@ -694,7 +528,7 @@ class UserController extends Controller
 
             // Verificar si se encontró la imagen
             if (!$images['resources']) {
-                return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                return response()->json(['message' => 'Image not found in Cloudinary'], 400);
             }
 
             // Eliminar la imagen de Cloudinary
@@ -705,13 +539,13 @@ class UserController extends Controller
 
             // Verificar si la eliminación fue exitosa
             if ($result['result'] === 'ok') {
-                return response()->json(['message' => 'La imagen se eliminó correctamente'], 200);
+                return response()->json(['message' => 'Image deleted succesfully'], 200);
             } else {
-                return response()->json(['message' => $result], 500);
+                return response()->json(['message' => $result], 400);
             }
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => $e], 500);
+            return response()->json(['error' => $e], 400);
         }
     }
 
@@ -723,7 +557,7 @@ class UserController extends Controller
 
             // Verificar si se obtuvieron imágenes
             if (!$images) {
-                return response()->json(['message' => 'No se encontraron imágenes en Cloudinary'], 404);
+                return response()->json(['message' => 'Images not found in Cloudinary'], 400);
             }
 
             // Recorrer las imágenes y obtener las URLs
@@ -735,7 +569,7 @@ class UserController extends Controller
             return response()->json(['images' => $imageUrls], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -749,7 +583,7 @@ class UserController extends Controller
             return response()->json(['images' => $images], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al traer imagenes'], 500);
+            return response()->json(['error' => 'Error taking images'], 400);
         }
     }
 
@@ -769,11 +603,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto guardada',
+                'message' => 'Photo saved',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al guardar imagenes'], 500);
+            return response()->json(['error' => 'Error saving images'], 400);
         }
     }
 
@@ -789,7 +623,7 @@ class UserController extends Controller
 
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
-                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                    return response()->json(['message' => 'Image not found in Cloudinary'], 400);
                 }
 
                 // Eliminar la imagen de Cloudinary
@@ -799,7 +633,7 @@ class UserController extends Controller
                 ]);
             } catch (\Exception $e) {
                 // Error al eliminar la imagen
-                return response()->json(['error' => $e], 500);
+                return response()->json(['error' => $e], 400);
             }
 
             // Verificar que la imagen exista para el usuario
@@ -811,11 +645,11 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Foto eliminada',
+                'message' => 'Photo deleted',
             ], 200);
         } catch (\Exception $e) {
             // Error al eliminar la imagen
-            return response()->json(['error' => 'Error al eliminar imagen'], 500);
+            return response()->json(['error' => 'Error deleting image'], 400);
         }
     }
 }

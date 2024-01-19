@@ -31,3 +31,12 @@ Adicionalmente de la administración de citas, la página web también ofrecerá
 #### Iniciar el servicio
 
     php artisan serve
+
+## Tecnologías empleadas
+
+Para acceder como administrador copiar el siguiente email y contraseña:
+
+```
+email: admin@ieseltablero.es
+contraseña: root
+```

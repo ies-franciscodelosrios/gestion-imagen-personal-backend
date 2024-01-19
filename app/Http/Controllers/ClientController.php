@@ -73,7 +73,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 0,
                 'message' => 'NO CLIENTS FOUND ' + $th,
-            ], 404);
+            ], 400);
         }
     }
 
@@ -89,7 +89,7 @@ class ClientController extends Controller
      *        description="Clients registry found"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="No clients saved"
      *    )
      * )
@@ -109,7 +109,7 @@ class ClientController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'NO CLIENTS FOUND',
-        ], 404);
+        ], 400);
     }
 
     /**
@@ -130,7 +130,7 @@ class ClientController extends Controller
      *        description="Client found"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="Client not found"
      *    )
      * )
@@ -152,7 +152,7 @@ class ClientController extends Controller
         return response()->json([
             'status' => 0,
             'message' => 'CLIENT NOT FOUND',
-        ], 404);
+        ], 400);
     }
 
     /**
@@ -173,7 +173,7 @@ class ClientController extends Controller
      *        description="Client found"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="Client not found"
      *    )
      * )
@@ -194,7 +194,7 @@ class ClientController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'EMPTY',
-        ], 404);
+        ], 400);
     }
 
     /**
@@ -229,7 +229,7 @@ class ClientController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 404);
+            return response()->json($validator->errors(), 400);
         }
 
         $client = new Client;
@@ -272,7 +272,7 @@ class ClientController extends Controller
      *        description="Client deleted"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="No client deleted"
      *    )
      * )
@@ -326,7 +326,7 @@ class ClientController extends Controller
      *        description="Client deleted"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="No client deleted"
      *    )
      * )
@@ -346,6 +346,7 @@ class ClientController extends Controller
             'status' => -1,
             'message' => 'YOU MUST PROVIDE AN ID TO DELETE A CLIENT',
         ], 404);
+
     }
 
     /**
@@ -366,7 +367,7 @@ class ClientController extends Controller
      *        description="Clients deleted"
      *    ),
      *    @OA\Response(
-     *        response=404,
+     *        response=400,
      *        description="No clients deleted"
      *    )
      * )
@@ -385,7 +386,7 @@ class ClientController extends Controller
         return response()->json([
             'status' => -1,
             'message' => 'ERROR',
-        ], 404);
+        ], 400);
     }
 
     public function getPhotosUrl(Request $request)
@@ -438,7 +439,7 @@ class ClientController extends Controller
 
                 // Verificar si se encontró la imagen
                 if (!$images['resources']) {
-                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 404);
+                    return response()->json(['message' => 'La imagen no se encontró en Cloudinary'], 400);
                 }
 
                 // Eliminar la imagen de Cloudinary
