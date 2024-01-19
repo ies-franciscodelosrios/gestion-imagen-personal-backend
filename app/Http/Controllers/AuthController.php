@@ -26,7 +26,7 @@ class AuthController extends Controller
      *         description="Login successful and token generated."
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -42,13 +42,14 @@ class AuthController extends Controller
                 'token' => $request->user()->createToken($request->device)->plainTextToken,
                 'status' => 1,
                 'message' => 'Login success',
+                'id' => $request->user()->id,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
-            'message' => 'Unauthenticated',
-        ], 401);
+            'message' => 'Error at LogIn',
+        ], 400);
     }
 
     public function validateLogin(Request $request)
@@ -78,7 +79,7 @@ class AuthController extends Controller
      *         description="Logout successful."
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response=400,
      *         description="ERROR"
      *     )
      * )
@@ -89,12 +90,13 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'Logout success',
+                'id' => $request->user()->id,
             ], 200);
         }
 
         return response()->json([
             'status' => -1,
             'message' => 'Logout error',
-        ], 401);
+        ], 400);
     }
 }
