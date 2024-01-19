@@ -224,6 +224,8 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dni' => 'required|unique:clients',
+            'phone' => 'required|unique:clients',
+            'email' => 'required|unique:clients'
         ]);
 
         if ($validator->fails()) {
@@ -246,7 +248,10 @@ class ClientController extends Controller
 
         $client->save();
 
-        return response()->json(['message' => 'CLIENT CREATED SUCCESSFULLY'], 201);
+        return response()->json([
+            'message' => 'CLIENT CREATED SUCCESSFULLY',
+            'client_id' => $client->id,]
+        , 201);
     }
 
     /**
@@ -274,6 +279,16 @@ class ClientController extends Controller
      */
     public function editById(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'dni' => 'required|unique:clients',
+            'phone' => 'required|unique:clients',
+            'email' => 'required|unique:clients',
+            
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 404);
+        }  
         $client = Client::findOrFail($request->id);
         $client->dni = $request->dni;
         $client->name = $request->name;
@@ -329,7 +344,7 @@ class ClientController extends Controller
 
         return response()->json([
             'status' => -1,
-            'message' => 'CLIENT NOT DELETED',
+            'message' => 'YOU MUST PROVIDE AN ID TO DELETE A CLIENT',
         ], 404);
     }
 
