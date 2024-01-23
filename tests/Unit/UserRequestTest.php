@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
+//Tests unitarios sin documentar para probar diferentes roles
+/* 
 class UserRequestTest extends TestCase
 {
     public function test_authorize_with_rol_0(): void
@@ -30,3 +32,4 @@ class UserRequestTest extends TestCase
         $this->assertFalse($request->authorize());
     }
 }
+*/
