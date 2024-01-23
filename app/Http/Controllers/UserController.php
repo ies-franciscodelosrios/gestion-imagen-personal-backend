@@ -275,6 +275,32 @@ class UserController extends Controller
         ], 400);
     }
 
+    /**
+     * Adds a user to the database.
+     *
+     * @OA\Post(
+     *     path="/api/user/adduser",
+     *     tags={"Users"},
+     *     summary="Adds a user to the database",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UserAuth1Request")
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *         description="User added to the database",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=1),
+     *             @OA\Property(property="message", type="string", example="User added"),
+     *             @OA\Property(property="id", type="integer", example=1)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="An error has occurred."
+     *     )
+     * )
+     */
     public function addUser(UserAuth1Request $request)
     {
         $existingUser = User::where('dni', $request->dni)->orWhere('email', $request->email)->first();
