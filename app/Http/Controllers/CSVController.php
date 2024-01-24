@@ -15,20 +15,19 @@ class CSVController extends Controller
 
         $csvData = base64_decode($base64Data);
 
-        $filename = 'archivo.csv';
-        file_put_contents($filename, $csvData);
+        //$filename = 'archivo.csv';
+        //file_put_contents($temp, $csvData);
+
+        $temp = tempnam(sys_get_temp_dir(), 'csv_import');
+        file_put_contents($temp, $csvData);
 
         try {
-            Excel::import(new UserImport, $filename);
+            Excel::import(new UserImport, $temp);
+            unlink($temp);
 
             return response()->json(['message' => 'Importación exitosa']);
         } catch (Exception $e) {
             return response()->json(['error' => 'Error en la importación: ' . $e->getMessage()], 500);
         }
-    }
-
-    public function export()
-    {
-        // Lógica para exportar datos a un archivo CSV
     }
 }
