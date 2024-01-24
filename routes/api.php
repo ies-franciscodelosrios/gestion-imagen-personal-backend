@@ -105,6 +105,174 @@ Route::middleware('auth:sanctum')->delete('/user/delete-photo-url', [App\Http\Co
 Route::middleware('auth:sanctum')->get('/get-cloudinary', [App\Http\Controllers\UserController::class, 'getAllImages']);
 //Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
 
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* VocationalEducation */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/*  METODOS GET DE VocationalEducation */
+/**
+ * @OA\Get(
+ *     path="/vocationalEducation",
+ *     summary="Get all vocational educations",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(ref="#/components/schemas/VocationalEducation")
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->get('/vocationalEducation', [App\Http\Controllers\VocationalEducationController::class, 'getAll']);
+
+
+/*  METODOS GET DE VocationalEducation */
+/**
+ * @OA\Get(
+ *     path="/vocationalEducation/{id}",
+ *     summary="Get a vocational education by ID",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID of the vocational education",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer",
+ *             format="int64"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(ref="#/components/schemas/VocationalEducation")
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Vocational education not found"
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->get('/vocationalEducation/{id}', [App\Http\Controllers\VocationalEducationController::class, 'getVocationalEducationById']);
+
+/*  METODOS POST DE VocationalEducation */
+/**
+ * @OA\Post(
+ *     path="/vocationalEducation/add",
+ *     summary="Add a new vocational education",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(ref="#/components/schemas/VocationalEducationRequest")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Vocational education added successfully",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=1),
+ *             @OA\Property(property="message", type="string", example="vocationalEducation added"),
+ *             @OA\Property(property="id", type="integer", example=123)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Bad request",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=-1),
+ *             @OA\Property(property="message", type="string", example="VocationalEducation already exists")
+ *         )
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->post('/vocationalEducation/add', [App\Http\Controllers\VocationalEducationController::class, 'addVocationalEducation']);
+
+/*  METODOS PUT DE VocationalEducation */
+/**
+ * @OA\Put(
+ *     path="/vocationalEducation/edit/{id}",
+ *     summary="Edit a vocational education",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the vocational education",
+ *         @OA\Schema(
+ *             type="integer",
+ *             format="int64"
+ *         )
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(ref="#/components/schemas/VocationalEducation")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Vocational education edited successfully",
+ *         @OA\JsonContent(ref="#/components/schemas/VocationalEducation")
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Vocational education not edited"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Vocational education not found"
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->put('/vocationalEducation/edit/{id}', [App\Http\Controllers\VocationalEducationController::class, 'editVocationalEducation']);
+
+/*  METODOS DELETE DE VocationalEducation */
+/**
+ * @OA\Delete(
+ *     path="/vocationalEducation/delete/{id}",
+ *     summary="Delete a vocational education",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the vocational education",
+ *         @OA\Schema(
+ *             type="integer",
+ *             format="int64"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=204,
+ *         description="Vocational education deleted successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Vocational education not found"
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete/{id}', [App\Http\Controllers\VocationalEducationController::class, 'deleteVocationalEducation']);
+
+/**
+ * @OA\Delete(
+ *     path="/vocationalEducation/delete-all",
+ *     summary="Delete all vocational educations",
+ *     tags={"Vocational Education"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Response(
+ *         response=204,
+ *         description="All vocational educations deleted successfully"
+ *     )
+ * )
+ */
+Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete-all', [App\Http\Controllers\VocationalEducationController::class, 'deleteAll']);
+
 /* METODOS CSV */
 Route::middleware('auth:sanctum')->post('/csv/import', [App\Http\Controllers\CsvController::class, 'import']);
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */

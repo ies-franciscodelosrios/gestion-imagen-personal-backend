@@ -13,7 +13,7 @@ class VocationalEducation extends Model
         'id',
         'short_name',
         'long_name',
-        'descripcion',
+        'description',
     ];
 
     public function photoUrls()
