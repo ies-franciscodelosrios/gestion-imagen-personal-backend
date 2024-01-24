@@ -105,4 +105,6 @@ Route::middleware('auth:sanctum')->delete('/user/delete-photo-url', [App\Http\Co
 Route::middleware('auth:sanctum')->get('/get-cloudinary', [App\Http\Controllers\UserController::class, 'getAllImages']);
 //Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
 
+/* METODOS CSV */
+Route::middleware('auth:sanctum')->post('/csv/import', [App\Http\Controllers\CsvController::class, 'import']);
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
