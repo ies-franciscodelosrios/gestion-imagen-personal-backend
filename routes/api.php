@@ -105,4 +105,32 @@ Route::middleware('auth:sanctum')->delete('/user/delete-photo-url', [App\Http\Co
 Route::middleware('auth:sanctum')->get('/get-cloudinary', [App\Http\Controllers\UserController::class, 'getAllImages']);
 //Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
 
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* VocationalEducation */
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+
+/*  METODOS GET DE VocationalEducation */
+Route::middleware('auth:sanctum')->get('/vocationalEducation', [App\Http\Controllers\VocationalEducationController::class, 'getAll']);
+
+
+/*  METODOS GET DE VocationalEducation */
+Route::middleware('auth:sanctum')->get('/vocationalEducation/{id}', [App\Http\Controllers\VocationalEducationController::class, 'getVocationalEducationById']);
+
+/*  METODOS POST DE VocationalEducation */
+Route::middleware('auth:sanctum')->post('/vocationalEducation/add', [App\Http\Controllers\VocationalEducationController::class, 'addVocationalEducation']);
+
+/*  METODOS PUT DE VocationalEducation */
+Route::middleware('auth:sanctum')->put('/vocationalEducation/edit/{id}', [App\Http\Controllers\VocationalEducationController::class, 'editVocationalEducation']);
+
+/*  METODOS DELETE DE VocationalEducation */
+Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete/{id}', [App\Http\Controllers\VocationalEducationController::class, 'deleteVocationalEducation']);
+
+Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete-all', [App\Http\Controllers\VocationalEducationController::class, 'deleteAll']);
+
+/* METODOS CSV */
+Route::middleware('auth:sanctum')->post('/csv/import', [App\Http\Controllers\CsvController::class, 'import']);
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */

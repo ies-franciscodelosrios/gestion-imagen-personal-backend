@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('short_name');
             $table->string('long_name');
-            $table->string('description');
+            $table->string('description')->default('Sin descripción')->nullable();
 
             $table->timestamps();
         });
