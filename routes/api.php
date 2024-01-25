@@ -61,11 +61,11 @@ Route::middleware('auth:sanctum')->get('/clients', [App\Http\Controllers\ClientC
 Route::middleware('auth:sanctum')->get('/clients/paged', [App\Http\Controllers\ClientController::class, 'getClientPaged']);
 
 /*  METODOS POST DE Client */
-Route::middleware('auth:sanctum')->post('/client', [App\Http\Controllers\ClientController::class, 'addClient']);
+Route::middleware('auth:sanctum')->post('/client/add', [App\Http\Controllers\ClientController::class, 'addClient']);
 Route::middleware('auth:sanctum')->post('/client/add-photo-url', [App\Http\Controllers\ClientController::class, 'storePhotoUrl']);
 
 /*  METODOS PUT DE Client */
-Route::middleware('auth:sanctum')->put('/client', [App\Http\Controllers\ClientController::class, 'editById']);
+Route::middleware('auth:sanctum')->put('/client/edit', [App\Http\Controllers\ClientController::class, 'editById']);
 
 /*  METODOS DELETE DE Client */
 Route::middleware('auth:sanctum')->delete('/client/id', [App\Http\Controllers\ClientController::class, 'deleteById']);
