@@ -223,9 +223,6 @@ class ClientController extends Controller
      */
     public function addClient(ClientAuthRequest $request)
     {
-
-       
-
         $existingClientDNI = Client::where('dni', $request->dni)->first();
         $existingClientPhone = Client::where('phone', $request->phone)->first();
         $existingClientEmail = Client::where('email', $request->email)->first();
@@ -312,6 +309,7 @@ class ClientController extends Controller
             $client->hairdressing_routine = $request->hairdressing_routine;
 
             if ($client->save()) {
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Client edited',

@@ -212,6 +212,21 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
+            ],[
+                'dni' => '78130272P',
+                'rol' => 2,
+                'course_year' => '23-24',
+                'cycle' => 'ninguno',
+                'name' => 'Francisco Javier',
+                'surname' => 'Ordoñez',
+                'email' => 'fjsalamanca@ieseltablero.es',
+                'email_verified_at' => now(),
+                'Password' => Hash::make('root'),
+                'others' => ' ',
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+
             ],
         ]);
 

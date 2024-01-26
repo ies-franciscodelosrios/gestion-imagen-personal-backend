@@ -2,6 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CSVController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\vocationalEducationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,120 +23,123 @@ use Illuminate\Support\Facades\Route;
 
 /* Auth */
 /* ----------------------------------------------------------------------------------------------------------------------------------------- */
-Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')
-    ->get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
+    ->get('logout', [AuthController::class, 'logout']);
 
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+Route::middleware(['auth:sanctum'])->group(function(){
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/* Appointment */
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /* Appointment */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS GET DE Appointment */
-Route::middleware('auth:sanctum')->get('/appointments', [App\Http\Controllers\AppointmentController::class, 'getAll']);
-Route::middleware('auth:sanctum')->get('/appointment/id', [App\Http\Controllers\AppointmentController::class, 'getAppointmentById']);
-Route::middleware('auth:sanctum')->get('/appointment/dni/client', [App\Http\Controllers\AppointmentController::class, 'getAppointmentBydniClient']);
-Route::middleware('auth:sanctum')->get('/appointment/dni/student', [App\Http\Controllers\AppointmentController::class, 'getClientBydniStudent']);
-Route::middleware('auth:sanctum')->get('/appointments/paged', [App\Http\Controllers\AppointmentController::class, 'getAppointmentsByDniStudent']);
-Route::middleware('auth:sanctum')->get('/appointment/get-photos', [App\Http\Controllers\AppointmentController::class, 'getPhotosUrl']);
+    /*  METODOS GET DE Appointment */
+    Route::get('/appointments', [AppointmentController::class, 'getAll']);
+    Route::get('/appointment/id', [AppointmentController::class, 'getAppointmentById']);
+    Route::get('/appointment/dni/client', [AppointmentController::class, 'getAppointmentBydniClient']);
+    Route::get('/appointment/dni/student', [AppointmentController::class, 'getClientBydniStudent']);
+    Route::get('/appointments/paged', [AppointmentController::class, 'getAppointmentsByDniStudent']);
+    Route::get('/appointment/get-photos', [AppointmentController::class, 'getPhotosUrl']);
 
-/*  METODOS POST DE Appointment */
-Route::middleware('auth:sanctum')->post('/appointment', [App\Http\Controllers\AppointmentController::class, 'addAppointment']);
-Route::middleware('auth:sanctum')->post('/appointment/add-photo-url', [App\Http\Controllers\AppointmentController::class, 'storePhotoUrl']);
+    /*  METODOS POST DE Appointment */
+    Route::post('/appointment', [AppointmentController::class, 'addAppointment']);
+    Route::post('/appointment/add-photo-url', [AppointmentController::class, 'storePhotoUrl']);
 
-/*  METODOS PUT DE Appointment */
-Route::middleware('auth:sanctum')->put('/appointment', [App\Http\Controllers\AppointmentController::class, 'editAppointment']);
+    /*  METODOS PUT DE Appointment */
+    Route::put('/appointment', [AppointmentController::class, 'editAppointment']);
 
-/*  METODOS DELETE DE Appointment */
-Route::middleware('auth:sanctum')->delete('/appointment/delete-all', [App\Http\Controllers\AppointmentController::class, 'deleteAll']);
-Route::middleware('auth:sanctum')->delete('/appointment/id', [App\Http\Controllers\AppointmentController::class, 'DeleteAppointmenById']);
-Route::middleware('auth:sanctum')->delete('/appointment/delete-photo-url', [App\Http\Controllers\AppointmentController::class, 'deletePhotoUrl']);
+    /*  METODOS DELETE DE Appointment */
+    Route::delete('/appointment/delete-all', [AppointmentController::class, 'deleteAll']);
+    Route::delete('/appointment/id', [AppointmentController::class, 'DeleteAppointmenById']);
+    Route::delete('/appointment/delete-photo-url', [AppointmentController::class, 'deletePhotoUrl']);
 
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/* Client */
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /* Client */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS GET DE Client */
+    /*  METODOS GET DE Client */
 
-Route::middleware('auth:sanctum')->get('/client/id', [App\Http\Controllers\ClientController::class, 'searchClientByid']);
-Route::middleware('auth:sanctum')->get('/client/data', [App\Http\Controllers\ClientController::class, 'searchClient']);
-Route::middleware('auth:sanctum')->get('/client/stats', [App\Http\Controllers\ClientController::class, 'getStats']);
-Route::middleware('auth:sanctum')->get('/client/get-photos', [App\Http\Controllers\ClientController::class, 'getPhotosUrl']);
-Route::middleware('auth:sanctum')->get('/clients', [App\Http\Controllers\ClientController::class, 'getClientAll']);
-Route::middleware('auth:sanctum')->get('/clients/paged', [App\Http\Controllers\ClientController::class, 'getClientPaged']);
+    Route::get('/client/id', [ClientController::class, 'searchClientByid']);
+    Route::get('/client/data', [ClientController::class, 'searchClient']);
+    Route::get('/client/stats', [ClientController::class, 'getStats']);
+    Route::get('/client/get-photos', [ClientController::class, 'getPhotosUrl']);
+    Route::get('/clients', [ClientController::class, 'getClientAll']);
+    Route::get('/clients/paged', [ClientController::class, 'getClientPaged']);
 
-/*  METODOS POST DE Client */
-Route::middleware('auth:sanctum')->post('/client/add', [App\Http\Controllers\ClientController::class, 'addClient']);
-Route::middleware('auth:sanctum')->post('/client/add-photo-url', [App\Http\Controllers\ClientController::class, 'storePhotoUrl']);
+    /*  METODOS POST DE Client */
+    Route::post('/client/add', [ClientController::class, 'addClient']);
+    Route::post('/client/add-photo-url', [ClientController::class, 'storePhotoUrl']);
 
-/*  METODOS PUT DE Client */
-Route::middleware('auth:sanctum')->put('/client/edit', [App\Http\Controllers\ClientController::class, 'editById']);
+    /*  METODOS PUT DE Client */
+    Route::put('/client/edit', [ClientController::class, 'editById']);
 
-/*  METODOS DELETE DE Client */
-Route::middleware('auth:sanctum')->delete('/client/id', [App\Http\Controllers\ClientController::class, 'deleteById']);
-Route::middleware('auth:sanctum')->delete('/client/purge', [App\Http\Controllers\ClientController::class, 'deleteAll']);
-Route::middleware('auth:sanctum')->delete('/client/delete-photo-url', [App\Http\Controllers\ClientController::class, 'deletePhotoUrl']);
+    /*  METODOS DELETE DE Client */
+    Route::delete('/client/id', [ClientController::class, 'deleteById']);
+    Route::delete('/client/purge', [ClientController::class, 'deleteAll']);
+    Route::delete('/client/delete-photo-url', [ClientController::class, 'deletePhotoUrl']);
 
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/* Users */
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /* Users */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS GET DE User */
+    /*  METODOS GET DE User */
 
-Route::middleware('auth:sanctum')->get('/user', [App\Http\Controllers\UserController::class, 'getUserLogged']);
-Route::middleware('auth:sanctum')->get('/user/id/{id}', [App\Http\Controllers\UserController::class, 'getUserByID']);
-Route::middleware('auth:sanctum')->get('/users', [App\Http\Controllers\UserController::class, 'getAll']);
-Route::middleware('auth:sanctum')->get('/users/rol/{rol}', [App\Http\Controllers\UserController::class, 'getUsersByRol']);
-Route::middleware('auth:sanctum')->get('/users/course/{course_year}', [App\Http\Controllers\UserController::class, 'getUsersByCourse']);
-Route::middleware('auth:sanctum')->get('/users/cycle/{cycle}', [App\Http\Controllers\UserController::class, 'getUsersByCycle']);
-Route::middleware('auth:sanctum')->get('/users/search/{search}', [App\Http\Controllers\UserController::class, 'getUsersBySearch']);
-Route::middleware('auth:sanctum')->get('/user/get-photos', [App\Http\Controllers\UserController::class, 'getPhotosUrl']);
+    Route::get('/user', [UserController::class, 'getUserLogged']);
+    Route::get('/user/id/{id}', [UserController::class, 'getUserByID']);
+    Route::get('/users', [UserController::class, 'getAll']);
+    Route::get('/users/rol/{rol}', [UserController::class, 'getUsersByRol']);
+    Route::get('/users/course/{course_year}', [UserController::class, 'getUsersByCourse']);
+    Route::get('/users/cycle/{cycle}', [UserController::class, 'getUsersByCycle']);
+    Route::get('/users/search/{search}', [UserController::class, 'getUsersBySearch']);
+    Route::get('/user/get-photos', [UserController::class, 'getPhotosUrl']);
 
-/*  METODOS POST DE User */
-Route::middleware('auth:sanctum')->post('/user/add/{type}', [App\Http\Controllers\UserController::class, 'addUser']);
-Route::middleware('auth:sanctum')->post('/user/addstudents', [App\Http\Controllers\UserController::class, 'addAllStudent']);
-Route::middleware('auth:sanctum')->post('/user/addprofessors', [App\Http\Controllers\UserController::class, 'addAllProfessor']);
-Route::middleware('auth:sanctum')->post('/user/add-photo-url', [App\Http\Controllers\UserController::class, 'storePhotoUrl']);
+    /*  METODOS POST DE User */
+    Route::post('/user/add/{type}', [UserController::class, 'addUser']);
+    Route::post('/user/addstudents', [UserController::class, 'addAllStudent']);
+    Route::post('/user/addprofessors', [UserController::class, 'addAllProfessor']);
+    Route::post('/user/add-photo-url', [UserController::class, 'storePhotoUrl']);
 
-/*  METODOS PUT DE User */
-Route::middleware('auth:sanctum')->put('/user/editUser/{id}', [App\Http\Controllers\UserController::class, 'editUser']);
+    /*  METODOS PUT DE User */
+    Route::put('/user/editUser/{id}', [UserController::class, 'editUser']);
 
-/*  METODOS DELETE DE User */
-Route::middleware('auth:sanctum')->delete('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'deleteUser']);
-Route::middleware('auth:sanctum')->delete('/user/delete/rol', [App\Http\Controllers\UserController::class, 'deleteByrol']);
-Route::middleware('auth:sanctum')->delete('/delete-cloudinary', [App\Http\Controllers\UserController::class, 'deleteImage']);
-Route::middleware('auth:sanctum')->delete('/user/delete-photo-url', [App\Http\Controllers\UserController::class, 'deletePhotoUrl']);
-Route::middleware('auth:sanctum')->get('/get-cloudinary', [App\Http\Controllers\UserController::class, 'getAllImages']);
-//Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
-
-
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
-/* VocationalEducation */
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
-
-/*  METODOS GET DE VocationalEducation */
-Route::middleware('auth:sanctum')->get('/vocationalEducation', [App\Http\Controllers\VocationalEducationController::class, 'getAll']);
+    /*  METODOS DELETE DE User */
+    Route::delete('/user/delete/{id}', [UserController::class, 'deleteUser']);
+    Route::delete('/user/delete/rol', [UserController::class, 'deleteByrol']);
+    Route::delete('/delete-cloudinary', [UserController::class, 'deleteImage']);
+    Route::delete('/user/delete-photo-url', [UserController::class, 'deletePhotoUrl']);
+    Route::get('/get-cloudinary', [UserController::class, 'getAllImages']);
+    //Route::middleware('auth:sanctum')->delete('/user/deleteall/rol',[App\Http\Controllers\UserController::class, 'deleteAllByrol']);
 
 
-/*  METODOS GET DE VocationalEducation */
-Route::middleware('auth:sanctum')->get('/vocationalEducation/{id}', [App\Http\Controllers\VocationalEducationController::class, 'getVocationalEducationById']);
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS POST DE VocationalEducation */
-Route::middleware('auth:sanctum')->post('/vocationalEducation/add', [App\Http\Controllers\VocationalEducationController::class, 'addVocationalEducation']);
+    /* VocationalEducation */
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS PUT DE VocationalEducation */
-Route::middleware('auth:sanctum')->put('/vocationalEducation/edit/{id}', [App\Http\Controllers\VocationalEducationController::class, 'editVocationalEducation']);
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
 
-/*  METODOS DELETE DE VocationalEducation */
-Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete/{id}', [App\Http\Controllers\VocationalEducationController::class, 'deleteVocationalEducation']);
+    /*  METODOS GET DE VocationalEducation */
+    Route::get('/vocationalEducation', [vocationalEducationController::class, 'getAll']);
 
-Route::middleware('auth:sanctum')->delete('/vocationalEducation/delete-all', [App\Http\Controllers\VocationalEducationController::class, 'deleteAll']);
 
-/* METODOS CSV */
-Route::middleware('auth:sanctum')->post('/csv/import', [App\Http\Controllers\CsvController::class, 'import']);
-/* ----------------------------------------------------------------------------------------------------------------------------------------- */
+    /*  METODOS GET DE VocationalEducation */
+    Route::get('/vocationalEducation/{id}', [VocationalEducationController::class, 'getVocationalEducationById']);
+
+    /*  METODOS POST DE VocationalEducation */
+    Route::post('/vocationalEducation/add', [VocationalEducationController::class, 'addVocationalEducation']);
+
+    /*  METODOS PUT DE VocationalEducation */
+    Route::put('/vocationalEducation/edit/{id}', [VocationalEducationController::class, 'editVocationalEducation']);
+
+    /*  METODOS DELETE DE VocationalEducation */
+    Route::delete('/vocationalEducation/delete/{id}', [VocationalEducationController::class, 'deleteVocationalEducation']);
+
+    Route::delete('/vocationalEducation/delete-all', [VocationalEducationController::class, 'deleteAll']);
+
+    /* METODOS CSV */
+    Route::post('/csv/import', [CSVController::class, 'import']);
+    /* ----------------------------------------------------------------------------------------------------------------------------------------- */
+});
+

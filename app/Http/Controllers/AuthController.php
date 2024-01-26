@@ -33,7 +33,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        //$this->validateLogin($request);
+        //dd("hola");
 
         Log::debug($request->only('email', 'password'));
 
