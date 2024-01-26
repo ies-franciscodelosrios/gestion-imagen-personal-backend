@@ -28,9 +28,14 @@ class CSVController extends Controller
             $notimportedCount = $usersimport->getNotImportedCount();
             unlink($temp);
 
-            return response()->json(['message' => 'Importación exitosa', 'Total de Usuarios importados' => $importedCount, 'Total de Usuarios NO Importados' => $notimportedCount]);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Importación exitosa',
+                'imported' => $importedCount,
+                'failed' => $notimportedCount
+            ]);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Error en la importación: ' . $e->getMessage()], 500);
+            return response()->json(['status' => -1, 'message' => 'Error en la importación: ' . $e->getMessage()], 500);
         }
     }
 }
