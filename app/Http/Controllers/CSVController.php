@@ -22,10 +22,13 @@ class CSVController extends Controller
         file_put_contents($temp, $csvData);
 
         try {
-            Excel::import(new UserImport, $temp);
+            $usersimport = new UserImport;
+            Excel::import($usersimport, $temp);
+            $importedCount = $usersimport->getImportedCount();
+            $notimportedCount = $usersimport->getNotImportedCount();
             unlink($temp);
 
-            return response()->json(['message' => 'Importación exitosa']);
+            return response()->json(['message' => 'Importación exitosa', 'Total de Usuarios importados' => $importedCount, 'Total de Usuarios NO Importados' => $notimportedCount]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Error en la importación: ' . $e->getMessage()], 500);
         }
