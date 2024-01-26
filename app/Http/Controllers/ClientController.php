@@ -283,12 +283,12 @@ class ClientController extends Controller
             'dni' => 'required|unique:clients',
             'phone' => 'required|unique:clients',
             'email' => 'required|unique:clients',
-            
+
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 404);
-        }  
+        }
         $client = Client::findOrFail($request->id);
         $client->dni = $request->dni;
         $client->name = $request->name;
