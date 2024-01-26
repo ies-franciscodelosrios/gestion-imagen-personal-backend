@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\DniValidation;
 
@@ -24,5 +26,19 @@ class UserRulesRequest extends FormRequest
             'cycle' => 'required|integer'
         ];
 
+    }
+
+    /**
+     * Throw exception if request is failed.
+     *
+     * @param  Validator  $validator
+     */
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation errors',
+            'data' => $validator->errors(),
+        ], 400));
     }
 }

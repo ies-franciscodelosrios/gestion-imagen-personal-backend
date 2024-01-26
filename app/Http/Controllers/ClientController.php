@@ -24,7 +24,7 @@ class ClientController extends Controller
         return response()->json([
             'status' => 1,
             'message' => 'REGISTRY FOUND',
-            'data'=> [
+            'data' => [
                 'clients' => $clientCount,
                 'appointments' => $appointmentCount,
                 'teachers' => $teachersCount,
@@ -52,12 +52,12 @@ class ClientController extends Controller
             // Aplicar el filtrado por texto de búsqueda
             if (!empty($searchText)) {
                 $query->where(function ($q) use ($searchText) {
-                    $q->where('name', 'LIKE', '%'.$searchText.'%')
-                        ->orWhere('surname', 'LIKE', '%'.$searchText.'%')
-                        ->orWhere('birth_date', 'LIKE', '%'.$searchText.'%')
-                        ->orWhere('dni', 'LIKE', '%'.$searchText.'%')
-                        ->orWhere('email', 'LIKE', '%'.$searchText.'%')
-                        ->orWhere('phone', 'LIKE', '%'.$searchText.'%');
+                    $q->where('name', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('surname', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('birth_date', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('dni', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('email', 'LIKE', '%' . $searchText . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $searchText . '%');
                     // Añade más condiciones de búsqueda según los campos necesarios
                 });
             }
@@ -68,7 +68,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                'data'=>$clients,
+                'data' => $clients,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -103,7 +103,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 1,
                 'message' => 'REGISTRY FOUND',
-                'data'=>$clients,
+                'data' => $clients,
             ], 200);
         }
 
@@ -139,14 +139,14 @@ class ClientController extends Controller
     public function searchClient(Request $request)
     {
         $searchtext = $request->searchtext;
-        $client = Client::where('id', 'like', '%'.$searchtext.'%')->orWhere('dni', 'like', '%'.$searchtext.'%')
-     ->orWhere('name', 'like', '%'.$searchtext.'%')
-     ->orWhere('surname', 'like', '%'.$searchtext.'%')->first();
+        $client = Client::where('id', 'like', '%' . $searchtext . '%')->orWhere('dni', 'like', '%' . $searchtext . '%')
+            ->orWhere('name', 'like', '%' . $searchtext . '%')
+            ->orWhere('surname', 'like', '%' . $searchtext . '%')->first();
         if ($client) {
             return response()->json([
                 'status' => 1,
                 'message' => 'CLIENT FOUND',
-                'data'=>$client,
+                'data' => $client,
             ], 200);
         }
 
@@ -187,8 +187,8 @@ class ClientController extends Controller
         if ($client) {
             return response()->json([
                 'status' => 1,
-                'message' => 'GET USER BY ID '.$id,
-                'data'=>$client,
+                'message' => 'GET USER BY ID ' . $id,
+                'data' => $client,
             ], 200);
         }
 
@@ -221,50 +221,51 @@ class ClientController extends Controller
      *    )
      * )
      */
-    public function addClient(ClientAuthRequest $request){
-    $existingClientDNI = Client::where('dni', $request->dni)->first();
-    $existingClientPhone = Client::where('phone', $request->phone)->first();
-    $existingClientEmail = Client::where('email', $request->email)->first();
+    public function addClient(ClientAuthRequest $request)
+    {
+        $existingClientDNI = Client::where('dni', $request->dni)->first();
+        $existingClientPhone = Client::where('phone', $request->phone)->first();
+        $existingClientEmail = Client::where('email', $request->email)->first();
 
-    if ($existingClientDNI || $existingClientPhone || $existingClientEmail) {
-        $errors = [];
-        if ($existingClientDNI) {
-            $errors[] = 'Client with the same DNI already exists';
+        if ($existingClientDNI || $existingClientPhone || $existingClientEmail) {
+            $errors = [];
+            if ($existingClientDNI) {
+                $errors[] = 'Client with the same DNI already exists';
+            }
+            if ($existingClientPhone) {
+                $errors[] = 'Client with the same phone number already exists';
+            }
+            if ($existingClientEmail) {
+                $errors[] = 'Client with the same email already exists';
+            }
+            return response()->json([
+                'status' => -1,
+                'message' => 'Client cancelled',
+                'errors' => $errors
+            ], 400);
         }
-        if ($existingClientPhone) {
-            $errors[] = 'Client with the same phone number already exists';
-        }
-        if ($existingClientEmail) {
-            $errors[] = 'Client with the same email already exists';
-        }
+
+        $client = new Client();
+        $client->dni = $request->dni;
+        $client->name = $request->name;
+        $client->surname = $request->surname;
+        $client->birth_date = $request->birth_date;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->more_info = $request->more_info;
+        $client->life_style = $request->life_style;
+        $client->background_health = $request->background_health;
+        $client->background_aesthetic = $request->background_aesthetic;
+        $client->asthetic_routine = $request->asthetic_routine;
+        $client->hairdressing_routine = $request->hairdressing_routine;
+
+        $client->save();
+
         return response()->json([
-            'status' => -1,
-            'message' => 'Client cancelled',
-            'errors' => $errors
-        ], 400);
+            'message' => 'CLIENT CREATED SUCCESSFULLY',
+            'client_id' => $client->id
+        ], 201);
     }
-
-    $client = new Client();
-    $client->dni = $request->dni;
-    $client->name = $request->name;
-    $client->surname = $request->surname;
-    $client->birth_date = $request->birth_date;
-    $client->phone = $request->phone;
-    $client->email = $request->email;
-    $client->more_info = $request->more_info;
-    $client->life_style = $request->life_style;
-    $client->background_health = $request->background_health;
-    $client->background_aesthetic = $request->background_aesthetic;
-    $client->asthetic_routine = $request->asthetic_routine;
-    $client->hairdressing_routine = $request->hairdressing_routine;
-
-    $client->save();
-
-    return response()->json([
-        'message' => 'CLIENT CREATED SUCCESSFULLY',
-        'client_id' => $client->id
-    ], 201);
-}
 
 
     /**
@@ -292,7 +293,7 @@ class ClientController extends Controller
      */
     public function editById(ClientAuthRequest $request)
     {
-        try{
+        try {
             $client = Client::findOrFail($request->id);
             $client->dni = $request->dni;
             $client->name = $request->name;
@@ -307,18 +308,19 @@ class ClientController extends Controller
             $client->asthetic_routine = $request->asthetic_routine;
             $client->hairdressing_routine = $request->hairdressing_routine;
 
-            if($client->save()){
+            if ($client->save()) {
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Client edited',
                     'id' => $client->id,
                 ], 200);
-            }else if (!$client->save()){
+            } else if (!$client->save()) {
 
                 return response()->json([
                     'status' => -1,
                     'message' => 'User ot added',
-                ],400);
+                ], 400);
             }
             return $client;
         } catch (\Illuminate\Database\QueryException $exception) {
@@ -367,7 +369,7 @@ class ClientController extends Controller
         if ($client) {
             return response()->json([
                 'status' => 1,
-                'message' => 'CLIENT WHITH ID '.$id.' SUCCESSFULLY DELETED',
+                'message' => 'CLIENT WHITH ID ' . $id . ' SUCCESSFULLY DELETED',
             ], 200);
         }
 
@@ -463,7 +465,7 @@ class ClientController extends Controller
 
             try {
                 // Buscar la imagen en Cloudinary
-                $search = 'folder:iestablero public_id:'.$request->public_id;
+                $search = 'folder:iestablero public_id:' . $request->public_id;
                 $images = Cloudinary::search()->expression($search)->execute();
 
                 // Verificar si se encontró la imagen
@@ -472,7 +474,7 @@ class ClientController extends Controller
                 }
 
                 // Eliminar la imagen de Cloudinary
-                $result = Cloudinary::destroy('iestablero/'.$request->public_id, [
+                $result = Cloudinary::destroy('iestablero/' . $request->public_id, [
                     'invalidate' => true,
                     'folder' => 'iestablero',
                 ]);
