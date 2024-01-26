@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientAuthRequest;
 use App\Models\Appointment;
 use App\Models\Client;
 use App\Models\PhotoUrl;
@@ -220,39 +221,51 @@ class ClientController extends Controller
      *    )
      * )
      */
-    public function addClient(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'dni' => 'required|unique:clients',
-            'phone' => 'required|unique:clients',
-            'email' => 'required|unique:clients'
-        ]);
+    public function addClient(ClientAuthRequest $request){
+    $existingClientDNI = Client::where('dni', $request->dni)->first();
+    $existingClientPhone = Client::where('phone', $request->phone)->first();
+    $existingClientEmail = Client::where('email', $request->email)->first();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+    if ($existingClientDNI || $existingClientPhone || $existingClientEmail) {
+        $errors = [];
+        if ($existingClientDNI) {
+            $errors[] = 'Client with the same DNI already exists';
+        }    
+        if ($existingClientPhone) {
+            $errors[] = 'Client with the same phone number already exists';
         }
-
-        $client = new Client;
-        $client->dni = $request->dni;
-        $client->name = $request->name;
-        $client->surname = $request->surname;
-        $client->birth_date = $request->birth_date;
-        $client->phone = $request->phone;
-        $client->email = $request->email;
-        $client->more_info = $request->more_info;
-        $client->life_style = $request->life_style;
-        $client->background_health = $request->background_health;
-        $client->background_aesthetic = $request->background_aesthetic;
-        $client->asthetic_routine = $request->asthetic_routine;
-        $client->hairdressing_routine = $request->hairdressing_routine;
-
-        $client->save();
-
+        if ($existingClientEmail) {
+            $errors[] = 'Client with the same email already exists';
+        }
         return response()->json([
-            'message' => 'CLIENT CREATED SUCCESSFULLY',
-            'client_id' => $client->id,]
-        , 201);
+            'status' => -1,
+            'message' => 'Client cancelled',
+            'errors' => $errors
+        ], 400);
     }
+
+    $client = new Client();
+    $client->dni = $request->dni;
+    $client->name = $request->name;
+    $client->surname = $request->surname;
+    $client->birth_date = $request->birth_date;
+    $client->phone = $request->phone;
+    $client->email = $request->email;
+    $client->more_info = $request->more_info;
+    $client->life_style = $request->life_style;
+    $client->background_health = $request->background_health;
+    $client->background_aesthetic = $request->background_aesthetic;
+    $client->asthetic_routine = $request->asthetic_routine;
+    $client->hairdressing_routine = $request->hairdressing_routine;
+
+    $client->save();
+
+    return response()->json([
+        'message' => 'CLIENT CREATED SUCCESSFULLY',
+        'client_id' => $client->id
+    ], 201);
+}
+
 
     /**
      * This function will alow you to edit an specific client by his/her id.
@@ -277,35 +290,51 @@ class ClientController extends Controller
      *    )
      * )
      */
-    public function editById(Request $request)
+    public function editById(ClientAuthRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'dni' => 'required|unique:clients',
-            'phone' => 'required|unique:clients',
-            'email' => 'required|unique:clients',
-            
-        ]);
+        try{
+            $client = Client::findOrFail($request->id);
+            $client->dni = $request->dni;
+            $client->name = $request->name;
+            $client->surname = $request->surname;
+            $client->birth_date = $request->birth_date;
+            $client->phone = $request->phone;
+            $client->email = $request->email;
+            $client->more_info = $request->more_info;
+            $client->life_style = $request->life_style;
+            $client->background_health = $request->background_health;
+            $client->background_aesthetic = $request->background_aesthetic;
+            $client->asthetic_routine = $request->asthetic_routine;
+            $client->hairdressing_routine = $request->hairdressing_routine;
+    
+            if($client->save()){
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Client edited',
+                    'id' => $client->id,
+                ], 200);
+            }else if (!$client->save()){
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 404);
-        }  
-        $client = Client::findOrFail($request->id);
-        $client->dni = $request->dni;
-        $client->name = $request->name;
-        $client->surname = $request->surname;
-        $client->birth_date = $request->birth_date;
-        $client->phone = $request->phone;
-        $client->email = $request->email;
-        $client->more_info = $request->more_info;
-        $client->life_style = $request->life_style;
-        $client->background_health = $request->background_health;
-        $client->background_aesthetic = $request->background_aesthetic;
-        $client->asthetic_routine = $request->asthetic_routine;
-        $client->hairdressing_routine = $request->hairdressing_routine;
-
-        $client->save();
-
-        return $client;
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'User ot added',
+                ],400);
+            }
+            return $client;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $errorCode = $exception->errorInfo[1];
+            if ($errorCode == 1062) {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'DNI or email already exists in the database',
+                ], 400);
+            } else {
+                return response()->json([
+                    'status' => -1,
+                    'message' => 'An error has occurred',
+                ], 500);
+            }
+        } 
     }
 
     /**

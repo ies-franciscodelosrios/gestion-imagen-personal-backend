@@ -441,7 +441,7 @@ class UserController extends Controller
             if ($errorCode == 1062) {
                 return response()->json([
                     'status' => -1,
-                    'message' => 'DNI or email already exists in the database',
+                    'message' => 'DNI, Phone or email are already in use',
                 ], 400);
             } else {
                 return response()->json([
