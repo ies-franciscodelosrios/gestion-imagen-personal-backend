@@ -68,11 +68,11 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/clients/paged', [ClientController::class, 'getClientPaged']);
 
     /*  METODOS POST DE Client */
-    Route::post('/client', [ClientController::class, 'addClient']);
+    Route::post('/client/add', [ClientController::class, 'addClient']);
     Route::post('/client/add-photo-url', [ClientController::class, 'storePhotoUrl']);
 
     /*  METODOS PUT DE Client */
-    Route::put('/client', [ClientController::class, 'editById']);
+    Route::put('/client/edit', [ClientController::class, 'editById']);
 
     /*  METODOS DELETE DE Client */
     Route::delete('/client/id', [ClientController::class, 'deleteById']);
