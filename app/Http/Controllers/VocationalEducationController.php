@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\vocationalEducation;
+use App\Models\VocationalEducation;
 use App\Http\Requests\VocationalEducationRequest;
 
-class vocationalEducationController extends Controller
+class VocationalEducationController extends Controller
 {
     /**
      * Retrieve all vocational educations.
@@ -62,7 +62,7 @@ class vocationalEducationController extends Controller
      */
     public function getAll()
     {
-        $vocationalEducation = vocationalEducation::all();
+        $vocationalEducation = VocationalEducation::all();
         if ($vocationalEducation) {
             return response()->json([
                 'status' => 1,
@@ -72,7 +72,7 @@ class vocationalEducationController extends Controller
         }
         return response()->json([
             'status' => -1,
-            'message' => 'No Users Found',
+            'message' => 'No Vocational Education Found',
         ], 400);
     }
 
@@ -84,7 +84,7 @@ class vocationalEducationController extends Controller
      */
     public function getVocationalEducationById($id)
     {
-        $vocationalEducation = vocationalEducation::find($id);
+        $vocationalEducation = VocationalEducation::find($id);
         return $vocationalEducation;
     }
 
@@ -130,29 +130,29 @@ class vocationalEducationController extends Controller
      */
     public function addVocationalEducation(VocationalEducationRequest $request)
     {
-        $existingUser = vocationalEducation::where('id', $request->id)->orWhere('short_name', $request->short_name)->first();
+        $existingUser = VocationalEducation::where('id', $request->id)->orWhere('short_name', $request->short_name)->first();
         if ($existingUser) {
             return response()->json([
                 'status' => -1,
-                'message' => 'VocationalEducation already exists',
+                'message' => 'Vocational Education already exists',
             ], 400);
         }
 
-        $vocationalEducation = new vocationalEducation();
+        $vocationalEducation = new VocationalEducation();
         $vocationalEducation->short_name = $request->short_name;
         $vocationalEducation->long_name = $request->long_name;
         $vocationalEducation->description = $request->description;
-        
+
         if ($vocationalEducation->save()) {
             return response()->json([
                 'status' => 1,
-                'message' => 'vocationalEducation added',
+                'message' => 'Vocational Education added',
                 'id' => $vocationalEducation->id,
             ], 200);
-        } else if (!$vocationalEducation->save()) {
+        } elseif (!$vocationalEducation->save()) {
             return response()->json([
                 'status' => -1,
-                'message' => 'vocationalEducation not added',
+                'message' => 'Vocational Education not added',
             ], 400);
         }
     }
@@ -166,7 +166,7 @@ class vocationalEducationController extends Controller
      */
     public function editVocationalEducation(VocationalEducationRequest $request, $id)
     {
-        $vocationalEducation = vocationalEducation::find($id);
+        $vocationalEducation = VocationalEducation::find($id);
         if ($vocationalEducation) {
             $vocationalEducation->short_name = $request->short_name;
             $vocationalEducation->long_name = $request->long_name;
@@ -176,16 +176,16 @@ class vocationalEducationController extends Controller
                     'status' => 1,
                     'message' => 'vocationalEducation edited',
                 ], 200);
-            } else if (!$vocationalEducation->save()) {
+            } elseif (!$vocationalEducation->save()) {
                 return response()->json([
                     'status' => -1,
-                    'message' => 'vocationalEducation not edited',
+                    'message' => 'Vocational Education not edited',
                 ], 400);
             }
         }
         return response()->json([
             'status' => -1,
-            'message' => 'vocationalEducation not found',
+            'message' => 'Vocational Education not found',
         ], 404);
     }
 
@@ -244,23 +244,23 @@ class vocationalEducationController extends Controller
      */
     public function deleteVocationalEducation($id)
     {
-        $vocationalEducation = vocationalEducation::find($id);
+        $vocationalEducation = VocationalEducation::find($id);
         if ($vocationalEducation) {
             if ($vocationalEducation->delete()) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'vocationalEducation deleted',
+                    'message' => 'Vocational Education deleted',
                 ], 200);
-            } else if (!$vocationalEducation->delete()) {
+            } elseif (!$vocationalEducation->delete()) {
                 return response()->json([
                     'status' => -1,
-                    'message' => 'vocationalEducation not deleted',
+                    'message' => 'Vocational Education not deleted',
                 ], 400);
             }
         }
         return response()->json([
             'status' => -1,
-            'message' => 'vocationalEducation not found',
+            'message' => 'Vocational Education not found',
         ], 400);
     }
 
@@ -306,23 +306,23 @@ class vocationalEducationController extends Controller
      */
     public function deleteAll()
     {
-        $vocationalEducation = vocationalEducation::all();
+        $vocationalEducation = VocationalEducation::all();
         if ($vocationalEducation) {
-            if (vocationalEducation::truncate()) {
+            if (VocationalEducation::truncate()) {
                 return response()->json([
                     'status' => 1,
                     'message' => 'All vocationalEducation deleted',
                 ], 200);
-            } else if (!vocationalEducation::truncate()) {
+            } elseif (!VocationalEducation::truncate()) {
                 return response()->json([
                     'status' => -1,
-                    'message' => 'vocationalEducation not deleted',
+                    'message' => 'Vocational Education not deleted',
                 ], 400);
             }
         }
         return response()->json([
             'status' => -1,
-            'message' => 'vocationalEducation not found',
+            'message' => 'Vocational Education not found',
         ], 400);
     }
 }
