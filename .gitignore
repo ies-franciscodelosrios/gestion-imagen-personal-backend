@@ -6,6 +6,8 @@
 /public/storage
 /storage/*.key
 /vendor
+**/.DS_Store
+composer.lock
 .env
 .env.local
 .env.testing
@@ -14,5 +16,5 @@ docker-compose.override.yml
 Homestead.json
 Homestead.yaml
 npm-debug.log
+package-lock.json
 yarn-error.log
-composer.lock
