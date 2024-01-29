@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "GipAPI User",
-    "dateExported": "2024-01-17T11:47:06.148Z",
+    "dateExported": "2024-01-29T12:15:15.141Z",
     "version": "1.1",
     "folders": [
         {
@@ -43,8 +43,13 @@
             "method": "GET",
             "sortNum": 10000,
             "created": "2024-01-08T12:00:51.683Z",
-            "modified": "2024-01-15T11:47:45.514Z",
-            "headers": [],
+            "modified": "2024-01-29T11:28:22.973Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "auth": {
                 "type": "bearer",
@@ -68,8 +73,13 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-01-15T10:00:34.025Z",
-            "modified": "2024-01-15T12:40:31.009Z",
-            "headers": [],
+            "modified": "2024-01-29T12:05:21.866Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "body": {
                 "type": "json",
@@ -87,7 +97,7 @@
                     "type": "set-env-var",
                     "custom": "json.id",
                     "action": "setto",
-                    "value": "{{variable}}"
+                    "value": "{{gip.id_login}}"
                 }
             ]
         },
@@ -118,17 +128,17 @@
             "_id": "c2d722f7-1b20-4a8e-8eeb-691f2b38a78d",
             "colId": "c75ebd02-f8f7-4344-bdce-fef8e5d1cd30",
             "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
-            "name": "Login Teacher",
+            "name": "Login Professor",
             "url": "http://localhost:8000/api/login",
             "method": "POST",
             "sortNum": 20000,
             "created": "2024-01-08T11:57:38.172Z",
-            "modified": "2024-01-15T11:47:10.423Z",
+            "modified": "2024-01-29T12:05:31.602Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"manuela@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
+                "raw": "{\n  \"email\": \"manolo@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
                 "form": []
             },
             "tests": [
@@ -137,6 +147,12 @@
                     "custom": "json.token",
                     "action": "setto",
                     "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
                 }
             ]
         },
@@ -149,8 +165,13 @@
             "method": "GET",
             "sortNum": 30000,
             "created": "2023-12-19T11:18:15.681Z",
-            "modified": "2024-01-15T10:01:14.054Z",
-            "headers": [],
+            "modified": "2024-01-29T11:29:23.238Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "auth": {
                 "type": "bearer",
@@ -167,7 +188,7 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2024-01-08T13:20:54.826Z",
-            "modified": "2024-01-15T11:47:26.338Z",
+            "modified": "2024-01-29T12:05:37.690Z",
             "headers": [],
             "params": [],
             "body": {
@@ -181,6 +202,12 @@
                     "custom": "json.token",
                     "action": "setto",
                     "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
                 }
             ]
         },
@@ -189,11 +216,11 @@
             "colId": "c75ebd02-f8f7-4344-bdce-fef8e5d1cd30",
             "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
             "name": "User ID",
-            "url": "http://localhost:8000/api/user/id/3",
+            "url": "http://localhost:8000/api/user/id/5",
             "method": "GET",
             "sortNum": 40000,
             "created": "2023-12-18T11:59:13.969Z",
-            "modified": "2024-01-15T13:20:06.051Z",
+            "modified": "2024-01-29T11:11:11.470Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -216,7 +243,7 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-01-15T11:48:15.469Z",
-            "modified": "2024-01-17T11:22:31.259Z",
+            "modified": "2024-01-29T12:05:44.614Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -226,7 +253,7 @@
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"dni\":\"76891030Y\",\n  \"course_year\":\"24-25\",\n  \"cycle\":\"1\",\n  \"name\":\"Fernando\",\n  \"surname\":\"Paez\",\n  \"email\":\"fernando@ieseltablero.es\",\n  \"password\":\"polloProfesor\",\n  \"others\":\"\"\n}",
+                "raw": "{\n  \"dni\":\"96348357T\",\n  \"course_year\":\"24-25\",\n  \"cycle\":\"1\",\n  \"name\":\"Manolo\",\n  \"surname\":\"Gómez\",\n  \"email\":\"manologomez@ieseltablero.es\",\n  \"password\":\"polloProfesor\",\n  \"others\":\"\"\n}",
                 "form": []
             },
             "auth": {
@@ -238,7 +265,7 @@
                     "type": "set-env-var",
                     "custom": "json.id",
                     "action": "setto",
-                    "value": "{{response.id}}"
+                    "value": "{{gip.id}}"
                 }
             ]
         },
@@ -251,7 +278,7 @@
             "method": "POST",
             "sortNum": 50000,
             "created": "2024-01-15T12:25:33.041Z",
-            "modified": "2024-01-15T13:10:22.569Z",
+            "modified": "2024-01-29T12:05:51.082Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -268,7 +295,14 @@
                 "type": "bearer",
                 "bearer": "{{gip.token}}"
             },
-            "tests": []
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id}}"
+                }
+            ]
         },
         {
             "_id": "432f3986-5804-41ad-9677-ebcad751f76c",
@@ -279,8 +313,13 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2024-01-10T11:32:49.622Z",
-            "modified": "2024-01-15T10:01:29.422Z",
-            "headers": [],
+            "modified": "2024-01-29T11:29:37.096Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "auth": {
                 "type": "bearer",
@@ -293,12 +332,17 @@
             "colId": "c75ebd02-f8f7-4344-bdce-fef8e5d1cd30",
             "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
             "name": "Users Course",
-            "url": "http://localhost:8000/api/users/course/23-24",
+            "url": "http://localhost:8000/api/users/course/22-23",
             "method": "GET",
             "sortNum": 80000,
             "created": "2024-01-10T11:45:43.471Z",
-            "modified": "2024-01-15T10:01:33.382Z",
-            "headers": [],
+            "modified": "2024-01-29T11:29:43.996Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "auth": {
                 "type": "bearer",
@@ -315,8 +359,13 @@
             "method": "GET",
             "sortNum": 90000,
             "created": "2024-01-11T08:26:33.357Z",
-            "modified": "2024-01-17T10:50:20.347Z",
-            "headers": [],
+            "modified": "2024-01-29T11:29:50.302Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
             "params": [],
             "auth": {
                 "type": "bearer",
@@ -352,11 +401,11 @@
             "colId": "c75ebd02-f8f7-4344-bdce-fef8e5d1cd30",
             "containerId": "71229a46-11bb-4616-93cc-4d6d1048e8b0",
             "name": "User Edit Professor",
-            "url": "http://localhost:8000/api/user/editUser/2",
+            "url": "http://localhost:8000/api/user/edit/2",
             "method": "PUT",
             "sortNum": 120000,
             "created": "2024-01-11T10:04:37.515Z",
-            "modified": "2024-01-17T11:32:45.865Z",
+            "modified": "2024-01-29T12:15:09.876Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -380,11 +429,11 @@
             "colId": "c75ebd02-f8f7-4344-bdce-fef8e5d1cd30",
             "containerId": "9dc49214-7a7b-4573-9aba-e6294b591a79",
             "name": "User Delete",
-            "url": "http://localhost:8000/api/user/delete/11",
+            "url": "http://localhost:8000/api/user/delete/12",
             "method": "DELETE",
             "sortNum": 120000,
             "created": "2024-01-15T11:21:21.631Z",
-            "modified": "2024-01-15T13:13:07.319Z",
+            "modified": "2024-01-29T12:11:20.907Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -398,5 +447,8 @@
             },
             "tests": []
         }
-    ]
+    ],
+    "settings": {
+        "envId": "b193fd4d-986a-4c27-a339-1c2f33a008ec"
+    }
 }

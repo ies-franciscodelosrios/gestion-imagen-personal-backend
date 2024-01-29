@@ -53,7 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user/addstudents', [UserController::class, 'addAllStudent']);
     Route::post('/user/addprofessors', [UserController::class, 'addAllProfessor']);
     Route::post('/user/add-photo-url', [UserController::class, 'storePhotoUrl']);
-    Route::put('/user/editUser/{id}', [UserController::class, 'editUser']);
+    Route::put('/user/edit/{id}', [UserController::class, 'editUser']);
     Route::delete('/user/delete/{id}', [UserController::class, 'deleteUser']);
     Route::delete('/user/delete/rol', [UserController::class, 'deleteByrol']);
     Route::delete('/delete-cloudinary', [UserController::class, 'deleteImage']);

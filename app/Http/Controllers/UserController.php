@@ -426,13 +426,13 @@ class UserController extends Controller
             if ($user->save()) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'User added',
+                    'message' => 'User updated',
                     'id' => $user->id,
                 ], 200);
             } else if (!$user->save()) {
                 return response()->json([
                     'status' => -1,
-                    'message' => 'User not added',
+                    'message' => 'User not updated',
                 ], 400);
             }
             return $user;

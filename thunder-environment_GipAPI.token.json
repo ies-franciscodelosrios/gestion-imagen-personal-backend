@@ -1,0 +1,20 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "GipAPI.token",
+    "dateExported": "2024-01-29T12:15:23.988Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "gip.token",
+            "value": "15|AmwAid6InkvyNhvAZgV2ZLt467jPMCs27SRd5zcAcc5923f6"
+        },
+        {
+            "name": "gip.id_login",
+            "value": "1"
+        },
+        {
+            "name": "gip.id",
+            "value": "25"
+        }
+    ]
+}
