@@ -22,7 +22,7 @@ class VocationalEducationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'short_name' => 'required|min:1|max:5',
+            'short_name' => 'required|min:1|max:8',
             'long_name' => 'required|min:3|max:50',
             'description' => 'max:200'
         ];

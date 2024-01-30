@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "GIP API",
-    "dateExported": "2024-01-30T10:51:27.077Z",
+    "dateExported": "2024-01-30T11:39:36.161Z",
     "version": "1.1",
     "folders": [
         {
@@ -68,6 +68,13 @@
             "sortNum": 30000
         },
         {
+            "_id": "9b6f1c61-026b-40e3-bb12-0ea800234b93",
+            "name": "VocEduEndpoints",
+            "containerId": "",
+            "created": "2024-01-30T10:56:42.657Z",
+            "sortNum": 30000
+        },
+        {
             "_id": "3c3aae1c-1ab0-49ba-82ae-fc49db9e3b39",
             "name": "PUT",
             "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
@@ -82,11 +89,39 @@
             "sortNum": 40000
         },
         {
+            "_id": "0aa210af-ba7a-4d35-92c7-f2a102a1d78a",
+            "name": "GET",
+            "containerId": "9b6f1c61-026b-40e3-bb12-0ea800234b93",
+            "created": "2024-01-30T10:56:57.117Z",
+            "sortNum": 40000
+        },
+        {
             "_id": "b86ce2ae-293a-4a17-ac98-6839261ff1b2",
             "name": "DELETE",
             "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
             "created": "2024-01-29T13:54:11.580Z",
             "sortNum": 50000
+        },
+        {
+            "_id": "9a438c8a-e9a9-4c24-bdae-b07980269a7b",
+            "name": "POST",
+            "containerId": "9b6f1c61-026b-40e3-bb12-0ea800234b93",
+            "created": "2024-01-30T11:04:15.654Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "d57ba660-2849-4a1a-9b4c-7dc45ced5e43",
+            "name": "PUT",
+            "containerId": "9b6f1c61-026b-40e3-bb12-0ea800234b93",
+            "created": "2024-01-30T11:11:19.294Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "a44618a1-30e5-4c6b-b546-e368a69fd5cb",
+            "name": "DELETE",
+            "containerId": "9b6f1c61-026b-40e3-bb12-0ea800234b93",
+            "created": "2024-01-30T11:17:24.359Z",
+            "sortNum": 70000
         }
     ],
     "requests": [
@@ -147,6 +182,29 @@
                     "value": "0"
                 }
             ]
+        },
+        {
+            "_id": "7315b864-fbda-4c12-8957-d9460eac42d6",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "0aa210af-ba7a-4d35-92c7-f2a102a1d78a",
+            "name": "VocationalEducations",
+            "url": "http://localhost:8000/api/vocationaleducation",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-30T11:07:47.649Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
         },
         {
             "_id": "1d0e469b-c735-4869-83ff-76aeb85429a3",
@@ -324,6 +382,29 @@
             ]
         },
         {
+            "_id": "e2c57625-67b9-49d2-8a47-2b4f7f22a437",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "0aa210af-ba7a-4d35-92c7-f2a102a1d78a",
+            "name": "VocEdu ID",
+            "url": "http://localhost:8000/api/vocationaleducation/2",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-30T11:03:11.548Z",
+            "modified": "2024-01-30T11:03:58.274Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
             "_id": "748c0302-f636-4a83-9fc0-6dfebfca5961",
             "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
             "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
@@ -412,6 +493,34 @@
                     "value": "{{gip.id}}"
                 }
             ]
+        },
+        {
+            "_id": "ca99641b-8342-42c5-aac3-4e219d48ca11",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "9a438c8a-e9a9-4c24-bdae-b07980269a7b",
+            "name": "VocEdu New",
+            "url": "http://localhost:8000/api/vocationaleducation/add",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-30T11:05:07.503Z",
+            "modified": "2024-01-30T11:09:57.170Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"short_name\": \"FPBPM\",\n  \"long_name\": \"FPB Peluquería y masaje\",\n  \"description\": \"Formación profesional básica de peluquería y masaje\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
         },
         {
             "_id": "db484ee7-d8e7-4065-ac22-d2e9c9bbc1bc",
@@ -558,6 +667,34 @@
             "tests": []
         },
         {
+            "_id": "5049b3ac-2481-4feb-8e79-97ae9f0fe7c0",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "d57ba660-2849-4a1a-9b4c-7dc45ced5e43",
+            "name": "VocEdu Edit",
+            "url": "http://localhost:8000/api/vocationaleducation/edit/6",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-01-30T11:12:14.352Z",
+            "modified": "2024-01-30T11:14:07.123Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"short_name\": \"GS PM\",\n  \"long_name\": \"GS Peluquería y masaje\",\n  \"description\": \"Grado superior de peluquería y masaje\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
             "_id": "789b1e44-faa3-41c4-bd9e-18b5289c235f",
             "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
             "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
@@ -616,6 +753,29 @@
             ]
         },
         {
+            "_id": "74e8b26a-0885-47b0-9b72-8218970a04e5",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "a44618a1-30e5-4c6b-b546-e368a69fd5cb",
+            "name": "VocEdu Delete",
+            "url": "http://localhost:8000/api/vocationaleducation/delete/6",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-01-30T11:17:34.157Z",
+            "modified": "2024-01-30T11:18:08.350Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
             "_id": "298b49ca-5882-4917-b85b-2ae8d45ed7ac",
             "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
             "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
@@ -655,6 +815,29 @@
             "sortNum": 70000,
             "created": "2024-01-29T13:54:41.273Z",
             "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "cfa0ec41-dc9d-4fc4-981a-1e93433f9ad9",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "a44618a1-30e5-4c6b-b546-e368a69fd5cb",
+            "name": "VocEdu Delete All",
+            "url": "http://localhost:8000/api/vocationaleducation/delete-all",
+            "method": "DELETE",
+            "sortNum": 70000,
+            "created": "2024-01-30T11:38:15.732Z",
+            "modified": "2024-01-30T11:38:38.763Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -842,25 +1025,6 @@
                 "type": "bearer",
                 "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
             },
-            "tests": []
-        },
-        {
-            "_id": "7315b864-fbda-4c12-8957-d9460eac42d6",
-            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
-            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
-            "name": "VocationalEducations",
-            "url": "http://localhost:8000/api/vocationaleducation",
-            "method": "GET",
-            "sortNum": 130000,
-            "created": "2024-01-29T13:54:41.273Z",
-            "modified": "2024-01-29T13:54:41.273Z",
-            "headers": [
-                {
-                    "name": "Accept",
-                    "value": "application/json"
-                }
-            ],
-            "params": [],
             "tests": []
         },
         {
