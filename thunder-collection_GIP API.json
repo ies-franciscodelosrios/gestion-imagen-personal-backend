@@ -1,0 +1,974 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "GIP API",
+    "dateExported": "2024-01-30T10:51:27.077Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
+            "name": "ClientsEndpoints",
+            "containerId": "",
+            "created": "2024-01-29T13:54:11.547Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "48d70119-7710-4908-a2f3-78bae41b5fb1",
+            "name": "UsersEndpoints",
+            "containerId": "",
+            "created": "2024-01-29T13:54:37.592Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "GET",
+            "containerId": "48d70119-7710-4908-a2f3-78bae41b5fb1",
+            "created": "2024-01-29T13:54:41.268Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "Admin",
+            "containerId": "9d8dfdc3-9325-4a01-9d4b-909efcdb7ef5",
+            "created": "2024-01-29T13:55:13.179Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "58ddaeef-4cfa-459b-b527-a80dd3afeb0d",
+            "name": "POST",
+            "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
+            "created": "2024-01-29T13:54:11.556Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "POST",
+            "containerId": "48d70119-7710-4908-a2f3-78bae41b5fb1",
+            "created": "2024-01-29T13:54:46.021Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "9d8dfdc3-9325-4a01-9d4b-909efcdb7ef5",
+            "name": "UsersTestEndpoints",
+            "containerId": "",
+            "created": "2024-01-29T13:55:06.142Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "4812a77e-e78e-4f8a-8ef6-2ed63aef5b69",
+            "name": "GET",
+            "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
+            "created": "2024-01-29T13:54:11.565Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "71229a46-11bb-4616-93cc-4d6d1048e8b0",
+            "name": "PUT",
+            "containerId": "48d70119-7710-4908-a2f3-78bae41b5fb1",
+            "created": "2024-01-29T13:54:48.348Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "3c3aae1c-1ab0-49ba-82ae-fc49db9e3b39",
+            "name": "PUT",
+            "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
+            "created": "2024-01-29T13:54:11.572Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "9dc49214-7a7b-4573-9aba-e6294b591a79",
+            "name": "DELETE",
+            "containerId": "48d70119-7710-4908-a2f3-78bae41b5fb1",
+            "created": "2024-01-29T13:54:49.716Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "b86ce2ae-293a-4a17-ac98-6839261ff1b2",
+            "name": "DELETE",
+            "containerId": "bfb7ca3c-eb82-47f4-bf63-0a325e655208",
+            "created": "2024-01-29T13:54:11.580Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "3d3ef767-da20-4353-939a-78200f9f7540",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "58ddaeef-4cfa-459b-b527-a80dd3afeb0d",
+            "name": "addClient",
+            "url": "http://localhost:8000/api/client/add",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-29T13:54:11.560Z",
+            "modified": "2024-01-29T13:54:11.560Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"dni\": \"46271264W\",\n    \"name\": \"Manu\",\n    \"surname\": \"Lopez\",\n    \"birth_date\": \"1990-01-01\",\n    \"phone\": \"123456787\",\n    \"email\": \"rafa@hotmail.es\",\n    \"more_info\": \"Info cliente\",\n    \"life_style\": \"Estilo de vida\",\n    \"background_health\": \"salud\",\n    \"background_aesthetic\": \"Esteticos\",\n    \"asthetic_routine\": \"Rutina estetica\",\n    \"hairdressing_routine\": \"Rutina de peluquería del cliente\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "30|dVBZftJ1FG0E9233SPz97pzXhR1Wis3Rhjnrih8Nb4e6feba"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3c570259-913e-4a5c-9a54-b4f1a1d6fe20",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "LogOut",
+            "url": "http://localhost:8000/api/logout",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "_id": "1d0e469b-c735-4869-83ff-76aeb85429a3",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "Login Admin",
+            "url": "http://localhost:8000/api/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-29T13:54:46.026Z",
+            "modified": "2024-01-29T13:54:46.026Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"admin@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
+                }
+            ]
+        },
+        {
+            "_id": "24b26b8a-d078-4849-a5be-e07408dce01c",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "Login Admin Copy",
+            "url": "http://localhost:8000/api/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"admin@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
+                }
+            ]
+        },
+        {
+            "_id": "394355c1-e014-496a-b172-266164185427",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Copy",
+            "url": "http://localhost:8000/api/user",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "03b78b3e-3d6b-401b-b472-5fd46201c598",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "58ddaeef-4cfa-459b-b527-a80dd3afeb0d",
+            "name": "setPhotoUrlClient",
+            "url": "http://localhost:8000/api/client/add-photo-url",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-01-29T13:54:11.560Z",
+            "modified": "2024-01-29T13:54:11.560Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"id\": 1,\r\n    \"url\": \"https://static.wikia.nocookie.net/reinoanimalia/images/2/21/Pug.png/revision/latest?cb=20200815234311&path-prefix=es\"\r\n}\r\n",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "658bb231-0625-4a40-b9c7-589ca61607b6",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "User",
+            "url": "http://localhost:8000/api/user",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c2d722f7-1b20-4a8e-8eeb-691f2b38a78d",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "Login Professor",
+            "url": "http://localhost:8000/api/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-01-29T13:54:46.026Z",
+            "modified": "2024-01-29T13:54:46.026Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"manolo@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
+                }
+            ]
+        },
+        {
+            "_id": "748c0302-f636-4a83-9fc0-6dfebfca5961",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "Users",
+            "url": "http://localhost:8000/api/users",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "fc09b9f3-ad67-4e5d-86b1-be287d459289",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "Login Student",
+            "url": "http://localhost:8000/api/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-29T13:54:46.026Z",
+            "modified": "2024-01-29T13:54:46.026Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"pedor@ieseltablero.es\",\n  \"password\": \"root\",\n  \"device\": \"dev_client\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{gip.token}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id_login}}"
+                }
+            ]
+        },
+        {
+            "_id": "0ab3a3fc-18b5-4907-92ff-5ec6dca5464c",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Student New Copy",
+            "url": "http://localhost:8000/api/user/add/student",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"99407584C\",\n  \"course_year\":\"24-25\",\n  \"cycle\":\"3\",\n  \"name\":\"Pedro\",\n  \"surname\":\"Giménez\",\n  \"email\":\"pedro2@ieseltablero.es\",\n  \"password\":\"patatasEstudiante\",\n  \"others\":\"\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id}}"
+                }
+            ]
+        },
+        {
+            "_id": "db484ee7-d8e7-4065-ac22-d2e9c9bbc1bc",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Delete Copy",
+            "url": "http://localhost:8000/api/user/delete/{{gip.id}}",
+            "method": "DELETE",
+            "sortNum": 32500,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "fbcb7459-6e38-4edf-9579-d2929842cb79",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Professor New Copy",
+            "url": "http://localhost:8000/api/user/add/professor",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"04839668P\",\n  \"course_year\":\"23-24\",\n  \"cycle\":\"2\",\n  \"name\":\"Alfredo\",\n  \"surname\":\"Gómez\",\n  \"email\":\"alfredogomez@ieseltablero.es\",\n  \"password\":\"polloProfesor\",\n  \"others\":\"\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id}}"
+                }
+            ]
+        },
+        {
+            "_id": "56594f9c-342f-4542-9866-bcc3462834cf",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "User ID",
+            "url": "http://localhost:8000/api/user/id/5",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "332ed44f-e7d8-4df3-8602-6576df4af3ea",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "User Professor New",
+            "url": "http://localhost:8000/api/user/add/professor",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-01-29T13:54:46.026Z",
+            "modified": "2024-01-29T13:54:46.026Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"96348357T\",\n  \"course_year\":\"24-25\",\n  \"cycle\":\"1\",\n  \"name\":\"Manolo\",\n  \"surname\":\"Gómez\",\n  \"email\":\"manologomez@ieseltablero.es\",\n  \"password\":\"polloProfesor\",\n  \"others\":\"\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id}}"
+                }
+            ]
+        },
+        {
+            "_id": "76a9875a-9395-49bf-8cd5-ee194c413e5e",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Edit Professor Copy",
+            "url": "http://localhost:8000/api/user/edit/{{gip.id}}",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"04839668P\",\n  \"course_year\":\"22-23\",\n  \"cycle\":\"2\",\n  \"name\":\"Alfredo\",\n  \"surname\":\"Gómez\",\n  \"email\":\"alfredo@ieseltablero.es\",\n  \"password\":\"root1234\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "789b1e44-faa3-41c4-bd9e-18b5289c235f",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "User Delete Copy Copy",
+            "url": "http://localhost:8000/api/user/delete/{{gip.id}}",
+            "method": "DELETE",
+            "sortNum": 45000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e231755d-c7e1-4886-b9ff-a8b9fd7fd4b5",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "5f7eae13-7077-4113-915b-32adc5299fe4",
+            "name": "User Student New",
+            "url": "http://localhost:8000/api/user/add/student",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-01-29T13:54:46.026Z",
+            "modified": "2024-01-29T13:54:46.026Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"11122233U\",\n  \"course_year\":\"24-25\",\n  \"cycle\":\"3\",\n  \"name\":\"Pedro\",\n  \"surname\":\"Giménez\",\n  \"email\":\"pedro2@ieseltablero.es\",\n  \"password\":\"patatasEstudiante\",\n  \"others\":\"\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.id",
+                    "action": "setto",
+                    "value": "{{gip.id}}"
+                }
+            ]
+        },
+        {
+            "_id": "298b49ca-5882-4917-b85b-2ae8d45ed7ac",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "7b5b168d-5293-4992-8b56-31d0859eb8e5",
+            "name": "LogOut Copy",
+            "url": "http://localhost:8000/api/logout",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-01-29T13:55:13.184Z",
+            "modified": "2024-01-29T13:55:13.184Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "_id": "432f3986-5804-41ad-9677-ebcad751f76c",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "Users Rol",
+            "url": "http://localhost:8000/api/users/rol/1",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "de1781b4-b6fc-4c2a-a9fe-04b9b916f57b",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "Users Course",
+            "url": "http://localhost:8000/api/users/course/22-23",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e6259664-15df-490c-95af-fa34f30aee47",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "Users Cycle",
+            "url": "http://localhost:8000/api/users/cycle/1",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f002ebb9-653e-4526-8ac7-7c92b1c58ee9",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "Users Search",
+            "url": "http://localhost:8000/api/users/search/a",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "2cb4f5bb-4466-4dfd-9e70-7d6c30c43448",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "4812a77e-e78e-4f8a-8ef6-2ed63aef5b69",
+            "name": "searchClientByid",
+            "url": "http://localhost:8000/api/client/id",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-01-29T13:54:11.569Z",
+            "modified": "2024-01-29T13:54:11.569Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"4\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c3877a6b-b5d7-4f8b-bb2d-861e3a671e8e",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "71229a46-11bb-4616-93cc-4d6d1048e8b0",
+            "name": "User Edit Professor",
+            "url": "http://localhost:8000/api/user/edit/2",
+            "method": "PUT",
+            "sortNum": 120000,
+            "created": "2024-01-29T13:54:48.352Z",
+            "modified": "2024-01-29T13:54:48.352Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\":\"58832770N\",\n  \"course_year\":\"22-23\",\n  \"cycle\":\"2\",\n  \"name\":\"Manolo\",\n  \"surname\":\"Escobilla\",\n  \"email\":\"manolo@ieseltablero.es\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "54a2bd0d-247b-4966-bc3f-3a92eaebcd28",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "9dc49214-7a7b-4573-9aba-e6294b591a79",
+            "name": "User Delete",
+            "url": "http://localhost:8000/api/user/delete/12",
+            "method": "DELETE",
+            "sortNum": 120000,
+            "created": "2024-01-29T13:54:49.719Z",
+            "modified": "2024-01-29T13:54:49.719Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{gip.token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "8fd6c2f7-032b-413a-aa7d-0e9f0a253198",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "4812a77e-e78e-4f8a-8ef6-2ed63aef5b69",
+            "name": "searchClient",
+            "url": "http://localhost:8000/api/client/data",
+            "method": "GET",
+            "sortNum": 130000,
+            "created": "2024-01-29T13:54:11.569Z",
+            "modified": "2024-01-29T13:54:11.569Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"searchtext\":\"Paco\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "7315b864-fbda-4c12-8957-d9460eac42d6",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "206789aa-9ffe-4922-8e09-c2d69fd38a77",
+            "name": "VocationalEducations",
+            "url": "http://localhost:8000/api/vocationaleducation",
+            "method": "GET",
+            "sortNum": 130000,
+            "created": "2024-01-29T13:54:41.273Z",
+            "modified": "2024-01-29T13:54:41.273Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ab2b0fef-5838-4097-96f1-560a9e36ed77",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "4812a77e-e78e-4f8a-8ef6-2ed63aef5b69",
+            "name": "getClientAll",
+            "url": "http://localhost:8000/api/clients",
+            "method": "GET",
+            "sortNum": 140000,
+            "created": "2024-01-29T13:54:11.569Z",
+            "modified": "2024-01-29T13:54:11.569Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "4b4e5b8f-46bc-4034-8a17-661b78b4cf73",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "3c3aae1c-1ab0-49ba-82ae-fc49db9e3b39",
+            "name": "editById",
+            "url": "http://localhost:8000/api/client/edit",
+            "method": "PUT",
+            "sortNum": 150000,
+            "created": "2024-01-29T13:54:11.575Z",
+            "modified": "2024-01-29T13:54:11.575Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"id\": \"11\",\n    \"dni\": \"46271264W\",\n    \"name\": \"Nuevo Nombre\",\n    \"surname\": \"Nuevo Apellido\",\n    \"birth_date\": \"1990-01-01\",\n    \"phone\": \"111111112\",\n    \"email\": \"nuevo@correo.ces\",\n    \"more_info\": \"Nueva información\",\n    \"life_style\": \"Nuevo estilo de vida\",\n    \"background_health\": \"Nuevos antecedentes de salud\",\n    \"background_aesthetic\": \"Nuevos antecedentes estéticos\",\n    \"asthetic_routine\": \"Nueva rutina estética\",\n    \"hairdressing_routine\": \"Nueva rutina de peluquería\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "7e50d2c9-711c-499b-a9ea-3741af30af7d",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "b86ce2ae-293a-4a17-ac98-6839261ff1b2",
+            "name": "deleteById",
+            "url": "http://localhost:8000/api/client/id",
+            "method": "DELETE",
+            "sortNum": 160000,
+            "created": "2024-01-29T13:54:11.583Z",
+            "modified": "2024-01-29T13:54:11.583Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"15\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a78ef0a5-e8fc-448b-b7f9-0b637c05ea92",
+            "colId": "e685ee88-c618-4d6d-9975-0efefd1063a2",
+            "containerId": "b86ce2ae-293a-4a17-ac98-6839261ff1b2",
+            "name": "deleteAll",
+            "url": "http://localhost:8000/api/client/purge",
+            "method": "DELETE",
+            "sortNum": 170000,
+            "created": "2024-01-29T13:54:11.583Z",
+            "modified": "2024-01-29T13:54:11.583Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "17|pWDlT5faPo96wDoGrJjJLqF6EYMVPhyZGufQIvrV59d05138"
+            },
+            "tests": []
+        }
+    ]
+}
