@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->string('dni')->unique()->nullable();
             $table->string('name');
             $table->string('surname');
-            $table->date('birth_date');
+            $table->date('birth_date')->nullable();
             $table->integer('phone')->nullable();
             $table->string('email')->unique()->nullable();
             $table->text('more_info')->nullable();
