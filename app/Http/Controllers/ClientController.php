@@ -307,22 +307,14 @@ class ClientController extends Controller
             $client->background_aesthetic = $request->background_aesthetic;
             $client->asthetic_routine = $request->asthetic_routine;
             $client->hairdressing_routine = $request->hairdressing_routine;
-
-            if ($client->save()) {
-
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Client edited',
-                    'id' => $client->id,
-                ], 200);
-            } else if (!$client->save()) {
-
-                return response()->json([
-                    'status' => -1,
-                    'message' => 'User ot added',
-                ], 400);
-            }
-            return $client;
+            
+            $client->save();
+            
+            return response()->json([
+                'status' => 1,
+                'message' => 'Client edited',
+                'id' => $client->id,
+            ], 200);
         } catch (\Illuminate\Database\QueryException $exception) {
             $errorCode = $exception->errorInfo[1];
             if ($errorCode == 1062) {
