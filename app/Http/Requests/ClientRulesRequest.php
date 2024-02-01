@@ -24,7 +24,7 @@ class ClientRulesRequest extends FormRequest
             'background_health' => 'nullable|string|max:255',
             'background_aesthetic' => 'nullable|string|max:255',
             'asthetic_routine' => 'nullable|string|max:255',
-            'hairdressing_routine' => 'nullable|string|max:255',
+            'hairdressing_routine' => 'nullable|string|max:255'
         ];
     }
 
