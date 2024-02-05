@@ -29,17 +29,7 @@ class UserImport implements ToModel, WithHeadingRow
             return null;
         }
 
-        $user = new User([
-            'dni' => $row['dni'],
-            'rol' => $row['rol'],
-            'course_year' => $row['course_year'],
-            'cycle' => $row['cycle'],
-            'name' => $row['name'],
-            'surname' => $row['surname'],
-            'email' => $row['email'],
-            'password' => bcrypt($row['password']), //De esta manera ciframos la contraseña en hash
-            'others' => $row['others'],
-        ]);
+        $user = User::create($row);
 
         $this->importedCount++;
 
