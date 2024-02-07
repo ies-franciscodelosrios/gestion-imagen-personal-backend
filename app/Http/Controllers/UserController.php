@@ -124,7 +124,7 @@ class UserController extends Controller
      *         description="An error has ocurred."
      *     )
      * )
-     * 
+     *
      * @OA\Get(
      *     path="/api/users/rol/2",
      *     tags={"Users"},
@@ -328,7 +328,8 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
-        $user->password = Hash::make($user->password);
+        /* $user->password = Hash::make($user->password); */
+        $user->password = $request->password;
         $user->others = $request->others;
 
         if ($user->save()) {
