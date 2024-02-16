@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->morphMany(PhotoUrl::class, 'imageable');
     }
+
+    public function cycle_info(){
+        return $this->hasOne(VocationalEducation::class, 'id', 'cycle');
+    }
 }
