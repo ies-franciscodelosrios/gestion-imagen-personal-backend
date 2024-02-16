@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        $users = User::all();
+        $users = User::with('cycle_info:id,short_name,long_name,description')->get();
         if ($users) {
             return response()->json([
                 'status' => 1,
@@ -94,7 +94,7 @@ class UserController extends Controller
     public function getUserByID(Request $request)
     {
         $id = $request->id;
-        $users = User::where('id', $id)->first();
+        $users = User::where('id', $id)->with('cycle_info:id,short_name,long_name,description')->first();
         if ($users) {
             return response()->json([
                 'status' => 1,

@@ -63,10 +63,10 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
 
-                'dni' => '30000001u',
+                'dni' => '05986869S',
                 'rol' => 0,
                 'course_year' => '23-24',
-                'cycle' => 'Peluquería',
+                'cycle' => 1,
                 'name' => 'Administrador',
                 'surname' => 'root',
                 'email' => 'admin@ieseltablero.es',
@@ -77,10 +77,10 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ], [
-                'dni' => '31000000u',
+                'dni' => '82536333M',
                 'rol' => 1,
                 'course_year' => '23-24',
-                'cycle' => 'Estética',
+                'cycle' => 2,
                 'name' => 'Manuela',
                 'surname' => 'Escobar',
                 'email' => 'manuela@ieseltablero.es',
@@ -92,10 +92,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '31000002u',
+                'dni' => '77378266X',
                 'rol' => 1,
                 'course_year' => '23-24',
-                'cycle' => 'Peluquería',
+                'cycle' => 1,
                 'name' => 'Jose Maria',
                 'surname' => 'Alcantara',
                 'email' => 'josemaria@ieseltablero.es',
@@ -107,10 +107,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '31000001u',
+                'dni' => '53002792M',
                 'rol' => 1,
                 'course_year' => '23-24',
-                'cycle' => 'Estética',
+                'cycle' => 2,
                 'name' => 'Josefina',
                 'surname' => 'Guitierrez',
                 'email' => 'josefin@ieseltablero.es',
@@ -123,10 +123,10 @@ class DatabaseSeeder extends Seeder
 
             ], [
 
-                'dni' => '31000003u',
+                'dni' => '47863517B',
                 'rol' => 1,
                 'course_year' => '23-24',
-                'cycle' => 'Peluquería',
+                'cycle' => 2,
                 'name' => 'Sanfran',
                 'surname' => 'Torreado',
                 'email' => 'sanfran@ieseltablero.es',
@@ -138,10 +138,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '31000004u',
+                'dni' => '35138942W',
                 'rol' => 1,
                 'course_year' => '23-24',
-                'cycle' => 'Estética',
+                'cycle' => 3,
                 'name' => 'Pedro',
                 'surname' => 'Sanchez',
                 'email' => 'pedro@ieseltablero.es',
@@ -153,10 +153,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '32000000u',
+                'dni' => '42634833D',
                 'rol' => 2,
                 'course_year' => '23-24',
-                'cycle' => 'Masaje Relajante',
+                'cycle' => 4,
                 'name' => 'Pedro',
                 'surname' => 'Garcia',
                 'email' => 'pedor@ieseltablero.es',
@@ -168,10 +168,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '32000001u',
+                'dni' => '30507984W',
                 'rol' => 2,
                 'course_year' => '23-24',
-                'cycle' => 'ninguno',
+                'cycle' => 1,
                 'name' => 'Angel',
                 'surname' => 'Mercoles',
                 'email' => 'angel@ieseltablero.es',
@@ -183,10 +183,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '32000002u',
+                'dni' => '27774202T',
                 'rol' => 2,
                 'course_year' => '23-24',
-                'cycle' => 'Masaje Relajante',
+                'cycle' => 3,
                 'name' => 'Alca',
                 'surname' => 'Montes',
                 'email' => 'alca@ieseltablero.es',
@@ -198,10 +198,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ], [
-                'dni' => '32000003u',
+                'dni' => '64089491Z',
                 'rol' => 2,
                 'course_year' => '23-24',
-                'cycle' => 'ninguno',
+                'cycle' => 2,
                 'name' => 'Miguel',
                 'surname' => 'Carmona',
                 'email' => 'miqui@ieseltablero.es',
@@ -213,10 +213,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
 
             ],[
-                'dni' => '78130272P',
+                'dni' => '14976375V',
                 'rol' => 2,
                 'course_year' => '23-24',
-                'cycle' => 'ninguno',
+                'cycle' => 1,
                 'name' => 'Francisco Javier',
                 'surname' => 'Ordoñez',
                 'email' => 'fjsalamanca@ieseltablero.es',

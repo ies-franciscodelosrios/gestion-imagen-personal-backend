@@ -17,7 +17,7 @@ class AlterUsersTable extends Migration
             $table->string('dni')->unique()->nullable();
             $table->integer('rol');
             $table->string('course_year');
-            $table->string('cycle');
+            $table->bigInteger('cycle');
             $table->string('surname');
             $table->string('others')->nullable();
         });
