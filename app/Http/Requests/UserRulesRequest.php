@@ -18,14 +18,13 @@ class UserRulesRequest extends FormRequest
     {
         return [
             'dni' => ['required', new DniValidation()],
-            'name' => 'required|min:3|max:50|regex:/^[A-Z]/',
-            'surname' => 'required|min:3|max:50|regex:/^[A-Z]/',
+            'name' => 'required|min:3|max:50|regex:/^[A-Za-z\s]/',
+            'surname' => 'required|min:3|max:50|regex:/^[A-Za-z\s]/',
             'email' => 'required|email|max:50',
-            'password' => 'min:8|max:50',
+            'password' => 'min:4|max:50',
             'course_year' => 'required|min:1|max:5',
             'cycle' => 'required|integer'
         ];
-
     }
 
     /**
