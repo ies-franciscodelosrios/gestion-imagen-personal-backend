@@ -243,8 +243,8 @@ class AppointmentController extends Controller
     {
         $appointment = new Appointment();
         $appointment->date = $request->date;
-        $appointment->dni_client = $request->dni_client;
-        $appointment->dni_student = $request->dni_student;
+        $appointment->id_client = $request->id_client;
+        $appointment->id_student = $request->id_student;
         $appointment->treatment = $request->treatment;
 
         $appointment->protocol = $request->protocol;
@@ -286,8 +286,8 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($request->id);
         $appointment->date = $request->date;
-        $appointment->dni_client = $request->dni_client;
-        $appointment->dni_student = $request->dni_student;
+        $appointment->id_client = $request->id_client;
+        $appointment->id_student = $request->id_student;
         $appointment->treatment = $request->treatment;
 
         $appointment->protocol = $request->protocol;
