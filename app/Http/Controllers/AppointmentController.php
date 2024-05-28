@@ -422,4 +422,42 @@ class AppointmentController extends Controller
             return response()->json(['error' => 'Error al eliminar imagen'], 500);
         }
     }
+
+    public function getAppointmentsByClientId(Request $request)
+{
+    $query = Appointment::query();
+
+    if ($request->has('client_id')) {
+        $query->where('id_client', $request->client_id);
+    }
+
+    // Cargar relaciones de usuario y cliente
+    $query->with('student', 'client');
+
+    // Agregar filtro de búsqueda si se proporciona un texto de búsqueda
+    if ($request->has('searchtext')) {
+        $searchText = $request->input('searchtext');
+        $query->where(function ($q) use ($searchText) {
+            $q->where('treatment', 'like', '%'.$searchText.'%')
+                ->orWhere('protocol', 'like', '%'.$searchText.'%')
+                ->orWhere('consultancy', 'like', '%'.$searchText.'%')
+                ->orWhere('tracking', 'like', '%'.$searchText.'%')
+                ->orWhere('date', 'like', '%'.$searchText.'%')
+                ->orWhere('survey', 'like', '%'.$searchText.'%')
+                ->orWhereHas('student', function ($q) use ($searchText) {
+                    $q->where('name', 'like', '%'.$searchText.'%')
+                        ->orWhere('surname', 'like', '%'.$searchText.'%');
+                })
+                ->orWhereHas('client', function ($q) use ($searchText) {
+                    $q->where('name', 'like', '%'.$searchText.'%');
+                });
+        });
+    }
+
+    // Paginar los resultados
+    $perPage = $request->input('perpage', 10);
+    $appointments = $query->paginate($perPage, ['*'], 'page', $request->input('page', 1));
+
+    return response()->json($appointments);
+}
 }

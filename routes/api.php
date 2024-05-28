@@ -81,6 +81,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/appointment/dni/client', [AppointmentController::class, 'getAppointmentBydniClient']);
     Route::get('/appointment/dni/student', [AppointmentController::class, 'getClientBydniStudent']);
     Route::get('/appointments/paged', [AppointmentController::class, 'getAppointmentsByDniStudent']);
+    Route::get('/appointments/byClientId', [AppointmentController::class, 'getAppointmentsByClientId']);
     Route::get('/appointment/get-photos', [AppointmentController::class, 'getPhotosUrl']);
     Route::post('/appointment', [AppointmentController::class, 'addAppointment']);
     Route::post('/appointment/add-photo-url', [AppointmentController::class, 'storePhotoUrl']);

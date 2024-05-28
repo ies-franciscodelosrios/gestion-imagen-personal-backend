@@ -222,50 +222,62 @@ class ClientController extends Controller
      * )
      */
     public function addClient(ClientAuthRequest $request)
-    {
+{
+    $errors = [];
+
+    // Verificar si los campos existen en la solicitud y no son nulos antes de buscar clientes existentes
+    if ($request->filled('dni')) {
         $existingClientDNI = Client::where('dni', $request->dni)->first();
-        $existingClientPhone = Client::where('phone', $request->phone)->first();
-        $existingClientEmail = Client::where('email', $request->email)->first();
-
-        if ($existingClientDNI || $existingClientPhone || $existingClientEmail) {
-            $errors = [];
-            if ($existingClientDNI) {
-                $errors[] = 'Client with the same DNI already exists';
-            }
-            if ($existingClientPhone) {
-                $errors[] = 'Client with the same phone number already exists';
-            }
-            if ($existingClientEmail) {
-                $errors[] = 'Client with the same email already exists';
-            }
-            return response()->json([
-                'status' => -1,
-                'message' => 'Client cancelled',
-                'errors' => $errors
-            ], 400);
+        if ($existingClientDNI) {
+            $errors[] = 'Client with the same DNI already exists';
         }
-
-        $client = new Client();
-        $client->dni = $request->dni;
-        $client->name = $request->name;
-        $client->surname = $request->surname;
-        $client->birth_date = $request->birth_date;
-        $client->phone = $request->phone;
-        $client->email = $request->email;
-        $client->more_info = $request->more_info;
-        $client->life_style = $request->life_style;
-        $client->background_health = $request->background_health;
-        $client->background_aesthetic = $request->background_aesthetic;
-        $client->asthetic_routine = $request->asthetic_routine;
-        $client->hairdressing_routine = $request->hairdressing_routine;
-
-        $client->save();
-
-        return response()->json([
-            'message' => 'CLIENT CREATED SUCCESSFULLY',
-            'client_id' => $client->id
-        ], 201);
     }
+
+    if ($request->filled('phone')) {
+        $existingClientPhone = Client::where('phone', $request->phone)->first();
+        if ($existingClientPhone) {
+            $errors[] = 'Client with the same phone number already exists';
+        }
+    }
+
+    if ($request->filled('email')) {
+        $existingClientEmail = Client::where('email', $request->email)->first();
+        if ($existingClientEmail) {
+            $errors[] = 'Client with the same email already exists';
+        }
+    }
+
+    // Verificar si se encontraron errores
+    if (!empty($errors)) {
+        return response()->json([
+            'status' => -1,
+            'message' => 'Client cancelled',
+            'errors' => $errors
+        ], 400);
+    }
+
+    // Crear el nuevo cliente
+    $client = new Client();
+    $client->dni = $request->dni;
+    $client->name = $request->name;
+    $client->surname = $request->surname;
+    $client->birth_date = $request->birth_date;
+    $client->phone = $request->phone;
+    $client->email = $request->email;
+    $client->more_info = $request->more_info;
+    $client->life_style = $request->life_style;
+    $client->background_health = $request->background_health;
+    $client->background_aesthetic = $request->background_aesthetic;
+    $client->asthetic_routine = $request->asthetic_routine;
+    $client->hairdressing_routine = $request->hairdressing_routine;
+
+    $client->save();
+
+    return response()->json([
+        'message' => 'CLIENT CREATED SUCCESSFULLY',
+        'client_id' => $client->id
+    ], 201);
+}
 
 
     /**
