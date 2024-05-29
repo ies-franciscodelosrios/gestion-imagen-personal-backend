@@ -9,6 +9,8 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -95,12 +97,19 @@ class UserController extends Controller
     {
         $id = $request->id;
         $users = User::where('id', $id)->with('cycle_info:id,short_name,long_name,description')->first();
-        if ($users) {
+        $userData = $users->toArray();
+        $allFiles = Storage::disk('public')->files('/images');
+        foreach($allFiles as $file){
+            $explodedName = explode("_",str_replace("images/", "", $file));
+            if($explodedName[0] == $id) $userData['image'] = url("storage/$file");
+        }
+        if ($userData) {
             return response()->json([
                 'status' => 1,
                 'message' => 'Get user by ID ' . $id,
-                'data' => $users,
-            ], 200);
+                'data' => $userData,
+            ], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
         return response()->json([
             'status' => -1,
@@ -491,7 +500,6 @@ class UserController extends Controller
             'status' => -1,
             'message' => 'No User Found',
         ], 400);
-
     }
 
     /**
@@ -679,4 +687,28 @@ class UserController extends Controller
             return response()->json(['error' => 'Error deleting image'], 400);
         }
     }
+
+    public function addAvatar (Request $request){
+        $validator = Validator::make($request->all(), [
+            "avatar_image" => ["required", "string"]
+            ]
+        );
+        if($validator->fails())return response()->json($validator->getMessageBag(), 422);
+        try {
+            $nowDate = date("Ydmhis");
+            $user = $request->user();
+            $allFiles = Storage::disk('public')->files('/images');
+            foreach($allFiles as $file){
+                $explodedName = explode("_",str_replace("images/", "", $file));
+                if($explodedName[0] == $user->id) Storage::disk('public')->delete($file);
+            }
+            if ($request->avatar_image) Storage::disk('public')->put("/images/{$user->id}_{$nowDate}_avatar.jpg", base64_decode($request->avatar_image));
+            return response()->json(['status' => true, 'message' => 'Image Inserted', 'url' => url("storage/images/{$user->id}_{$nowDate}_avatar.jpg")], 201,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false, 'message' => $th->getMessage()], 500);
+        }
+
+    }
+
 }
