@@ -711,4 +711,18 @@ class UserController extends Controller
 
     }
 
+    public function deleteAvatar (Request $request){
+        try {
+            $user = $request->user();
+            $allFiles = Storage::disk('public')->files('/images');
+            foreach($allFiles as $file){
+                $explodedName = explode("_",str_replace("images/", "", $file));
+                if($explodedName[0] == $user->id) Storage::disk('public')->delete($file);
+            }
+            return response()->json(['status' => true, 'message' => 'Image Deleted'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false, 'message' => $th->getMessage()], 500);
+        }
+
+    }
 }
