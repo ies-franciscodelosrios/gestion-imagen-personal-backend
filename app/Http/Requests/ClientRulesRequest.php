@@ -15,7 +15,7 @@ class ClientRulesRequest extends FormRequest
         return [
             'dni' => ['nullable', new DniValidation()],
             'name' => 'required|min:3|max:50|regex:/^[A-Z]/',
-            'surname' => 'required|min:3|max:50|regex:/^[A-Z]/',
+            'surname' => 'required|min:3|max:50|regex:/^[A-Za-z]/',
             'birth_date' => 'nullable|date|date_format:Y-m-d',
             'phone' => 'nullable|numeric|digits:9',
             'email' => ['nullable', new EmailValidation()],
