@@ -22,12 +22,12 @@ class Appointment extends Model
 
     public function student()
     {
-        return $this->belongsTo(User::class, 'dni_student', 'dni');
+        return $this->belongsTo(User::class, 'id_student', 'id');
     }
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'dni_client', 'dni');
+        return $this->belongsTo(Client::class, 'id_client', 'id');
     }
 
     public function photoUrls()
