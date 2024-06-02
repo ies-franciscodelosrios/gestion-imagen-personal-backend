@@ -36,7 +36,7 @@ class AppointmentController extends Controller
      */
     public function getAll()
     {
-        $appointment = Appointment::all();
+        $appointment = Appointment::with(['client:id,name,surname', 'student:id,name,surname'])->get();
 
         $count = count($appointment);
         if ($appointment) {
@@ -57,15 +57,8 @@ class AppointmentController extends Controller
     public function getAppointmentsByDniStudent(Request $request)
     {
         $query = Appointment::query();
-
-        if ($request->has('dni_student') && strlen($request->dni_student) === 9) {
-            $query->where('dni_student', $request->dni_student);
-        }
-
-        if ($request->has('dni_client') && strlen($request->dni_client) === 9) {
-            $query->where('dni_client', $request->dni_client);
-        }
-
+        if ($request->has('dni_student') && strlen($request->dni_student) === 9) $query->where('dni_student', $request->dni_student);
+        if ($request->has('dni_client') && strlen($request->dni_client) === 9) $query->where('dni_client', $request->dni_client);
         // Cargar relaciones de usuario y cliente
         $query->with('student', 'client');
 
@@ -88,10 +81,10 @@ class AppointmentController extends Controller
                     });
             });
         }
-
         // Paginar los resultados
         $perPage = $request->input('perpage', 10);
-        $appointments = $query->paginate($perPage, ['*'], 'page', $request->input('page', 1));
+        $page = $request->input('page', 1);
+        $appointments = $query->paginate($perPage, ['*'], 'page', $page);
 
         return response()->json($appointments);
     }
