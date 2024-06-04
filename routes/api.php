@@ -59,6 +59,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/user/delete/rol', [UserController::class, 'deleteByrol']);
     Route::delete('/delete-cloudinary', [UserController::class, 'deleteImage']);
     Route::delete('/user/delete-photo-url', [UserController::class, 'deletePhotoUrl']);
+    Route::post('/user/addAvatar', [UserController::class, 'addAvatar']);
+    Route::delete('/user/deleteAvatar', [UserController::class, 'deleteAvatar']);
 
     /* Clients */
     /* ----------------------------------------------------------------------------------------------------------------------------------------- */
