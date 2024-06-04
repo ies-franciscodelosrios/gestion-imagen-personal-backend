@@ -34,7 +34,15 @@ class UserController extends Controller
     public function getUserLogged(Request $request)
     {
         //Log::debug($request->user('api'));
-        return $request->user();
+        $user = $request->user();
+        $userData = $user->toArray();
+        $allFiles = Storage::disk('public')->files('/images');
+        foreach($allFiles as $file){
+            $explodedName = explode("_",str_replace("images/", "", $file));
+            if($explodedName[0] == $user->id) $userData['image'] = url("storage/$file");
+        }
+        return response()->json($userData, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**
