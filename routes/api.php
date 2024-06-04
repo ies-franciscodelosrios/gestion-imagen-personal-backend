@@ -32,11 +32,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /* Vocational Educations */
     /* ----------------------------------------------------------------------------------------------------------------------------------------- */
     Route::get('/vocationaleducation', [VocationalEducationController::class, 'getAll']);
-    Route::get('/vocationaleducation/{id}', [VocationalEducationController::class, 'getVocationalEducationById']);
+    Route::get('/vocationaleducation/id/{id}', [VocationalEducationController::class, 'getVocationalEducationById']);
     Route::post('/vocationaleducation/add', [VocationalEducationController::class, 'addVocationalEducation']);
     Route::put('/vocationaleducation/edit/{id}', [VocationalEducationController::class, 'editVocationalEducation']);
     Route::delete('/vocationaleducation/delete/{id}', [VocationalEducationController::class, 'deleteVocationalEducation']);
     Route::delete('/vocationaleducation/delete-all', [VocationalEducationController::class, 'deleteAll']);
+
 
     /* Users */
     /* ----------------------------------------------------------------------------------------------------------------------------------------- */

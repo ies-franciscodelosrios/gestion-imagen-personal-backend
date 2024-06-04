@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        $users = User::with('cycle_info:id,short_name,long_name,description')->get();
+        $users = User::with('cycle_info:id,cyle_name,short_name,long_name,description')->get();
         if ($users) {
             return response()->json([
                 'status' => 1,
@@ -94,7 +94,7 @@ class UserController extends Controller
     public function getUserByID(Request $request)
     {
         $id = $request->id;
-        $users = User::where('id', $id)->with('cycle_info:id,short_name,long_name,description')->first();
+        $users = User::where('id', $id)->with('cycle_info:id,cyle_name,short_name,long_name,description')->first();
         if ($users) {
             return response()->json([
                 'status' => 1,
@@ -325,6 +325,7 @@ class UserController extends Controller
         }
         $user->course_year = $request->course_year;
         $user->cycle = $request->cycle;
+        $user->cycle_name = $request->cycle_name;
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
@@ -418,6 +419,7 @@ class UserController extends Controller
             $user->dni = $request->dni;
             $user->course_year = $request->course_year;
             $user->cycle = $request->cycle;
+            $user->cycle_name = $request->cycle_name;
             $user->name = $request->name;
             $user->surname = $request->surname;
             $user->email = $request->email;
