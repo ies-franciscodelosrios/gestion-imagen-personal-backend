@@ -444,10 +444,12 @@ class UserController extends Controller
             $user->others = $request->others;
 
             if ($user->save()) {
+                $user->load('cycle_info:id,short_name,long_name,description');
                 return response()->json([
                     'status' => 1,
                     'message' => 'User updated',
                     'id' => $user->id,
+                    'user' => $user
                 ], 200);
             } else if (!$user->save()) {
                 return response()->json([
