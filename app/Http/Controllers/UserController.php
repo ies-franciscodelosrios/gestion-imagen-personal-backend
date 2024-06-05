@@ -159,7 +159,7 @@ class UserController extends Controller
     public function getUsersByRol(Request $request)
     {
         $rol = $request->rol;
-        $users = User::where('rol', $rol)->get();
+        $users = User::where('rol', $rol)->with('cycle_info:id,short_name,long_name,description')->get();
         $count = count($users);
         if ($request->rol == '1') {
             if ($users) {
