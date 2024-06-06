@@ -342,7 +342,6 @@ class UserController extends Controller
         }
         $user->course_year = $request->course_year;
         $user->cycle = $request->cycle;
-        $user->cycle_name = $request->cycle_name;
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
@@ -436,7 +435,6 @@ class UserController extends Controller
             $user->dni = $request->dni;
             $user->course_year = $request->course_year;
             $user->cycle = $request->cycle;
-            $user->cycle_name = $request->cycle_name;
             $user->name = $request->name;
             $user->surname = $request->surname;
             $user->email = $request->email;

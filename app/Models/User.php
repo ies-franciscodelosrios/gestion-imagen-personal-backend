@@ -21,7 +21,6 @@ class User extends Authenticatable
         'email',
         'password',
         'others',
-        'cycle_name'
     ];
 
     /**
