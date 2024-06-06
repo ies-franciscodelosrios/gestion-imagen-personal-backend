@@ -84,7 +84,7 @@ class VocationalEducationController extends Controller
      */
     public function getVocationalEducationById($id)
     {
-        $vocationalEducation = VocationalEducation::find($id);
+        $vocationalEducation = VocationalEducation::where('id', $id)->with('users:id,cycle,name,surname,rol')->first();
         return $vocationalEducation;
     }
 
